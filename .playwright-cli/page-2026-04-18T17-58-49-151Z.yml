@@ -1,0 +1,112 @@
+- generic [ref=e4]:
+  - banner:
+    - generic [ref=e5]:
+      - link "Dubinsky Studio" [ref=e7] [cursor=pointer]:
+        - /url: "#top"
+        - img "Dubinsky Studio" [ref=e8]
+      - navigation [ref=e9]:
+        - link "Services" [ref=e10] [cursor=pointer]:
+          - /url: "#solutions"
+          - generic [ref=e11]:
+            - generic [ref=e12]: Services
+            - img [ref=e14]
+        - link "Process" [ref=e16] [cursor=pointer]:
+          - /url: "#platform"
+        - link "Team" [ref=e17] [cursor=pointer]:
+          - /url: "#team"
+        - link "Contacts" [ref=e18] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e19]:
+        - link "Discuss Project" [ref=e22] [cursor=pointer]:
+          - /url: "#contact"
+          - generic [ref=e24]: Discuss Project
+        - button "EN" [ref=e26]:
+          - img [ref=e27]
+          - generic [ref=e30]: EN
+          - img [ref=e31]
+  - main [ref=e33]:
+    - generic [ref=e36]:
+      - generic [ref=e42]: Premium Ecosystem 2026
+      - heading "We build products" [level=1] [ref=e43]:
+        - generic: We build
+        - generic: products
+      - paragraph: We are a full-cycle development studio. We don't just build interfaces, we deliver turnkey MVPs. We design UI/UX systems, write scalable code, and build a robust technical foundation for your business growth.
+      - generic [ref=e44]:
+        - link "Contact Us" [ref=e46] [cursor=pointer]:
+          - /url: "#contact"
+          - generic [ref=e48]:
+            - text: Contact Us
+            - img [ref=e49]
+        - link "View Cases" [ref=e52] [cursor=pointer]:
+          - /url: "#solutions"
+          - generic [ref=e54]:
+            - text: View Cases
+            - img [ref=e55]
+      - generic [ref=e58]:
+        - generic [ref=e59]: Trusted by innovative teams
+        - generic [ref=e60]:
+          - generic [ref=e61]: FinTech Core
+          - generic [ref=e62]: NEXUS
+          - generic [ref=e63]: Lumina
+          - generic [ref=e64]: Aero
+    - generic [ref=e67]:
+      - generic [ref=e68]:
+        - button "Web3 & TMA" [ref=e69]:
+          - generic [ref=e72]: Web3 & TMA
+        - button "Fintech & Exchange" [ref=e73]:
+          - generic [ref=e75]: Fintech & Exchange
+        - button "B2B Platforms" [ref=e77]:
+          - generic [ref=e79]: B2B Platforms
+        - button "DeFi & DAO" [ref=e81]:
+          - generic [ref=e83]: DeFi & DAO
+        - button "GameFi" [ref=e85]:
+          - generic [ref=e87]: GameFi
+        - button "Cloud Mining" [ref=e89]:
+          - generic [ref=e91]: Cloud Mining
+        - button "Trading Tools" [ref=e93]:
+          - generic [ref=e95]: Trading Tools
+      - generic [ref=e97]:
+        - generic [ref=e99]:
+          - generic [ref=e100]: Web3 & TMA
+          - heading "Swipy Dating Application" [level=2] [ref=e101]
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - img [ref=e105]
+              - text: Smart feed algorithm
+            - generic [ref=e108]:
+              - img [ref=e110]
+              - text: Profile matching system
+            - generic [ref=e112]:
+              - img [ref=e114]
+              - text: Referral mechanics
+            - generic [ref=e116]:
+              - img [ref=e118]
+              - text: Purchases via Telegram Stars
+          - link "Start project" [ref=e121] [cursor=pointer]:
+            - /url: "#contact"
+            - text: Start project
+            - img [ref=e122]
+        - generic [ref=e125]:
+          - generic [ref=e127]:
+            - img "Swipy - slide 1"
+            - generic [ref=e128]:
+              - button "Previous slide" [ref=e129]:
+                - img [ref=e130]
+              - button "Next slide" [ref=e132]:
+                - img [ref=e133]
+            - generic [ref=e135]:
+              - generic [ref=e136]:
+                - generic [ref=e137]:
+                  - heading "Swipy" [level=3] [ref=e138]
+                  - generic [ref=e139]: Case
+                - paragraph [ref=e140]: Dating app built on Telegram MiniApps (Top-10 in TMA center). A cozy place to find people by heart and interests.
+              - link "Live project" [ref=e141] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Live project
+                - img [ref=e142]
+          - generic [ref=e146]:
+            - generic [ref=e148]: Ecosystem
+            - generic [ref=e149]: Telegram
+          - generic [ref=e153]:
+            - generic [ref=e154]: Rating
+            - generic [ref=e155]: Top-10 TMA

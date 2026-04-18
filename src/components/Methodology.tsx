@@ -209,7 +209,7 @@ export function Methodology() {
   const pathHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="py-16 md:py-32 px-4 bg-transparent relative overflow-hidden" id="platform">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-32 px-4 bg-transparent relative overflow-hidden" id="platform">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-brand-blue/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto">

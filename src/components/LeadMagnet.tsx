@@ -19,7 +19,7 @@ export function LeadMagnet() {
   };
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="lead-magnet">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="lead-magnet">
       <div className="max-w-5xl mx-auto relative z-10">
         
         <motion.div 
@@ -41,7 +41,7 @@ export function LeadMagnet() {
             </div>
             
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
-              {t('lead', 'titlePart1')}<span className="font-serif italic text-brand-blue font-normal">{t('lead', 'titleHighlight')}</span>{t('lead', 'titlePart2')}
+              {t('lead', 'titlePart1')}<span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t('lead', 'titleHighlight')}</span>{t('lead', 'titlePart2')}
             </h2>
             <p className="text-text-muted text-lg mb-8 leading-relaxed">
               {t('lead', 'desc')}
@@ -61,7 +61,7 @@ export function LeadMagnet() {
               <button 
                 type="submit"
                 disabled={isSubmitted}
-                className="w-full sm:w-auto shrink-0 py-4 px-8 rounded-xl sm:rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
+                className="brand-button w-full sm:w-auto shrink-0 py-4 px-8 rounded-xl sm:rounded-full text-white font-bold transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
               >
                 {isSubmitted ? (
                   <span>{t('lead', 'sent')}</span>

@@ -43,28 +43,18 @@ export default function App() {
         <Header />
         
         <main>
-          <section id="about">
-            <Hero />
-          </section>
-          <section id="solutions">
-            <BentoCase />
-            <Suspense fallback={<div className="h-[200px]" />}>
-              <Projects />
-              <ShowcaseMarquee />
-            </Suspense>
-          </section>
+          <Hero />
+          <BentoCase />
           <Suspense fallback={<div className="h-[200px]" />}>
-            <section id="platform">
-              <Methodology />
-            </section>
-            <section id="integration">
-              <Transparency />
-              <Team />
-            </section>
-            
+            <Projects />
+            <ShowcaseMarquee />
+          </Suspense>
+          <Suspense fallback={<div className="h-[200px]" />}>
+            <Methodology />
+            <Transparency />
+            <Team />
             <SocialProof />
             <LeadMagnet />
-            
             <Cta />
             <Faq />
           </Suspense>

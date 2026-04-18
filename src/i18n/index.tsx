@@ -5,11 +5,20 @@ export type Language = 'RU' | 'EN' | 'UA';
 export const translations = {
   RU: {
     nav: {
+      home: 'Главная',
       services: 'Услуги',
+      sections: 'Разделы',
       process: 'Процесс',
       team: 'Команда',
       contacts: 'Контакты',
-      discuss: 'Обсудить проект'
+      discuss: 'Обсудить проект',
+      cases: 'Кейсы',
+      approach: 'Подход',
+      gallery: 'Галерея',
+      transparency: 'Прозрачность',
+      reviews: 'Отзывы',
+      guide: 'Гайд',
+      faq: 'FAQ'
     },
     hero: {
       badge: 'Премиум Экосистема 2026',
@@ -114,11 +123,20 @@ export const translations = {
   },
   EN: {
     nav: {
+      home: 'Home',
       services: 'Services',
+      sections: 'Sections',
       process: 'Process',
       team: 'Team',
       contacts: 'Contacts',
-      discuss: 'Discuss Project'
+      discuss: 'Discuss Project',
+      cases: 'Cases',
+      approach: 'Approach',
+      gallery: 'Gallery',
+      transparency: 'Transparency',
+      reviews: 'Reviews',
+      guide: 'Guide',
+      faq: 'FAQ'
     },
     hero: {
       badge: 'Premium Ecosystem 2026',
@@ -223,11 +241,20 @@ export const translations = {
   },
   UA: {
     nav: {
+      home: 'Головна',
       services: 'Послуги',
+      sections: 'Розділи',
       process: 'Процес',
       team: 'Команда',
       contacts: 'Контакти',
-      discuss: 'Обговорити проект'
+      discuss: 'Обговорити проект',
+      cases: 'Кейси',
+      approach: 'Підхід',
+      gallery: 'Галерея',
+      transparency: 'Прозорість',
+      reviews: 'Відгуки',
+      guide: 'Гайд',
+      faq: 'FAQ'
     },
     hero: {
       badge: 'Преміальна екосистема 2026',
@@ -342,15 +369,35 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+function detectInitialLanguage(initialLang?: Language): Language {
+  if (initialLang) return initialLang;
+  if (typeof window === 'undefined') return 'EN';
+
+  const rootLanguage = document.getElementById('root')?.dataset.lang as Language | undefined;
+  if (rootLanguage) return rootLanguage;
+
+  const pathLanguage = window.location.pathname.startsWith('/ru')
+    ? 'RU'
+    : window.location.pathname.startsWith('/uk')
+      ? 'UA'
+      : 'EN';
+  if (pathLanguage) return pathLanguage;
+
+  const browserLang = navigator.language.toLowerCase();
+  if (browserLang.startsWith('ru')) return 'RU';
+  if (browserLang.startsWith('uk') || browserLang.startsWith('ua')) return 'UA';
+  return 'EN';
+}
+
+export const LanguageProvider = ({
+  children,
+  initialLang,
+}: {
+  children: ReactNode;
+  initialLang?: Language;
+}) => {
   const [lang, setLang] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'RU'; // SSR safety
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('ru')) return 'RU';
-    if (browserLang.startsWith('uk') || browserLang.startsWith('ua')) return 'UA';
-    // optionally add a check for 'en' or just default to English for the rest of the world
-    if (browserLang.startsWith('en')) return 'EN';
-    return 'EN'; // Fallback for all other regions
+    return detectInitialLanguage(initialLang);
   });
   
   React.useEffect(() => {

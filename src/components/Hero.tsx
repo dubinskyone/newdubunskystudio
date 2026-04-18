@@ -69,7 +69,7 @@ export function Hero() {
   const background = useMotionTemplate`radial-gradient(600px circle at ${smoothX}px ${smoothY}px, rgba(255,255,255,0.06), transparent 80%)`;
 
   return (
-    <section className="relative pt-32 pb-16 sm:pt-48 sm:pb-20 px-4 flex flex-col items-center justify-center text-center min-h-[85svh] overflow-hidden">
+    <section id="top" className="relative scroll-mt-28 md:scroll-mt-32 pt-32 pb-16 sm:pt-48 sm:pb-20 px-4 flex flex-col items-center justify-center text-center min-h-[85svh] overflow-hidden">
       
       {/* Interactive Cursor Flashlight (follows cursor) */}
       <motion.div 
@@ -204,12 +204,12 @@ export function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="relative px-8 py-4 bg-brand-blue text-white rounded-full font-bold text-[15px] tracking-wide w-full sm:w-auto flex items-center justify-center gap-2 group overflow-hidden shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:shadow-[0_0_60px_rgba(37,99,235,0.5)] transition-shadow no-underline"
+              className="brand-button relative px-8 py-4 text-white rounded-full font-bold text-[15px] tracking-wide w-full sm:w-auto flex items-center justify-center gap-2 group overflow-hidden transition-all no-underline"
             >
               <motion.div 
                 animate={{ x: ['-100%', '200%'] }} 
                 transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }} 
-                className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0 skew-x-12" 
+                className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/16 to-transparent z-0 skew-x-12" 
               />
               <span className="relative z-10 flex items-center gap-2">
                 {t('hero', 'contact')}
@@ -245,7 +245,7 @@ export function Hero() {
             <span className="font-display font-bold text-xl md:text-2xl text-text-muted hover:text-white transition-colors cursor-default">FinTech Core</span>
             <span className="font-display font-medium text-xl md:text-2xl tracking-tighter text-text-muted hover:text-white transition-colors cursor-default">NEXUS</span>
             <span className="font-sans font-black text-xl md:text-2xl tracking-tight text-text-muted hover:text-white transition-colors cursor-default">Lumina</span>
-            <span className="font-display font-bold text-xl md:text-2xl italic pr-2 text-text-muted hover:text-white transition-colors cursor-default">Aero</span>
+            <span className="font-display font-semibold text-xl md:text-2xl pr-2 text-text-muted hover:text-white transition-colors cursor-default brand-accent-text">Aero</span>
           </div>
         </motion.div>
       </div>

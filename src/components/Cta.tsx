@@ -18,7 +18,7 @@ export function Cta() {
   };
 
   return (
-    <section className="px-4 py-16 md:py-32 max-w-7xl mx-auto relative overflow-hidden" id="contact">
+    <section className="scroll-mt-28 md:scroll-mt-32 px-4 py-16 md:py-32 max-w-7xl mx-auto relative overflow-hidden" id="contact">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -48,7 +48,7 @@ export function Cta() {
 
           <h2 className="text-4xl sm:text-5xl lg:text-7xl font-display font-black text-text-main leading-[1.05] tracking-tight mb-6">
             {t('cta', 'title1')} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-brand-blue bg-[length:200%_auto] animate-gradient">
+            <span className="brand-gradient-text">
               {t('cta', 'title2')}
             </span>
           </h2>
@@ -113,7 +113,7 @@ export function Cta() {
                  </div>
                  <div>
                     <div className="text-white font-bold text-lg">{t('cta', 'direct')}</div>
-                    <div className="text-brand-blue font-medium text-sm">{t('cta', 'directSub')}</div>
+                    <div className="brand-accent-text font-medium text-sm">{t('cta', 'directSub')}</div>
                  </div>
               </div>
 
@@ -156,7 +156,7 @@ export function Cta() {
                     <button 
                        type="submit"
                        disabled={isSubmitted}
-                       className="w-full sm:w-auto shrink-0 py-4 px-8 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
+                       className="brand-button w-full sm:w-auto shrink-0 py-4 px-8 text-white font-bold rounded-xl transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
                     >
                        {isSubmitted ? t('cta', 'sent') : t('cta', 'next')}
                     </button>

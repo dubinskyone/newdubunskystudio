@@ -31,7 +31,7 @@ export const Faq = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 px-4 bg-transparent relative" id="faq">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-24 md:py-32 px-4 bg-transparent relative" id="faq">
       <div className="max-w-4xl mx-auto">
         <div className="mb-16 text-center flex flex-col items-center">
           <motion.div

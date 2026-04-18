@@ -68,7 +68,7 @@ export function SocialProof() {
 
   return (
     <section
-      className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden"
+      className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden"
       id="social-proof"
     >
       {/* Background elements */}
@@ -114,7 +114,7 @@ export function SocialProof() {
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main leading-[1.05] tracking-tight"
           >
             {t("social", "title1")} <br />{" "}
-            <span className="font-serif italic text-brand-blue font-normal">
+            <span className="brand-gradient-text font-semibold tracking-[-0.02em]">
               {t("social", "titleHighlight")}
             </span>
           </motion.h2>

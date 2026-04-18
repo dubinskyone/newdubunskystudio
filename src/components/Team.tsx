@@ -19,7 +19,7 @@ export function Team() {
   ];
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-[#09090b] relative overflow-hidden" id="team">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-[#09090b] relative overflow-hidden" id="team">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           
@@ -39,7 +39,7 @@ export function Team() {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 leading-[1.05] tracking-tight"
             >
-              {t('team', 'title1')} <span className="font-serif italic text-brand-blue font-normal">{t('team', 'titleHighlight')}</span><br/>{t('team', 'title2')}
+              {t('team', 'title1')} <span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t('team', 'titleHighlight')}</span><br/>{t('team', 'title2')}
             </motion.h2>
             
             <motion.p 

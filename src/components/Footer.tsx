@@ -9,9 +9,24 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-line pb-16">
           <div className="col-span-1 md:col-span-5 pr-8">
-            <div className="text-2xl font-logo font-extrabold tracking-tighter uppercase text-text-main mb-6">
-              DUBINSKY<br />STUDIO
-            </div>
+            <a href="#top" className="mb-6 inline-flex w-fit items-center gap-3.5 no-underline" aria-label="Dubinsky Studio">
+              <img
+                src="/branding/logo-mark-white.svg"
+                alt=""
+                aria-hidden="true"
+                className="h-8 sm:h-10 w-auto shrink-0 opacity-95"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="flex flex-col justify-center leading-none whitespace-nowrap opacity-95">
+                <span className="font-logo text-base sm:text-lg font-semibold uppercase tracking-[0.08em] text-text-main">
+                  Dubinsky
+                </span>
+                <span className="mt-1.5 font-logo text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.38em] text-text-muted">
+                  Studio
+                </span>
+              </span>
+            </a>
             <p className="text-text-muted max-w-sm mb-8 text-lg">
               {t('footer', 'tagline')}
             </p>
@@ -43,7 +58,7 @@ export function Footer() {
             </h4>
             <div className="flex flex-col gap-4 text-text-muted font-medium">
               {[
-                { name: t('footer', 'about'), id: 'about' },
+                { name: t('footer', 'about'), id: 'top' },
                 { name: t('footer', 'solutions'), id: 'solutions' },
                 { name: t('footer', 'approach'), id: 'platform' },
                 { name: t('footer', 'process'), id: 'integration' }

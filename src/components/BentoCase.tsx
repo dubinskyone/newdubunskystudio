@@ -197,7 +197,7 @@ export function BentoCase() {
     <section
       id="solutions"
       ref={sectionRef}
-      className="px-4 py-8 md:py-16 max-w-7xl mx-auto flex items-center justify-center"
+      className="scroll-mt-28 md:scroll-mt-32 px-4 py-8 md:py-16 max-w-7xl mx-auto flex items-center justify-center"
     >
       <div className="bg-surface-card rounded-[32px] border border-line p-4 md:p-6 shadow-[0_0_50px_rgba(0,0,0,0.3)] w-full relative overflow-hidden">
         {/* Subtle Background Glow */}
@@ -216,7 +216,7 @@ export function BentoCase() {
                 {isActive && (
                   <motion.div
                     layoutId="bento-tab"
-                    className="absolute inset-0 bg-gradient-to-r from-brand-blue to-[#4B6BFB] rounded-full -z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),_0_2px_15px_rgba(37,99,235,0.4)]"
+                    className="brand-pill-fill absolute inset-0 rounded-full -z-10"
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   />
                 )}

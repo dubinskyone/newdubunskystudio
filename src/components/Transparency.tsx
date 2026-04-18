@@ -84,7 +84,7 @@ export function Transparency() {
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="integration">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="integration">
       {/* Dynamic Background Glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/5 blur-[150px] rounded-full pointer-events-none -z-10" />
 

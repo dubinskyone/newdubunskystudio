@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import type { ReactNode } from 'react';
+import { motion } from 'motion/react';
 import {
   ArrowRight,
   Activity,
@@ -10,337 +11,388 @@ import {
   PieChart,
   TrendingUp,
   Users,
-} from "lucide-react";
-import { useLanguage } from "../i18n";
+} from 'lucide-react';
+import { useLanguage } from '../i18n';
 
-const getMockProjects = (tLocal: any) => [
-  {
-    title: tLocal.projects.fintech.title,
-    tag: tLocal.projects.fintech.tag,
-    type: tLocal.projects.fintech.type,
-    color: "from-blue-600 via-indigo-600 to-blue-800",
-    glowColor: "bg-blue-500/50",
-    content: (
-      <div className="flex flex-col gap-3 w-full p-5 h-full relative z-10">
-        <div className="flex justify-between items-center mb-2">
-          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/30">
-            <CreditCard className="w-5 h-5 text-blue-100" />
-          </div>
-          <div className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-[10px] font-bold uppercase tracking-wider border border-emerald-500/30">
-            {tLocal.projects.fintech.verified}
-          </div>
-        </div>
-        <div className="mt-2 text-blue-100/70 text-[11px] font-bold uppercase tracking-widest">
-          {tLocal.projects.fintech.balance}
-        </div>
-        <div className="text-white text-3xl font-bold font-mono tracking-tighter drop-shadow-md">
-          $124,592.50
-        </div>
-        <div className="text-emerald-400 text-xs font-bold font-mono">
-          +12.4% {tLocal.projects.fintech.month}
-        </div>
-
-        <div className="flex gap-3 mt-auto">
-          <div className="flex-1 h-14 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 border border-white/20 flex flex-col items-center justify-center gap-1 hover:bg-white/20 transition-colors shadow-inner">
-            <Activity className="w-5 h-5 text-indigo-200" />
-            <span className="text-[9px] text-white/70 uppercase">
-              {tLocal.projects.fintech.transfer}
-            </span>
-          </div>
-          <div className="flex-1 h-14 rounded-2xl bg-gradient-to-b from-blue-400/20 to-blue-500/5 border border-blue-400/30 flex flex-col items-center justify-center gap-1 hover:bg-blue-400/30 transition-colors shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-            <Zap className="w-5 h-5 text-blue-200" />
-            <span className="text-[9px] text-white/70 uppercase">
-              {tLocal.projects.fintech.pay}
-            </span>
-          </div>
-        </div>
-      </div>
-    ),
-    width: "w-[280px]",
-    height: "h-[320px]",
+const SHOWCASE_COPY = {
+  RU: {
+    badge: 'Галерея интерфейсов',
+    titlePart1: 'Интерфейсы,',
+    titlePart2: 'задающие тренды',
+    button: 'Обсудить дизайн',
+    projects: {
+      fintech: {
+        title: 'Финтех Приложение',
+        tag: 'Мобильный интерфейс',
+        type: 'Native iOS',
+        verified: 'Подтверждено',
+        balance: 'Баланс',
+        month: 'в этом месяце',
+        transfer: 'Перевод',
+        pay: 'Оплата',
+      },
+      crm: {
+        title: 'AI CRM Система',
+        tag: 'Веб Дашборд',
+        type: 'React Frontend',
+        analytics: 'Аналитика',
+      },
+      logistics: {
+        title: 'Платформа логистики',
+        tag: 'B2B Платформа',
+        type: 'Vue Client',
+        online: 'Онлайн',
+        secure: 'Защищенный Узел',
+      },
+      social: {
+        title: 'Социальная сеть',
+        tag: 'React Native',
+        type: 'Мобильное Приложение',
+        live: 'Прямой эфир',
+        follow: 'Подписаться',
+      },
+    },
   },
-  {
-    title: tLocal.projects.crm.title,
-    tag: tLocal.projects.crm.tag,
-    type: tLocal.projects.crm.type,
-    color: "from-fuchsia-600 via-purple-600 to-indigo-800",
-    glowColor: "bg-fuchsia-500/50",
-    content: (
-      <div className="flex flex-col gap-4 w-full p-5 h-full relative z-10">
-        <div className="flex justify-between items-center border-b border-white/10 pb-4">
-          <div className="flex gap-2 items-center">
-            <div className="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center border border-pink-500/30">
-              <LayoutDashboard className="w-4 h-4 text-pink-200" />
-            </div>
-            <div className="h-3 w-20 bg-white/20 rounded-full" />
-          </div>
-          <div className="w-6 h-6 rounded-full bg-indigo-500/40 border border-indigo-400/30 flex items-center justify-center">
-            <Users className="w-3 h-3 text-indigo-100" />
-          </div>
-        </div>
-        <div className="flex flex-1 gap-4">
-          <div className="w-1/3 h-full rounded-xl bg-white/5 border border-white/10 flex flex-col gap-3 p-3 shadow-inner">
-            <div className="h-2 w-full bg-pink-400/40 rounded-full mb-1 shadow-[0_0_10px_rgba(244,114,182,0.4)]" />
-            <div className="h-2 w-3/4 bg-purple-400/30 rounded-full" />
-            <div className="h-2 w-1/2 bg-white/20 rounded-full mt-auto" />
-          </div>
-          <div className="w-2/3 h-full rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-white/10 flex flex-col gap-2 p-3 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-fuchsia-600/20 to-transparent pointer-events-none" />
-            <div className="h-full flex items-end gap-1.5 z-10">
-              {[40, 70, 45, 90, 65, 80].map((h, i) => (
-                <div
-                  key={i}
-                  className={`flex-1 rounded-t-sm shadow-sm transition-all ${i === 3 ? "bg-pink-400 shadow-[0_0_15px_rgba(244,114,182,0.6)]" : "bg-white/20"}`}
-                  style={{ height: `${h}%` }}
-                />
-              ))}
-            </div>
-            <div className="flex justify-between items-center text-white/50 text-[10px] mt-1 z-10 font-medium">
-              <span>{tLocal.projects.crm.analytics}</span>
-              <TrendingUp className="w-3 h-3 text-pink-300" />
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    width: "w-[400px]",
-    height: "h-[320px]",
+  EN: {
+    badge: 'Interface Gallery',
+    titlePart1: 'Interfaces that',
+    titlePart2: 'set the trends',
+    button: 'Discuss Design',
+    projects: {
+      fintech: {
+        title: 'FinTech App',
+        tag: 'Mobile UI',
+        type: 'Native iOS',
+        verified: 'Verified',
+        balance: 'Total Balance',
+        month: 'this month',
+        transfer: 'Transfer',
+        pay: 'Pay',
+      },
+      crm: {
+        title: 'AI CRM System',
+        tag: 'Web Dashboard',
+        type: 'React Frontend',
+        analytics: 'Analytics',
+      },
+      logistics: {
+        title: 'Logistics Platform',
+        tag: 'B2B Platform',
+        type: 'Vue Client',
+        online: 'Online',
+        secure: 'Secure Node',
+      },
+      social: {
+        title: 'Social Network',
+        tag: 'React Native',
+        type: 'Mobile App',
+        live: 'Live',
+        follow: 'Follow',
+      },
+    },
   },
-  {
-    title: tLocal.projects.logistics.title,
-    tag: tLocal.projects.logistics.tag,
-    type: tLocal.projects.logistics.type,
-    color: "from-teal-600 via-emerald-600 to-green-800",
-    glowColor: "bg-teal-500/50",
-    content: (
-      <div className="flex flex-col gap-4 w-full p-5 h-full relative overflow-hidden z-10">
-        <div className="absolute -right-6 -top-6 w-32 h-32 rounded-full border-[20px] border-emerald-400/10 blur-xl" />
-        <div className="absolute -right-2 -top-2 w-24 h-24 rounded-full border border-emerald-400/30 bg-emerald-400/5 backdrop-blur-md" />
-
-        <div className="flex justify-between items-center relative z-10">
-          <div className="p-2 bg-black/20 rounded-lg backdrop-blur-sm border border-white/10">
-            <Search className="w-5 h-5 text-teal-100" />
-          </div>
-          <div className="px-2.5 py-1 bg-white/90 text-teal-900 rounded-full text-[10px] font-bold uppercase shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-            {tLocal.projects.logistics.online}
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 backdrop-blur-md rounded-2xl p-4 flex items-center gap-4 mt-6 shadow-[0_10px_30px_rgba(16,185,129,0.2)]">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
-            <ShieldCheck className="w-6 h-6 text-white drop-shadow-md" />
-          </div>
-          <div>
-            <div className="text-white text-base font-bold drop-shadow-sm">
-              {tLocal.projects.logistics.secure}
-            </div>
-            <div className="text-teal-200 text-xs font-medium">
-              Uptime 99.99%
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 mt-auto flex items-end justify-between px-2 pb-2">
-          <div className="flex gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
-            <div className="w-2 h-2 rounded-full bg-emerald-400/30" />
-            <div className="w-2 h-2 rounded-full bg-emerald-400/30" />
-          </div>
-          <PieChart className="w-5 h-5 text-teal-200/50" />
-        </div>
-      </div>
-    ),
-    width: "w-[300px]",
-    height: "h-[320px]",
+  UA: {
+    badge: 'Галерея інтерфейсів',
+    titlePart1: 'Інтерфейси,',
+    titlePart2: 'що задають тренди',
+    button: 'Обговорити дизайн',
+    projects: {
+      fintech: {
+        title: 'Фінтех Додаток',
+        tag: 'Мобільний інтерфейс',
+        type: 'Native iOS',
+        verified: 'Перевірено',
+        balance: 'Загальний Баланс',
+        month: 'в цьому місяці',
+        transfer: 'Переказ',
+        pay: 'Оплата',
+      },
+      crm: {
+        title: 'AI CRM Система',
+        tag: 'Веб Дашборд',
+        type: 'React Frontend',
+        analytics: 'Аналітика',
+      },
+      logistics: {
+        title: 'Платформа логістики',
+        tag: 'B2B Платформа',
+        type: 'Vue Client',
+        online: 'Онлайн',
+        secure: 'Захищений Вузол',
+      },
+      social: {
+        title: 'Соціальна мережа',
+        tag: 'React Native',
+        type: 'Мобільний Додаток',
+        live: 'Наживо',
+        follow: 'Стежити',
+      },
+    },
   },
-  {
-    title: tLocal.projects.social.title,
-    tag: tLocal.projects.social.tag,
-    type: tLocal.projects.social.type,
-    color: "from-orange-500 via-rose-500 to-pink-700",
-    glowColor: "bg-rose-500/50",
-    content: (
-      <div className="flex flex-col w-full h-full relative z-10">
-        <div className="w-full h-[45%] bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center rounded-t-2xl flex items-start justify-end p-4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-rose-900/80" />
-          <div className="px-3 py-1.5 backdrop-blur-md bg-black/40 rounded-full flex items-center gap-2 border border-white/20 shadow-lg relative z-10">
-            <div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,1)] animate-pulse" />
-            <span className="text-white text-[10px] font-bold uppercase tracking-wider">
-              {tLocal.projects.social.live}
-            </span>
+} as const;
+
+type ShowcaseCopy = (typeof SHOWCASE_COPY)[keyof typeof SHOWCASE_COPY];
+
+type ProjectCardData = {
+  key: string;
+  title: string;
+  tag: string;
+  type: string;
+  desktopWidth: string;
+  mobileWidth: string;
+  gradientClass: string;
+  content: ReactNode;
+};
+
+function getMockProjects(tLocal: ShowcaseCopy): ProjectCardData[] {
+  return [
+    {
+      key: 'fintech',
+      title: tLocal.projects.fintech.title,
+      tag: tLocal.projects.fintech.tag,
+      type: tLocal.projects.fintech.type,
+      desktopWidth: 'w-[282px]',
+      mobileWidth: 'w-[82vw] max-w-[312px]',
+      gradientClass: 'from-[#0d2340] via-[#1f59af] to-[#70caff]',
+      content: (
+        <div className="relative z-10 flex h-full flex-col gap-3 p-5">
+          <div className="mb-1 flex items-center justify-between">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-white/12 text-sky-100">
+              <CreditCard className="h-5 w-5" />
+            </div>
+            <div className="rounded-full border border-cyan-200/20 bg-cyan-300/12 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-100">
+              {tLocal.projects.fintech.verified}
+            </div>
+          </div>
+
+          <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-blue-100/68">
+            {tLocal.projects.fintech.balance}
+          </div>
+          <div className="text-[32px] font-bold tracking-[-0.05em] text-white">$124,592.50</div>
+          <div className="text-xs font-semibold text-cyan-100/88">
+            +12.4% {tLocal.projects.fintech.month}
+          </div>
+
+          <div className="mt-auto grid grid-cols-2 gap-3">
+            <div className="flex h-14 flex-col items-center justify-center gap-1 rounded-2xl border border-white/12 bg-white/10">
+              <Activity className="h-5 w-5 text-sky-100" />
+              <span className="text-[9px] uppercase tracking-[0.18em] text-white/72">
+                {tLocal.projects.fintech.transfer}
+              </span>
+            </div>
+            <div className="flex h-14 flex-col items-center justify-center gap-1 rounded-2xl border border-cyan-200/18 bg-cyan-300/12">
+              <Zap className="h-5 w-5 text-cyan-100" />
+              <span className="text-[9px] uppercase tracking-[0.18em] text-white/72">
+                {tLocal.projects.fintech.pay}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="p-5 flex flex-col gap-2 relative flex-1 bg-gradient-to-b from-transparent to-black/20">
-          <div className="absolute -top-10 left-5 w-16 h-16 rounded-full bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center border-[3px] border-rose-600 shadow-xl" />
-          <div className="mt-6 flex justify-between items-center">
+      ),
+    },
+    {
+      key: 'crm',
+      title: tLocal.projects.crm.title,
+      tag: tLocal.projects.crm.tag,
+      type: tLocal.projects.crm.type,
+      desktopWidth: 'w-[392px]',
+      mobileWidth: 'w-[88vw] max-w-[356px]',
+      gradientClass: 'from-[#0e223d] via-[#1b4b87] to-[#58adff]',
+      content: (
+        <div className="relative z-10 flex h-full flex-col gap-4 p-5">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/12 bg-white/10">
+                <LayoutDashboard className="h-4 w-4 text-sky-100" />
+              </div>
+              <div className="h-3 w-20 rounded-full bg-white/18" />
+            </div>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-white/12 bg-white/10">
+              <Users className="h-3.5 w-3.5 text-cyan-100" />
+            </div>
+          </div>
+
+          <div className="flex flex-1 gap-4">
+            <div className="flex w-[34%] flex-col gap-3 rounded-[18px] border border-white/10 bg-black/12 p-3">
+              <div className="h-2 w-full rounded-full bg-cyan-200/48" />
+              <div className="h-2 w-3/4 rounded-full bg-white/22" />
+              <div className="mt-auto h-2 w-1/2 rounded-full bg-white/16" />
+            </div>
+
+            <div className="relative flex w-[66%] flex-col rounded-[18px] border border-white/10 bg-black/10 p-3">
+              <div className="flex h-full items-end gap-1.5">
+                {[44, 68, 52, 86, 64, 78].map((height, index) => (
+                  <div
+                    key={height}
+                    className={`flex-1 rounded-t-sm ${
+                      index === 3 ? 'bg-cyan-200/90' : 'bg-white/24'
+                    }`}
+                    style={{ height: `${height}%` }}
+                  />
+                ))}
+              </div>
+              <div className="mt-3 flex items-center justify-between text-[10px] font-medium text-white/58">
+                <span>{tLocal.projects.crm.analytics}</span>
+                <TrendingUp className="h-3.5 w-3.5 text-cyan-100" />
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'logistics',
+      title: tLocal.projects.logistics.title,
+      tag: tLocal.projects.logistics.tag,
+      type: tLocal.projects.logistics.type,
+      desktopWidth: 'w-[302px]',
+      mobileWidth: 'w-[84vw] max-w-[320px]',
+      gradientClass: 'from-[#0f2940] via-[#17658d] to-[#6ed3ff]',
+      content: (
+        <div className="relative z-10 flex h-full flex-col gap-4 overflow-hidden p-5">
+          <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-cyan-200/18 bg-cyan-200/8" />
+
+          <div className="relative z-10 flex items-center justify-between">
+            <div className="rounded-xl border border-white/10 bg-black/14 p-2">
+              <Search className="h-5 w-5 text-sky-100" />
+            </div>
+            <div className="rounded-full border border-white/12 bg-white/86 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-900">
+              {tLocal.projects.logistics.online}
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center gap-4 rounded-[22px] border border-cyan-200/18 bg-white/12 p-4 backdrop-blur-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/18">
+              <ShieldCheck className="h-6 w-6 text-cyan-100" />
+            </div>
             <div>
-              <div className="h-3 w-24 bg-white/90 rounded-full shadow-sm" />
-              <div className="h-2 w-16 bg-white/40 rounded-full mt-2" />
-            </div>
-            <div className="px-3 py-1 bg-rose-500 text-white rounded-full text-[10px] font-bold shadow-[0_0_15px_rgba(244,63,94,0.4)]">
-              {tLocal.projects.social.follow}
+              <div className="text-base font-semibold text-white">
+                {tLocal.projects.logistics.secure}
+              </div>
+              <div className="mt-1 text-xs text-cyan-100/82">Uptime 99.99%</div>
             </div>
           </div>
-          <div className="flex gap-2 mt-auto">
-            <div className="flex-1 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-inner hover:bg-white/20 transition-colors" />
-            <div className="flex-1 h-10 rounded-xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center shadow-inner hover:bg-rose-500/30 transition-colors" />
+
+          <div className="mt-auto flex items-end justify-between px-1 pb-1">
+            <div className="flex gap-1.5">
+              <div className="h-2 w-2 rounded-full bg-cyan-100" />
+              <div className="h-2 w-2 rounded-full bg-cyan-100/38" />
+              <div className="h-2 w-2 rounded-full bg-cyan-100/24" />
+            </div>
+            <PieChart className="h-5 w-5 text-white/42" />
           </div>
         </div>
+      ),
+    },
+    {
+      key: 'social',
+      title: tLocal.projects.social.title,
+      tag: tLocal.projects.social.tag,
+      type: tLocal.projects.social.type,
+      desktopWidth: 'w-[282px]',
+      mobileWidth: 'w-[82vw] max-w-[312px]',
+      gradientClass: 'from-[#10243e] via-[#255fa9] to-[#83d4ff]',
+      content: (
+        <div className="relative z-10 flex h-full flex-col">
+          <div className="relative flex h-[46%] items-start justify-between overflow-hidden rounded-t-[24px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_34%),linear-gradient(135deg,rgba(9,18,38,0.45),rgba(24,70,130,0.24),rgba(129,220,255,0.3))] p-4">
+            <div className="rounded-full border border-white/12 bg-black/18 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+              {tLocal.projects.social.live}
+            </div>
+            <div className="flex gap-1.5">
+              <div className="h-2 w-2 rounded-full bg-white/92" />
+              <div className="h-2 w-2 rounded-full bg-cyan-100/58" />
+            </div>
+          </div>
+
+          <div className="relative flex flex-1 flex-col gap-3 bg-[linear-gradient(180deg,rgba(6,12,24,0),rgba(4,11,22,0.22))] p-5">
+            <div className="absolute -top-7 left-5 flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-cyan-100/45 bg-[linear-gradient(135deg,#102d51,#3f86e7,#8dd7ff)] text-sm font-bold tracking-[0.16em] text-white">
+              DS
+            </div>
+
+            <div className="mt-7 flex items-start justify-between gap-3">
+              <div>
+                <div className="h-3 w-24 rounded-full bg-white/90" />
+                <div className="mt-2 h-2 w-16 rounded-full bg-white/32" />
+              </div>
+              <div className="rounded-full border border-cyan-200/18 bg-cyan-200/12 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-100">
+                {tLocal.projects.social.follow}
+              </div>
+            </div>
+
+            <div className="mt-auto grid grid-cols-2 gap-2">
+              <div className="h-10 rounded-xl border border-white/12 bg-white/10" />
+              <div className="h-10 rounded-xl border border-cyan-200/18 bg-cyan-200/12" />
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
+}
+
+function ShowcaseCard({ project }: { project: ProjectCardData }) {
+  return (
+    <>
+      <div className="showcase-card-shell relative overflow-hidden rounded-[32px] border border-white/8 bg-[#101218] p-2 shadow-[0_18px_48px_rgba(0,0,0,0.34)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(181,232,255,0.14),transparent_42%)]" />
+        <div
+          className={`relative flex h-[320px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br ${project.gradientClass}`}
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.04)_24%,transparent_58%)]" />
+          {project.content}
+        </div>
       </div>
-    ),
-    width: "w-[280px]",
-    height: "h-[320px]",
-  },
-];
+
+      <div className="relative z-10 mt-7 pl-2 text-left">
+        <div className="mb-2 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-white/10 bg-[#18181b] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#a1a1aa]">
+            {project.type}
+          </span>
+          <span className="rounded-full border border-sky-200/12 bg-sky-200/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-sky-100/84">
+            {project.tag}
+          </span>
+        </div>
+        <h3 className="text-[22px] font-display font-medium text-white transition-colors duration-300 group-hover/project:text-sky-100">
+          {project.title}
+        </h3>
+      </div>
+    </>
+  );
+}
 
 export function ShowcaseMarquee() {
-  const { lang, t } = useLanguage();
-
-  const content = {
-    RU: {
-      badge: "Галерея интерфейсов",
-      titlePart1: "Интерфейсы,",
-      titlePart2: "задающие тренды",
-      button: "Обсудить дизайн",
-      projects: {
-        fintech: {
-          title: "Финтех Приложение",
-          tag: "Мобильный интерфейс",
-          type: "Native iOS",
-          verified: "Подтверждено",
-          balance: "Баланс",
-          month: "в этом месяце",
-          transfer: "Перевод",
-          pay: "Оплата",
-        },
-        crm: {
-          title: "AI CRM Система",
-          tag: "Веб Дашборд",
-          type: "React Frontend",
-          analytics: "Аналитика",
-        },
-        logistics: {
-          title: "Платформа логистики",
-          tag: "B2B Платформа",
-          type: "Vue Client",
-          online: "Онлайн",
-          secure: "Защищенный Узел",
-        },
-        social: {
-          title: "Социальная сеть",
-          tag: "React Native",
-          type: "Мобильное Приложение",
-          live: "Прямой эфир",
-          follow: "Подписаться",
-        },
-      },
-    },
-    EN: {
-      badge: "Interface Gallery",
-      titlePart1: "Interfaces that",
-      titlePart2: "set the trends",
-      button: "Discuss Design",
-      projects: {
-        fintech: {
-          title: "FinTech App",
-          tag: "Mobile UI",
-          type: "Native iOS",
-          verified: "Verified",
-          balance: "Total Balance",
-          month: "this month",
-          transfer: "Transfer",
-          pay: "Pay",
-        },
-        crm: {
-          title: "AI CRM System",
-          tag: "Web Dashboard",
-          type: "React Frontend",
-          analytics: "Analytics",
-        },
-        logistics: {
-          title: "Logistics Platform",
-          tag: "B2B Platform",
-          type: "Vue Client",
-          online: "Online",
-          secure: "Secure Node",
-        },
-        social: {
-          title: "Social Network",
-          tag: "React Native",
-          type: "Mobile App",
-          live: "Live",
-          follow: "Follow",
-        },
-      },
-    },
-    UA: {
-      badge: "Галерея інтерфейсів",
-      titlePart1: "Інтерфейси,",
-      titlePart2: "що задають тренди",
-      button: "Обговорити дизайн",
-      projects: {
-        fintech: {
-          title: "Фінтех Додаток",
-          tag: "Мобільний інтерфейс",
-          type: "Native iOS",
-          verified: "Перевірено",
-          balance: "Загальний Баланс",
-          month: "в цьому місяці",
-          transfer: "Переказ",
-          pay: "Оплата",
-        },
-        crm: {
-          title: "AI CRM Система",
-          tag: "Веб Дашборд",
-          type: "React Frontend",
-          analytics: "Аналітика",
-        },
-        logistics: {
-          title: "Платформа логістики",
-          tag: "B2B Платформа",
-          type: "Vue Client",
-          online: "Онлайн",
-          secure: "Захищений Вузол",
-        },
-        social: {
-          title: "Соціальна мережа",
-          tag: "React Native",
-          type: "Мобільний Додаток",
-          live: "Наживо",
-          follow: "Стежити",
-        },
-      },
-    },
-  };
-
-  const tLocal = content[lang as keyof typeof content] || content.EN;
-  const marqueeItems = getMockProjects(tLocal);
-  const itemsArray = [...marqueeItems, ...marqueeItems, ...marqueeItems];
+  const { lang } = useLanguage();
+  const tLocal = SHOWCASE_COPY[lang as keyof typeof SHOWCASE_COPY] ?? SHOWCASE_COPY.EN;
+  const projects = getMockProjects(tLocal);
+  const desktopTrackItems = [...projects, ...projects];
 
   return (
-    <section className="py-16 md:py-24 w-full overflow-hidden bg-surface-bg relative">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none" />
+    <section
+      id="showcase"
+      className="relative w-full overflow-hidden bg-surface-bg py-16 scroll-mt-28 md:py-24 md:scroll-mt-32"
+    >
+      <div className="pointer-events-none absolute right-[-80px] top-0 h-[420px] w-[420px] rounded-full bg-sky-400/8 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-[-180px] left-[-120px] h-[500px] w-[500px] rounded-full bg-blue-500/8 blur-[140px]" />
 
-      <div className="max-w-7xl mx-auto px-4 mb-16 relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-10">
+      <div className="relative z-10 mx-auto mb-12 flex max-w-7xl flex-col justify-between gap-6 px-4 lg:mb-16 lg:flex-row lg:items-end lg:gap-10">
         <div>
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit"
+            viewport={{ once: true, amount: 0.4 }}
+            className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted"
           >
             {tLocal.badge}
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-display font-bold text-text-main max-w-xl leading-[1.05] tracking-tight"
+            viewport={{ once: true, amount: 0.3 }}
+            className="max-w-xl text-4xl font-display font-bold leading-[1.05] tracking-tight text-text-main md:text-5xl"
           >
             {tLocal.titlePart1}
             <br />
-            <span className="text-text-muted">{tLocal.titlePart2}</span>
+            <span className="brand-gradient-text">{tLocal.titlePart2}</span>
           </motion.h2>
         </div>
 
@@ -348,78 +400,56 @@ export function ShowcaseMarquee() {
           href="#contact"
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-white/5 hover:text-white transition-colors group whitespace-nowrap hidden sm:flex shadow-soft w-fit focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg no-underline"
+          viewport={{ once: true, amount: 0.4 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+          className="brand-button group hidden w-fit items-center justify-center gap-2 rounded-full border border-brand-blue/35 px-8 py-4 text-[15px] font-bold text-white shadow-soft transition-transform no-underline sm:flex"
         >
           {tLocal.button}
-          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
         </motion.a>
       </div>
 
-      <div className="relative w-full flex overflow-hidden group py-10">
-        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-surface-bg to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-surface-bg to-transparent z-20 pointer-events-none" />
+      <div className="relative hidden overflow-hidden py-10 md:block">
+        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-40 bg-gradient-to-r from-surface-bg to-transparent xl:w-64" />
+        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-40 bg-gradient-to-l from-surface-bg to-transparent xl:w-64" />
 
-        <motion.div
-          animate={{ x: ["0%", "-33.333333%"] }}
-          transition={{ ease: "linear", duration: 35, repeat: Infinity }}
-          className="flex gap-6 md:gap-8 px-3 group-hover:[animation-play-state:paused] will-change-transform"
-        >
-          {itemsArray.map((project, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -10 }}
-              className={`flex-shrink-0 flex flex-col group cursor-pointer relative ${project.width}`}
-            >
-              <div
-                className={`w-full ${project.height} rounded-[32px] p-2 bg-[#18181b] border border-white/5 shadow-2xl relative overflow-visible transition-all duration-500`}
+        <div className="group flex overflow-hidden">
+          <div className="showcase-marquee-track flex w-max gap-8 px-4 will-change-transform">
+            {desktopTrackItems.map((project, index) => (
+              <article
+                key={`${project.key}-${index}`}
+                className={`group/project flex shrink-0 flex-col transition-transform duration-300 hover:-translate-y-2 ${project.desktopWidth}`}
               >
-                {/* Glowing underlay that becomes highly visible on hover */}
-                <div
-                  className={`absolute -inset-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br ${project.color} blur-3xl -z-10`}
-                />
-
-                {/* Inner screen */}
-                <div
-                  className={`w-full h-full rounded-[24px] overflow-hidden bg-gradient-to-br ${project.color} border border-white/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] relative flex flex-col`}
-                >
-                  {/* Subtle glare overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-transparent opacity-80 z-20 pointer-events-none mix-blend-overlay" />
-
-                  {project.content}
-                </div>
-              </div>
-
-              {/* Card Meta below */}
-              <div className="mt-8 pl-2 flex flex-col gap-1.5 relative z-10 text-left">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#a1a1aa] px-2 py-0.5 rounded border border-white/10 bg-[#18181b] shadow-sm">
-                    {project.type}
-                  </span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-blue drop-shadow-sm">
-                    {project.tag}
-                  </span>
-                </div>
-                <h3 className="text-[22px] font-display font-medium text-white group-hover:text-brand-blue transition-colors">
-                  {project.title}
-                </h3>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                <ShowcaseCard project={project} />
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="mt-4 px-4 flex sm:hidden">
+      <div className="scrollbar-hide showcase-mobile-scroll relative -mx-4 overflow-x-auto px-4 pb-2 pt-4 md:hidden">
+        <div className="flex w-max gap-4 pr-4">
+          {projects.map((project) => (
+            <article
+              key={project.key}
+              className={`group/project snap-start ${project.mobileWidth}`}
+            >
+              <ShowcaseCard project={project} />
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-6 flex px-4 sm:hidden">
         <motion.a
           href="#contact"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-full py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 active:bg-white/5 transition-colors group shadow-soft focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg no-underline"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="brand-button flex w-full items-center justify-center gap-2 rounded-full border border-brand-blue/35 py-4 text-[15px] font-bold text-white shadow-soft transition-transform no-underline"
         >
           {tLocal.button}
-          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-5 w-5" />
         </motion.a>
       </div>
     </section>

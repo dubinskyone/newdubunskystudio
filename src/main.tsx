@@ -1,13 +1,26 @@
 import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import {createRoot, hydrateRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { LanguageProvider } from './i18n';
+import { LanguageProvider, type Language } from './i18n';
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+const initialLang = rootElement.dataset.lang as Language | undefined;
+const app = (
   <StrictMode>
-    <LanguageProvider>
+    <LanguageProvider initialLang={initialLang}>
       <App />
     </LanguageProvider>
-  </StrictMode>,
+  </StrictMode>
 );
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, app);
+} else {
+  createRoot(rootElement).render(app);
+}

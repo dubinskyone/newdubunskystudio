@@ -89,7 +89,7 @@ export function Projects() {
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="py-24 bg-transparent pt-32 relative" id="approach">
+    <section className="scroll-mt-28 md:scroll-mt-32 py-24 bg-transparent pt-32 relative" id="approach">
       <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-line to-transparent" />
       <div className="max-w-7xl mx-auto px-4">
         
@@ -108,7 +108,7 @@ export function Projects() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main mb-6 tracking-tight leading-tight"
           >
-            {t.titlePart1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">{t.titleHighlight}</span>
+            {t.titlePart1} <span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t.titleHighlight}</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
