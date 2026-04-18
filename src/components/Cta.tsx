@@ -2,13 +2,9 @@ import { motion } from 'motion/react';
 import { ArrowRight, Send, Sparkles, Clock, CircleDollarSign, CheckCircle2, Mail } from 'lucide-react';
 import { useState, FormEvent } from 'react';
 import { useLanguage } from '../i18n';
-import { usePerformanceMode } from '../hooks/usePerformanceMode';
-import { useRevealMotion } from '../hooks/useRevealMotion';
 
 export function Cta() {
   const { t } = useLanguage();
-  const { disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
-  const { reveal } = useRevealMotion();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -22,32 +18,28 @@ export function Cta() {
   };
 
   return (
-    <section className="perf-section px-4 py-16 md:py-32 max-w-7xl mx-auto relative overflow-hidden" id="contact">
+    <section className="px-4 py-16 md:py-32 max-w-7xl mx-auto relative overflow-hidden" id="contact">
       <motion.div 
-        {...reveal({
-          initial: { opacity: 0, scale: 0.95 },
-          whileInView: { opacity: 1, scale: 1 },
-          viewport: { once: true },
-          transition: { duration: 1, ease: "easeOut" },
-        })}
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, ease: "easeOut" }}
         className="bg-surface-card border border-line rounded-[40px] px-6 py-12 md:p-16 lg:p-20 shadow-[0_0_100px_rgba(37,99,235,0.05)] relative overflow-hidden flex flex-col lg:flex-row gap-16 items-center"
       >
         {/* Dynamic Glowing Aurora Background inside the Card */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 mix-blend-screen opacity-60">
-          <div className={`absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand-blue/30 rounded-full ${disableHeavyEffects ? 'blur-[72px]' : 'blur-[120px] animate-pulse-slow'}`} />
-          <div className={`absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-brand-purple/20 rounded-full ${disableHeavyEffects ? 'blur-[88px]' : 'blur-[150px] animate-pulse-slow'}`} style={disableHeavyEffects ? undefined : { animationDelay: '2s' }} />
+          <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand-blue/30 rounded-full blur-[120px] animate-pulse-slow" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[150px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
         </div>
 
         {/* Left Column: Copy & Anchors */}
         <div className="lg:w-1/2 w-full text-left relative z-10">
           {/* Floating chip */}
           <motion.div
-            {...reveal({
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true },
-              transition: { delay: 0.2 },
-            })}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
             className="mb-8 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2 w-fit"
           >
             <Sparkles className="w-4 h-4 text-brand-purple" />
@@ -56,7 +48,7 @@ export function Cta() {
 
           <h2 className="text-4xl sm:text-5xl lg:text-7xl font-display font-black text-text-main leading-[1.05] tracking-tight mb-6">
             {t('cta', 'title1')} <br />
-            <span className={`text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-brand-blue bg-[length:200%_auto] ${disableHeavyEffects ? '' : 'animate-gradient'}`}>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-brand-blue bg-[length:200%_auto] animate-gradient">
               {t('cta', 'title2')}
             </span>
           </h2>
@@ -113,8 +105,6 @@ export function Cta() {
                          src="https://picsum.photos/seed/ceo/150/150" 
                          alt="CEO Dubinsky Studio" 
                          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                         loading="lazy"
-                         decoding="async"
                          referrerPolicy="no-referrer"
                        />
                     </div>
@@ -131,8 +121,8 @@ export function Cta() {
                     href="https://t.me/dubinskystudio"
                     target="_blank"
                     rel="noreferrer"
-                    whileHover={disableHoverEffects ? undefined : { scale: 1.02 }}
-                    whileTap={disableHoverEffects ? undefined : { scale: 0.98 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     className="w-full px-6 py-4 bg-[#2AABEE] text-white rounded-2xl font-bold md:text-lg hover:bg-[#229ED9] transition-all flex items-center justify-between group shadow-[0_0_30px_rgba(42,171,238,0.2)]"
                  >
                     <div className="flex items-center gap-3">

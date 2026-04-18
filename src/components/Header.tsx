@@ -27,17 +27,10 @@ export function Header() {
   const solutionsTabs = Object.entries(bentoContent.tabs).map(([id, data]) => ({ id, label: data.label }));
 
   useEffect(() => {
-    let lastScrolled = false;
-
     const handleScroll = () => {
-      const nextScrolled = window.scrollY > 20;
-      if (nextScrolled !== lastScrolled) {
-        lastScrolled = nextScrolled;
-        setScrolled(nextScrolled);
-      }
+      setScrolled(window.scrollY > 20);
     };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -84,16 +77,11 @@ export function Header() {
               whileHover={{ scale: 1.02 }}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-[12px] sm:rounded-[16px] overflow-hidden bg-white flex items-center justify-center shrink-0 border border-white/20 shadow-[0_10px_30px_rgba(255,255,255,0.08)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-shadow">
-                 <img
-                   src="/logo-black.svg"
-                   alt="Dubinsky Studio logo"
-                   className="w-[82%] h-[82%] object-contain"
-                   width="612"
-                   height="444"
-                   fetchPriority="high"
-                   decoding="async"
-                 />
+              {/* Logo Placeholder */}
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-xl overflow-hidden bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center shrink-0 border border-white/20 shadow-inner group-hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-shadow">
+                 {/* Internal element of the logo placeholder */}
+                 <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-sm" />
+                 <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-white/20 blur-md rounded-full" />
               </div>
               
               {/* Brand Text */}

@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { Network, Shield, Zap } from 'lucide-react';
 import { useLanguage } from '../i18n';
-import { useRevealMotion } from '../hooks/useRevealMotion';
 
 const dict = {
   RU: {
@@ -86,42 +85,35 @@ const dict = {
 
 export function Projects() {
   const { lang } = useLanguage();
-  const { reveal } = useRevealMotion();
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="perf-section py-24 bg-transparent pt-32 relative" id="approach">
+    <section className="py-24 bg-transparent pt-32 relative" id="approach">
       <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-line to-transparent" />
       <div className="max-w-7xl mx-auto px-4">
         
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.div
-            {...reveal({
-              initial: { opacity: 0, scale: 0.9 },
-              whileInView: { opacity: 1, scale: 1 },
-              viewport: { once: true },
-            })}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit mx-auto"
           >
             {t.badge}
           </motion.div>
           <motion.h2 
-            {...reveal({
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true },
-            })}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main mb-6 tracking-tight leading-tight"
           >
             {t.titlePart1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">{t.titleHighlight}</span>
           </motion.h2>
           <motion.p 
-            {...reveal({
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true },
-              transition: { delay: 0.1 },
-            })}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
             className="text-lg md:text-xl text-text-muted"
           >
             {t.desc}
@@ -132,12 +124,10 @@ export function Projects() {
           {t.cards.map((project, index) => (
             <motion.div
               key={index}
-              {...reveal({
-                initial: { opacity: 0, y: 20 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true },
-                transition: { delay: index * 0.1 },
-              })}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
               className={`group bg-surface-glass border border-line rounded-3xl p-8 hover:bg-white/5 transition-all duration-300 relative overflow-hidden ${
                 index === 2 ? 'md:col-span-2 lg:col-span-1' : ''
               }`}

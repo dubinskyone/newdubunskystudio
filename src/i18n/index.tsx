@@ -17,9 +17,9 @@ export const translations = {
       title2: 'цифровые',
       titleWords: 'цифровые|премиальные|масштабируемые|инновационные|B2B',
       title3: 'продукты',
-      desc: 'Мы не просто запускаем проекты, мы ',
-      descHighlight: 'создаем наследие',
-      descEnding: '. Несём ответственность за каждый этап и итоговую капитализацию продукта.',
+      desc: 'Мы — студия разработки полного цикла. Не просто собираем интерфейсы, а ',
+      descHighlight: 'создаем MVP под ключ',
+      descEnding: '. Проектируем дизайн-системы, пишем масштабируемый код и закладываем надежный фундамент для уверенного роста вашего бизнеса.',
       contact: 'Связаться',
       cases: 'Смотреть кейсы',
       trusted: 'Нам доверяют инновационные команды'
@@ -86,7 +86,7 @@ export const translations = {
       desc04: 'Автоматизированное развертывание и непрерывная интеграция (CI/CD) для быстрой проверки гипотез.'
     },
     footer: {
-      tagline: 'Архитектура бизнеса в цифровой среде. Cоздаем премиальные экосистемы для брендов-новаторов.',
+      tagline: 'Студия разработки полного цикла. Создаем MVP под ключ, дизайн-системы и масштабируемые экосистемы для брендов-новаторов.',
       navTitle: 'Навигация',
       contactsTitle: 'Контакты',
       about: 'О студии',
@@ -112,9 +112,9 @@ export const translations = {
       title2: 'digital',
       titleWords: 'digital|premium|scalable|innovative|B2B',
       title3: 'products',
-      desc: 'We don\'t just launch projects, we ',
-      descHighlight: 'build a legacy',
-      descEnding: '. We take responsibility for every stage and the final capitalization of the product.',
+      desc: 'We are a full-cycle development studio. We don\'t just build interfaces, we ',
+      descHighlight: 'deliver turnkey MVPs',
+      descEnding: '. We design UI/UX systems, write scalable code, and build a robust technical foundation for your business growth.',
       contact: 'Contact Us',
       cases: 'View Cases',
       trusted: 'Trusted by innovative teams'
@@ -181,7 +181,7 @@ export const translations = {
       desc04: 'Automated deployment and continuous integration (CI/CD) for rapid hypothesis testing.'
     },
     footer: {
-      tagline: 'Business architecture in the digital environment. We build premium ecosystems for visionary brands.',
+      tagline: 'Full-cycle development studio. We build turnkey MVPs, design systems, and scalable ecosystems for visionary brands.',
       navTitle: 'Navigation',
       contactsTitle: 'Contacts',
       about: 'About',
@@ -207,9 +207,9 @@ export const translations = {
       title2: 'цифрові',
       titleWords: 'цифрові|преміальні|масштабовані|інноваційні|B2B',
       title3: 'продукти',
-      desc: 'Ми не просто запускаємо проекти, ми ',
-      descHighlight: 'створюємо спадщину',
-      descEnding: '. Несемо відповідальність за кожен етап та підсумкову капіталізацію продукту.',
+      desc: 'Ми — студія розробки повного циклу. Не просто збираємо інтерфейси, а ',
+      descHighlight: 'створюємо MVP під ключ',
+      descEnding: '. Проєктуємо дизайн-системи, пишемо масштабований код та закладаємо надійний фундамент для впевненого зростання вашого бізнесу.',
       contact: 'Зв\'язатися',
       cases: 'Дивитися кейси',
       trusted: 'Нам довіряють інноваційні команди'
@@ -276,7 +276,7 @@ export const translations = {
       desc04: 'Автоматизоване розгортання та безперервна інтеграція (CI/CD) для швидкої перевірки гіпотез.'
     },
     footer: {
-      tagline: 'Архітектура бізнесу в цифровому середовищі. Створюємо преміальні екосистеми для брендів-новаторів.',
+      tagline: 'Студія розробки повного циклу. Створюємо MVP під ключ, дизайн-системи та масштабовані екосистеми для брендів-новаторів.',
       navTitle: 'Навігація',
       contactsTitle: 'Контакти',
       about: 'Про студію',

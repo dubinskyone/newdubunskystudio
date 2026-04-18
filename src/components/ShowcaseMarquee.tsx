@@ -12,8 +12,6 @@ import {
   Users,
 } from "lucide-react";
 import { useLanguage } from "../i18n";
-import { usePerformanceMode } from "../hooks/usePerformanceMode";
-import { useRevealMotion } from "../hooks/useRevealMotion";
 
 const getMockProjects = (tLocal: any) => [
   {
@@ -163,7 +161,7 @@ const getMockProjects = (tLocal: any) => [
     glowColor: "bg-rose-500/50",
     content: (
       <div className="flex flex-col w-full h-full relative z-10">
-        <div className="w-full h-[45%] bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=75&w=900&auto=format&fit=crop')] bg-cover bg-center rounded-t-2xl flex items-start justify-end p-4 relative overflow-hidden">
+        <div className="w-full h-[45%] bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center rounded-t-2xl flex items-start justify-end p-4 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-rose-900/80" />
           <div className="px-3 py-1.5 backdrop-blur-md bg-black/40 rounded-full flex items-center gap-2 border border-white/20 shadow-lg relative z-10">
             <div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,1)] animate-pulse" />
@@ -173,7 +171,7 @@ const getMockProjects = (tLocal: any) => [
           </div>
         </div>
         <div className="p-5 flex flex-col gap-2 relative flex-1 bg-gradient-to-b from-transparent to-black/20">
-          <div className="absolute -top-10 left-5 w-16 h-16 rounded-full bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=75&w=320&auto=format&fit=crop')] bg-cover bg-center border-[3px] border-rose-600 shadow-xl" />
+          <div className="absolute -top-10 left-5 w-16 h-16 rounded-full bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center border-[3px] border-rose-600 shadow-xl" />
           <div className="mt-6 flex justify-between items-center">
             <div>
               <div className="h-3 w-24 bg-white/90 rounded-full shadow-sm" />
@@ -197,8 +195,6 @@ const getMockProjects = (tLocal: any) => [
 
 export function ShowcaseMarquee() {
   const { lang, t } = useLanguage();
-  const { disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
-  const { reveal } = useRevealMotion();
 
   const content = {
     RU: {
@@ -319,33 +315,27 @@ export function ShowcaseMarquee() {
 
   const tLocal = content[lang as keyof typeof content] || content.EN;
   const marqueeItems = getMockProjects(tLocal);
-  const itemsArray = disableHeavyEffects
-    ? marqueeItems
-    : [...marqueeItems, ...marqueeItems, ...marqueeItems];
+  const itemsArray = [...marqueeItems, ...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="perf-section py-16 md:py-24 w-full overflow-hidden bg-surface-bg relative">
+    <section className="py-16 md:py-24 w-full overflow-hidden bg-surface-bg relative">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 mb-16 relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-10">
         <div>
           <motion.div
-            {...reveal({
-              initial: { opacity: 0, scale: 0.9 },
-              whileInView: { opacity: 1, scale: 1 },
-              viewport: { once: true },
-            })}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit"
           >
             {tLocal.badge}
           </motion.div>
           <motion.h2
-            {...reveal({
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true },
-            })}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-text-main max-w-xl leading-[1.05] tracking-tight"
           >
             {tLocal.titlePart1}
@@ -356,13 +346,11 @@ export function ShowcaseMarquee() {
 
         <motion.a
           href="#contact"
-          {...reveal({
-            initial: { opacity: 0, x: 20 },
-            whileInView: { opacity: 1, x: 0 },
-            viewport: { once: true },
-          })}
-          whileHover={disableHoverEffects ? undefined : { scale: 1.05 }}
-          whileTap={disableHoverEffects ? undefined : { scale: 0.95 }}
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className="px-8 py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-white/5 hover:text-white transition-colors group whitespace-nowrap hidden sm:flex shadow-soft w-fit no-underline"
         >
           {tLocal.button}
@@ -370,19 +358,19 @@ export function ShowcaseMarquee() {
         </motion.a>
       </div>
 
-      <div className={`relative w-full flex group py-10 ${disableHeavyEffects ? 'overflow-x-auto perf-scroller' : 'overflow-hidden'}`}>
-        {!disableHeavyEffects && <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-surface-bg to-transparent z-20 pointer-events-none" />}
-        {!disableHeavyEffects && <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-surface-bg to-transparent z-20 pointer-events-none" />}
+      <div className="relative w-full flex overflow-hidden group py-10">
+        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-surface-bg to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-surface-bg to-transparent z-20 pointer-events-none" />
 
         <motion.div
-          animate={disableHeavyEffects ? undefined : { x: ["0%", "-33.333333%"] }}
-          transition={disableHeavyEffects ? undefined : { ease: "linear", duration: 35, repeat: Infinity }}
-          className={`flex gap-6 md:gap-8 px-3 ${disableHeavyEffects ? 'min-w-max pb-2' : 'group-hover:[animation-play-state:paused]'}`}
+          animate={{ x: ["0%", "-33.333333%"] }}
+          transition={{ ease: "linear", duration: 35, repeat: Infinity }}
+          className="flex gap-6 md:gap-8 px-3 group-hover:[animation-play-state:paused]"
         >
           {itemsArray.map((project, idx) => (
             <motion.div
               key={idx}
-              whileHover={disableHoverEffects ? undefined : { y: -10 }}
+              whileHover={{ y: -10 }}
               className={`flex-shrink-0 flex flex-col group cursor-pointer relative ${project.width}`}
             >
               <div
@@ -426,8 +414,8 @@ export function ShowcaseMarquee() {
       <div className="mt-4 px-4 flex sm:hidden">
         <motion.a
           href="#contact"
-          whileHover={disableHoverEffects ? undefined : { scale: 1.05 }}
-          whileTap={disableHoverEffects ? undefined : { scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className="w-full py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 active:bg-white/5 transition-colors group shadow-soft no-underline"
         >
           {tLocal.button}

@@ -2,13 +2,9 @@ import { motion } from 'motion/react';
 import { Download, Rocket, FileText, ArrowRight } from 'lucide-react';
 import { useState, FormEvent } from 'react';
 import { useLanguage } from '../i18n';
-import { usePerformanceMode } from '../hooks/usePerformanceMode';
-import { useRevealMotion } from '../hooks/useRevealMotion';
 
 export function LeadMagnet() {
   const { t } = useLanguage();
-  const { disableHeavyEffects } = usePerformanceMode();
-  const { reveal } = useRevealMotion();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -23,16 +19,14 @@ export function LeadMagnet() {
   };
 
   return (
-    <section className="perf-section py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="lead-magnet">
+    <section className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="lead-magnet">
       <div className="max-w-5xl mx-auto relative z-10">
         
         <motion.div 
-          {...reveal({
-            initial: { opacity: 0, y: 40 },
-            whileInView: { opacity: 1, y: 0 },
-            viewport: { once: true },
-            transition: { duration: 0.8 },
-          })}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           className="bg-gradient-to-br from-[#18181b] to-surface-bg border border-line rounded-[40px] p-8 md:p-12 lg:p-16 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-12 text-left"
         >
           {/* Abstract Glow */}
@@ -80,7 +74,7 @@ export function LeadMagnet() {
           </div>
 
           <div className="w-full lg:w-1/2 relative z-10 lg:-order-none order-first mb-8 lg:mb-0">
-             <div className={`bg-surface-glass border border-line rounded-[24px] p-6 backdrop-blur-md shadow-2xl max-w-sm mx-auto ${disableHeavyEffects ? '' : 'skew-y-3 lg:skew-y-6 transform hover:skew-y-0 transition-transform duration-500'}`}>
+             <div className="bg-surface-glass border border-line rounded-[24px] p-6 backdrop-blur-md shadow-2xl skew-y-3 lg:skew-y-6 transform hover:skew-y-0 transition-transform duration-500 max-w-sm mx-auto">
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                    <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-[#ef4444]" />
@@ -91,7 +85,7 @@ export function LeadMagnet() {
                 </div>
                 
                 <div className="space-y-4">
-                   <div className={`h-4 w-3/4 bg-white/10 rounded-full ${disableHeavyEffects ? '' : 'animate-pulse'}`} />
+                   <div className="h-4 w-3/4 bg-white/10 rounded-full animate-pulse" />
                    <div className="h-4 w-full bg-white/5 rounded-full" />
                    <div className="h-4 w-5/6 bg-white/5 rounded-full" />
                    
