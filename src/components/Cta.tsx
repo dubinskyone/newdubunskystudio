@@ -28,8 +28,8 @@ export function Cta() {
       >
         {/* Dynamic Glowing Aurora Background inside the Card */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 mix-blend-screen opacity-60">
-          <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand-blue/30 rounded-full blur-[120px] animate-pulse-slow" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[150px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand-blue/30 rounded-full blur-[120px] animate-pulse-slow will-change-opacity" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[150px] animate-pulse-slow will-change-opacity" style={{ animationDelay: '2s' }} />
         </div>
 
         {/* Left Column: Copy & Anchors */}
@@ -104,6 +104,7 @@ export function Cta() {
                        <img 
                          src="https://picsum.photos/seed/ceo/150/150" 
                          alt="CEO Dubinsky Studio" 
+                         loading="lazy"
                          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                          referrerPolicy="no-referrer"
                        />
@@ -142,18 +143,20 @@ export function Cta() {
                     <div className="hidden sm:block absolute left-4 top-1/2 -translate-y-1/2 text-text-muted z-10">
                        <Mail className="w-5 h-5" />
                     </div>
+                    <label htmlFor="cta-email" className="sr-only">Email</label>
                     <input 
+                       id="cta-email"
                        type="email"
                        value={email}
                        onChange={(e) => setEmail(e.target.value)}
                        placeholder={t('cta', 'placeholder')}
                        required
-                       className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 sm:pl-12 sm:pr-6 text-white placeholder:text-text-muted focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all text-center sm:text-left"
+                       className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 sm:pl-12 sm:pr-6 text-white placeholder:text-text-muted transition-all text-center sm:text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
                     />
                     <button 
                        type="submit"
                        disabled={isSubmitted}
-                       className="w-full sm:w-auto shrink-0 py-4 px-8 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-50"
+                       className="w-full sm:w-auto shrink-0 py-4 px-8 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
                     >
                        {isSubmitted ? t('cta', 'sent') : t('cta', 'next')}
                     </button>

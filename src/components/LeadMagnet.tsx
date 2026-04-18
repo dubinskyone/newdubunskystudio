@@ -48,18 +48,20 @@ export function LeadMagnet() {
             </p>
 
              <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3 w-full max-w-md">
+              <label htmlFor="lead-email" className="sr-only">Email</label>
               <input 
+                id="lead-email"
                 type="email" 
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t('lead', 'placeholder')}
-                className="w-full px-6 py-4 rounded-xl sm:rounded-full bg-black/40 border border-white/10 text-white placeholder:text-[#a1a1aa] focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+                className="w-full px-6 py-4 rounded-xl sm:rounded-full bg-black/40 border border-white/10 text-white placeholder:text-[#a1a1aa] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
               />
               <button 
                 type="submit"
                 disabled={isSubmitted}
-                className="w-full sm:w-auto shrink-0 py-4 px-8 rounded-xl sm:rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto shrink-0 py-4 px-8 rounded-xl sm:rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
               >
                 {isSubmitted ? (
                   <span>{t('lead', 'sent')}</span>

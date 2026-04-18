@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Magnetic } from './ui/Magnetic';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useLanguage, Language } from '../i18n';
 
 import { getBentoContent } from '../i18n/bento';
@@ -30,7 +30,7 @@ export function Header() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -197,10 +197,42 @@ export function Header() {
               </Magnetic>
             </div>
 
+            {/* Language Selector */}
+            <div className="relative group z-50">
+              <button 
+                className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 text-xs sm:text-[13px] font-bold text-white uppercase tracking-widest transition-all bg-[#18181b] rounded-full border border-white/10 hover:border-brand-blue/50 hover:bg-white/5 shadow-inner hover:shadow-[0_0_15px_rgba(37,99,235,0.2)] h-[40px]"
+              >
+                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-blue group-hover:text-amber-300 transition-colors" />
+                <span>{lang}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-transform duration-300 group-hover:-rotate-180" />
+              </button>
+              
+              <div className="absolute top-full right-0 mt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 min-w-[120px]">
+                <div className="p-2 bg-surface-glass backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 relative overflow-hidden">
+                  <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-blue/50 to-transparent" />
+                  {(['RU', 'EN', 'UA'] as Language[]).map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => setLang(l)}
+                      className={`flex items-center justify-between w-full py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-bold tracking-widest uppercase transition-all duration-300 ${
+                        lang === l 
+                          ? 'bg-brand-blue/20 text-white shadow-[inset_0_0_10px_rgba(37,99,235,0.2)]' 
+                          : 'text-text-muted hover:text-white hover:bg-white/5 hover:translate-x-1'
+                      }`}
+                    >
+                      {l}
+                      {lang === l && <div className="w-1.5 h-1.5 rounded-full bg-brand-blue shadow-[0_0_8px_#2563EB]" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Mobile Menu Button */}
             <button 
               className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white z-50 hover:bg-white/10 transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
@@ -242,6 +274,7 @@ export function Header() {
                       <button
                         onClick={() => setIsMobileSolutionsOpen(!isMobileSolutionsOpen)}
                         className="flex items-center justify-between w-full px-6 py-5 text-lg font-semibold text-white active:bg-white/10 transition-colors"
+                        aria-expanded={isMobileSolutionsOpen}
                       >
                         {t('nav', item.labelKey)}
                         <motion.div animate={{ rotate: isMobileSolutionsOpen ? 180 : 0 }}>

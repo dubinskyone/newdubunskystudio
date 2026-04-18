@@ -22,6 +22,8 @@ export function Footer() {
                 <button
                   key={l}
                   onClick={() => setLang(l as Language)}
+                  aria-label={`Switch language to ${l}`}
+                  aria-pressed={lang === l}
                   className={`px-4 py-2 rounded-full text-sm font-bold tracking-wider transition-all duration-300 ${
                     lang === l 
                       ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' 

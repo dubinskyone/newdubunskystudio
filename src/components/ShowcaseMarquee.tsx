@@ -351,7 +351,7 @@ export function ShowcaseMarquee() {
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-white/5 hover:text-white transition-colors group whitespace-nowrap hidden sm:flex shadow-soft w-fit no-underline"
+          className="px-8 py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-white/5 hover:text-white transition-colors group whitespace-nowrap hidden sm:flex shadow-soft w-fit focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg no-underline"
         >
           {tLocal.button}
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -365,7 +365,7 @@ export function ShowcaseMarquee() {
         <motion.div
           animate={{ x: ["0%", "-33.333333%"] }}
           transition={{ ease: "linear", duration: 35, repeat: Infinity }}
-          className="flex gap-6 md:gap-8 px-3 group-hover:[animation-play-state:paused]"
+          className="flex gap-6 md:gap-8 px-3 group-hover:[animation-play-state:paused] will-change-transform"
         >
           {itemsArray.map((project, idx) => (
             <motion.div
@@ -416,7 +416,7 @@ export function ShowcaseMarquee() {
           href="#contact"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-full py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 active:bg-white/5 transition-colors group shadow-soft no-underline"
+          className="w-full py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 active:bg-white/5 transition-colors group shadow-soft focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg no-underline"
         >
           {tLocal.button}
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

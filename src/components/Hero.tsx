@@ -69,7 +69,7 @@ export function Hero() {
   const background = useMotionTemplate`radial-gradient(600px circle at ${smoothX}px ${smoothY}px, rgba(255,255,255,0.06), transparent 80%)`;
 
   return (
-    <section className="relative pt-32 pb-16 sm:pt-48 sm:pb-20 px-4 flex flex-col items-center justify-center text-center min-h-[85vh] overflow-hidden">
+    <section className="relative pt-32 pb-16 sm:pt-48 sm:pb-20 px-4 flex flex-col items-center justify-center text-center min-h-[85svh] overflow-hidden">
       
       {/* Interactive Cursor Flashlight (follows cursor) */}
       <motion.div 
@@ -88,7 +88,7 @@ export function Hero() {
             rotate: [0, 45, 0]
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[10%] w-[30vw] max-w-[400px] aspect-square bg-brand-blue/10 rounded-full blur-[80px] mix-blend-screen"
+          className="absolute top-[15%] left-[10%] w-[30vw] max-w-[400px] aspect-square bg-brand-blue/10 rounded-full blur-[80px] mix-blend-screen will-change-transform"
         />
         <motion.div 
           animate={{ 
@@ -97,7 +97,7 @@ export function Hero() {
             rotate: [0, -45, 0]
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] right-[10%] w-[35vw] max-w-[500px] aspect-square bg-brand-purple/10 rounded-full blur-[100px] mix-blend-screen"
+          className="absolute bottom-[10%] right-[10%] w-[35vw] max-w-[500px] aspect-square bg-brand-purple/10 rounded-full blur-[100px] mix-blend-screen will-change-transform"
         />
 
         {/* Soft Ambient Core - Brightened performant radial gradients */}
@@ -156,12 +156,12 @@ export function Hero() {
           <span className="text-xs font-bold uppercase tracking-widest text-text-main relative z-10">{t('hero', 'badge')}</span>
         </motion.div>
 
-        <h1 className="text-[14vw] sm:text-7xl lg:text-[5rem] font-display font-bold text-text-main leading-[1.05] mb-8 tracking-tight flex flex-wrap justify-center gap-x-2 sm:gap-x-3 gap-y-1 sm:gap-y-2 perspective-1000">
+        <h1 className="text-[14vw] sm:text-7xl lg:text-[5rem] font-display font-bold text-text-main leading-[1.05] mb-8 tracking-tight flex flex-col sm:flex-row flex-wrap items-center sm:justify-center gap-x-2 sm:gap-x-3 gap-y-1 sm:gap-y-2 perspective-1000">
           <motion.span
             initial={{ opacity: 0, rotateX: -90, y: 40 }}
             animate={{ opacity: 1, rotateX: 0, y: 0 }}
             transition={{ duration: 0.8, delay: 0.0, ease: [0.2, 0.8, 0.2, 1] }}
-            className="origin-bottom block pointer-events-none"
+            className="origin-bottom block pointer-events-none text-center sm:text-left"
           >
             {t('hero', 'title1')}
           </motion.span>
@@ -169,7 +169,7 @@ export function Hero() {
             initial={{ opacity: 0, rotateX: -90, y: 40 }}
             animate={{ opacity: 1, rotateX: 0, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-            className="origin-bottom block pointer-events-none font-medium text-brand-blue drop-shadow-sm"
+            className="origin-bottom block pointer-events-none font-medium text-brand-blue drop-shadow-sm text-center sm:text-left min-h-[1.2em] sm:min-h-0"
           >
             <Typewriter words={titleWordsArray} />
           </motion.span>
@@ -177,7 +177,7 @@ export function Hero() {
             initial={{ opacity: 0, rotateX: -90, y: 40 }}
             animate={{ opacity: 1, rotateX: 0, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-            className="origin-bottom block pointer-events-none"
+            className="origin-bottom block pointer-events-none text-center sm:text-left"
           >
             {t('hero', 'title3')}
           </motion.span>
@@ -189,7 +189,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-base sm:text-lg md:text-xl text-text-muted max-w-[700px] mb-10 sm:mb-12 leading-relaxed pointer-events-none"
         >
-          {t('hero', 'desc')}<span className="font-serif italic text-white text-xl sm:text-2xl px-1">{t('hero', 'descHighlight')}</span>{t('hero', 'descEnding')}
+          {t('hero', 'desc')}<span className="font-medium text-white px-1 drop-shadow-sm">{t('hero', 'descHighlight')}</span>{t('hero', 'descEnding')}
         </motion.p>
 
         <motion.div

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Network, Shield, Zap } from 'lucide-react';
 import { useLanguage } from '../i18n';
+import { TiltCard } from './ui/TiltCard';
 
 const dict = {
   RU: {
@@ -128,28 +129,30 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`group bg-surface-glass border border-line rounded-3xl p-8 hover:bg-white/5 transition-all duration-300 relative overflow-hidden ${
-                index === 2 ? 'md:col-span-2 lg:col-span-1' : ''
-              }`}
+              className={index === 2 ? 'md:col-span-2 lg:col-span-1' : ''}
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 blur-[40px] rounded-full group-hover:bg-brand-blue/20 transition-colors" />
-              
-              <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-surface-card border border-line flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-brand-blue/30 transition-all duration-300">
-                  <project.icon className="w-6 h-6 text-brand-blue" />
+              <TiltCard
+                className="group bg-surface-glass border border-line rounded-3xl p-8 hover:bg-white/5 transition-all duration-300 relative overflow-hidden h-full"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 blur-[40px] rounded-full group-hover:bg-brand-blue/20 transition-colors" />
+                
+                <div className="flex items-center gap-4 mb-6 relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-surface-card border border-line flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-brand-blue/30 transition-all duration-300 shadow-[0_0_15px_rgba(37,99,235,0)] group-hover:shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+                    <project.icon className="w-6 h-6 text-brand-blue" />
+                  </div>
+                  <h3 className="text-xl font-bold text-text-main leading-tight group-hover:text-brand-blue transition-colors">
+                    {project.title}
+                  </h3>
                 </div>
-                <h3 className="text-xl font-bold text-text-main leading-tight">
-                  {project.title}
-                </h3>
-              </div>
-              
-              <p className="text-text-muted relative z-10 mb-6 leading-relaxed">
-                {project.desc}
-              </p>
-              
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-surface-card border border-line text-xs font-bold text-text-muted relative z-10 group-hover:border-brand-blue/30 transition-colors">
-                {project.tag}
-              </div>
+                
+                <p className="text-text-muted relative z-10 mb-6 leading-relaxed">
+                  {project.desc}
+                </p>
+                
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-surface-card border border-line text-xs font-bold text-text-muted relative z-10 group-hover:border-brand-blue/30 group-hover:text-white transition-colors">
+                  {project.tag}
+                </div>
+              </TiltCard>
             </motion.div>
           ))}
         </div>

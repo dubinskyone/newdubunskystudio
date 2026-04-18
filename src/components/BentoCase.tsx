@@ -329,6 +329,7 @@ export function BentoCase() {
                         key={currentSlide}
                         src={images[currentSlide]}
                         alt={`${currentContent.project.name} - slide ${currentSlide + 1}`}
+                        loading="lazy"
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
@@ -356,12 +357,14 @@ export function BentoCase() {
                     <div className="absolute top-4 right-4 z-30 flex items-center gap-2 pointer-events-auto">
                       <button 
                         onClick={handlePrevSlide}
+                        aria-label="Previous slide"
                         className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
                       <button 
                         onClick={handleNextSlide}
+                        aria-label="Next slide"
                         className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
                       >
                         <ChevronRight className="w-5 h-5" />

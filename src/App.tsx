@@ -2,20 +2,23 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
+import { lazy, Suspense } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { BentoCase } from './components/BentoCase';
-import { Projects } from './components/Projects';
-import { ShowcaseMarquee } from './components/ShowcaseMarquee';
-import { Methodology } from './components/Methodology';
-import { Transparency } from './components/Transparency';
-import { Team } from './components/Team';
-import { SocialProof } from './components/SocialProof';
-import { LeadMagnet } from './components/LeadMagnet';
-import { Cta } from './components/Cta';
-import { Footer } from './components/Footer';
 import { FilmGrain } from './components/ui/FilmGrain';
+
+const Projects = lazy(() => import('./components/Projects').then(m => ({ default: m.Projects })));
+const ShowcaseMarquee = lazy(() => import('./components/ShowcaseMarquee').then(m => ({ default: m.ShowcaseMarquee })));
+const Methodology = lazy(() => import('./components/Methodology').then(m => ({ default: m.Methodology })));
+const Transparency = lazy(() => import('./components/Transparency').then(m => ({ default: m.Transparency })));
+const Team = lazy(() => import('./components/Team').then(m => ({ default: m.Team })));
+const SocialProof = lazy(() => import('./components/SocialProof').then(m => ({ default: m.SocialProof })));
+const LeadMagnet = lazy(() => import('./components/LeadMagnet').then(m => ({ default: m.LeadMagnet })));
+const Faq = lazy(() => import('./components/Faq').then(m => ({ default: m.Faq })));
+const Cta = lazy(() => import('./components/Cta').then(m => ({ default: m.Cta })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 
 export default function App() {
   // Minimal scroll progress
@@ -27,9 +30,9 @@ export default function App() {
   });
 
   return (
-    <div style={{ zoom: "85%" }}>
+    <div className="lg:[zoom:85%]">
       <FilmGrain />
-      <div className="min-h-screen selection:bg-brand-blue selection:text-white transition-colors duration-500 overflow-x-hidden">
+      <div className="min-h-[100svh] selection:bg-brand-blue selection:text-white transition-colors duration-500 overflow-x-hidden">
         
         {/* Scroll Progress Bar */}
         <motion.div
@@ -45,23 +48,30 @@ export default function App() {
           </section>
           <section id="solutions">
             <BentoCase />
-            <Projects />
-            <ShowcaseMarquee />
+            <Suspense fallback={<div className="h-[200px]" />}>
+              <Projects />
+              <ShowcaseMarquee />
+            </Suspense>
           </section>
-          <section id="platform">
-            <Methodology />
-          </section>
-          <section id="integration">
-            <Transparency />
-            <Team />
-          </section>
-          
-          <SocialProof />
-          <LeadMagnet />
-          
-          <Cta />
+          <Suspense fallback={<div className="h-[200px]" />}>
+            <section id="platform">
+              <Methodology />
+            </section>
+            <section id="integration">
+              <Transparency />
+              <Team />
+            </section>
+            
+            <SocialProof />
+            <LeadMagnet />
+            
+            <Cta />
+            <Faq />
+          </Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={<div className="h-[100px]" />}>
+          <Footer />
+        </Suspense>
       </div>
     </div>
   );

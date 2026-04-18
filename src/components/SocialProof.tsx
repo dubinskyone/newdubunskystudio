@@ -144,6 +144,7 @@ export function SocialProof() {
                   <img
                     src={item.image}
                     alt={item.author}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />

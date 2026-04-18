@@ -96,6 +96,20 @@ export const translations = {
       privacy: 'Политика конфиденциальности',
       terms: 'Условия использования',
       rights: 'Все права защищены.'
+    },
+    faq: {
+      badge: 'FAQ',
+      title: 'Возникли вопросы?',
+      q1: 'Какие услуги предоставляет наша компания?',
+      a1: 'Мы занимаемся разработкой полного цикла. Мы поможем вам доработать идею продукта, написать техническое задание, разработать дизайн, помочь создать mvp для вашего сервиса или разработать лендинг для бизнеса.',
+      q2: 'Как работает наш процесс разработки проектов?',
+      a2: 'В начале обсуждаем проект, после формируем ТЗ, смету и сроки, после чего формируем план разработки и начинаем спринты. В процессе мы каждые 2 недели делаем отчет о проделанной работе, а так же каждый майлстоун проводим демо продукта.',
+      q3: 'Как мы обеспечиваем безопасность данных для наших клиентов?',
+      a3: 'Мы обеспечиваем безопасность данных наших клиентов за счет современного шифрования, контроля доступа и двухфакторной аутентификации. Регулярные аудиты и мониторинг позволяют вовремя выявлять и устранять потенциальные угрозы.',
+      q4: 'Какие сроки выполнения проектов?',
+      a4: 'Сроки выполнения зависят от сложности проекта, объема работы и требований заказчика. Небольшие задачи могут занимать от нескольких дней до недели, средние проекты - от 2 до 6 недель.',
+      q5: 'Какие технологии мы используем?',
+      a5: 'Мы работаем с React, Next.js, Node.js, NestJS и MongoDB, создавая производительные и гибкие решения. Для дизайна используем Figma, а для автоматизации развертывания - Docker и CI/CD.'
     }
   },
   EN: {
@@ -191,6 +205,20 @@ export const translations = {
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
       rights: 'All rights reserved.'
+    },
+    faq: {
+      badge: 'FAQ',
+      title: 'Any questions?',
+      q1: 'What services does our company provide?',
+      a1: 'We provide full-cycle development. We help you refine your product idea, write technical specifications, design, help create an MVP for your service, or develop a landing page for your business.',
+      q2: 'How does our project development process work?',
+      a2: 'Initially, we discuss the project, then we form the technical specification, estimate, and deadlines. After that, we create a development plan and start sprints. During the process, we provide bi-weekly progress reports and conduct a product demo at every milestone.',
+      q3: 'How do we ensure data security for our clients?',
+      a3: 'We ensure client data security through modern encryption, access control, and two-factor authentication. Regular audits and monitoring allow us to identify and address potential threats in a timely manner.',
+      q4: 'What are the project timelines?',
+      a4: 'Timelines depend on project complexity, scope of work, and client requirements. Small tasks can take from a few days to a week, while medium projects typically take 2 to 6 weeks.',
+      q5: 'What technologies do we use?',
+      a5: 'We work with React, Next.js, Node.js, NestJS, and MongoDB, creating performant and flexible solutions. We use Figma for design, and Docker and CI/CD for deployment automation.'
     }
   },
   UA: {
@@ -286,6 +314,20 @@ export const translations = {
       privacy: 'Політика конфіденційності',
       terms: 'Умови використання',
       rights: 'Всі права захищені.'
+    },
+    faq: {
+      badge: 'FAQ',
+      title: 'Виникли питання?',
+      q1: 'Які послуги надає наша компанія?',
+      a1: 'Ми займаємося розробкою повного циклу. Ми допоможемо вам доопрацювати ідею продукту, написати технічне завдання, розробити дизайн, створити MVP для вашого сервісу або розробити лендінг для бізнесу.',
+      q2: 'Як працює наш процес розробки проєктів?',
+      a2: 'Спочатку обговорюємо проєкт, потім формуємо ТЗ, кошторис та терміни, після чого створюємо план розробки та починаємо спринти. У процесі ми кожні 2 тижні робимо звіт про виконану роботу, а також кожного майлстоуну проводимо демо продукту.',
+      q3: 'Як ми забезпечуємо безпеку даних для наших клієнтів?',
+      a3: 'Ми забезпечуємо безпеку даних наших клієнтів за допомогою сучасного шифрування, контролю доступу та двофакторної автентифікації. Регулярні аудити та моніторинг дозволяють вчасно виявляти та усувати потенційні загрози.',
+      q4: 'Які терміни виконання проєктів?',
+      a4: 'Терміни виконання залежать від складності проєкту, обсягу роботи та вимог замовника. Невеликі завдання можуть тривати від кількох днів до тижня, середні проєкти - від 2 до 6 тижнів.',
+      q5: 'Які технології ми використовуємо?',
+      a5: 'Ми працюємо з React, Next.js, Node.js, NestJS та MongoDB, створюючи продуктивні та гнучкі рішення. Для дизайну використовуємо Figma, а для автоматизації розгортання - Docker та CI/CD.'
     }
   }
 };
@@ -311,6 +353,32 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return 'EN'; // Fallback for all other regions
   });
   
+  React.useEffect(() => {
+    document.documentElement.lang = lang.toLowerCase();
+    
+    // Update basic SEO tags based on language
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    
+    if (lang === 'RU') {
+      document.title = 'Dubinsky Studio | Разработка MVP и Дизайн полного цикла';
+      if (metaDesc) metaDesc.setAttribute('content', 'Студия разработки полного цикла. Создаем MVP под ключ, дизайн-системы и масштабируемые экосистемы для брендов-новаторов.');
+      if (ogTitle) ogTitle.setAttribute('content', 'Dubinsky Studio | Разработка и дизайн');
+      if (ogDesc) ogDesc.setAttribute('content', 'MVP под ключ и дизайн-системы для бизнеса.');
+    } else if (lang === 'EN') {
+      document.title = 'Dubinsky Studio | Full-Cycle MVP & Design';
+      if (metaDesc) metaDesc.setAttribute('content', 'Full-cycle development studio. We build turnkey MVPs, design systems, and scalable ecosystems for visionary brands.');
+      if (ogTitle) ogTitle.setAttribute('content', 'Dubinsky Studio | Design & Development');
+      if (ogDesc) ogDesc.setAttribute('content', 'Turnkey MVPs and design systems for business.');
+    } else if (lang === 'UA') {
+      document.title = 'Dubinsky Studio | Розробка MVP та Дизайн повного циклу';
+      if (metaDesc) metaDesc.setAttribute('content', 'Студія розробки повного циклу. Створюємо MVP під ключ, дизайн-системи та масштабовані екосистеми для брендів-новаторів.');
+      if (ogTitle) ogTitle.setAttribute('content', 'Dubinsky Studio | Розробка та дизайн');
+      if (ogDesc) ogDesc.setAttribute('content', 'MVP під ключ та дизайн-системи для бізнесу.');
+    }
+  }, [lang]);
+
   const t = (key: Extract<keyof TranslationsType, string>, subkey?: string): string => {
     const section = translations[lang][key] as any;
     if (!section) return key;
