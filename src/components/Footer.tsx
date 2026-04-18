@@ -5,7 +5,7 @@ export function Footer() {
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <footer className="bg-surface-bg border-t border-line pt-20 pb-8 px-4 overflow-hidden relative">
+    <footer className="perf-section bg-surface-bg border-t border-line pt-20 pb-8 px-4 overflow-hidden relative">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-line pb-16">
           <div className="col-span-1 md:col-span-5 pr-8">

@@ -2,18 +2,22 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { LineChart, CheckCircle2, Globe, Zap } from 'lucide-react';
 import { useRef } from 'react';
 import { useLanguage } from '../i18n';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
-const AnimatedChart = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden group-hover:scale-105 transition-transform duration-700">
+const AnimatedChart = () => {
+  const { disableHeavyEffects } = usePerformanceMode();
+
+  return (
+  <div className={`absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden ${disableHeavyEffects ? '' : 'group-hover:scale-105 transition-transform duration-700'}`}>
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-blue/20 blur-[80px] z-0 rounded-full" />
     <div className="flex items-end gap-3 w-full max-w-[220px] h-32 relative z-10">
       {[40, 70, 50, 90, 60, 100].map((h, i) => (
         <motion.div
           key={i}
           className="flex-1 bg-brand-blue/20 border-t-2 border-brand-blue rounded-t-sm"
-          initial={{ height: "10%" }}
+          initial={disableHeavyEffects ? false : { height: "10%" }}
           animate={{ height: `${h}%` }}
-          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: i * 0.1 }}
+          transition={disableHeavyEffects ? { duration: 0 } : { duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: i * 0.1 }}
         />
       ))}
       {/* Animated trend line simulation */}
@@ -24,26 +28,30 @@ const AnimatedChart = () => (
             stroke="#60a5fa" 
             strokeWidth="3"
             strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={disableHeavyEffects ? false : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+            transition={disableHeavyEffects ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
          />
       </motion.svg>
     </div>
   </div>
-);
+  );
+};
 
-const AnimatedTarget = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden group-hover:scale-105 transition-transform duration-700">
+const AnimatedTarget = () => {
+  const { disableHeavyEffects } = usePerformanceMode();
+
+  return (
+  <div className={`absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden ${disableHeavyEffects ? '' : 'group-hover:scale-105 transition-transform duration-700'}`}>
      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500/20 blur-[80px] z-0 rounded-full" />
      <motion.div
-        animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeOut' }}
+        animate={disableHeavyEffects ? { scale: 1, opacity: 0.35 } : { scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
+        transition={disableHeavyEffects ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: 'easeOut' }}
         className="absolute w-40 h-40 rounded-full border border-purple-500/40 z-0"
      />
      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
+        animate={disableHeavyEffects ? { scale: 1, opacity: 0.55 } : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+        transition={disableHeavyEffects ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
         className="absolute w-24 h-24 rounded-full border border-purple-500/50 z-0 bg-purple-500/5"
      />
      <div className="w-8 h-8 bg-brand-purple rounded-full shadow-[0_0_30px_#a855f7] z-10 flex items-center justify-center">
@@ -51,8 +59,8 @@ const AnimatedTarget = () => (
      </div>
 
      <motion.div
-       animate={{ x: [60, 0, 60], y: [60, 0, 60] }}
-       transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+       animate={disableHeavyEffects ? { x: 20, y: 20 } : { x: [60, 0, 60], y: [60, 0, 60] }}
+       transition={disableHeavyEffects ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: 'easeInOut' }}
        className="absolute z-20 pointer-events-none"
      >
        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
@@ -60,10 +68,14 @@ const AnimatedTarget = () => (
        </svg>
      </motion.div>
   </div>
-);
+  );
+};
 
-const AnimatedNetwork = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden group-hover:scale-105 transition-transform duration-700">
+const AnimatedNetwork = () => {
+  const { disableHeavyEffects } = usePerformanceMode();
+
+  return (
+  <div className={`absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden ${disableHeavyEffects ? '' : 'group-hover:scale-105 transition-transform duration-700'}`}>
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-teal-500/20 blur-[80px] z-0 rounded-full" />
     <div className="relative w-48 h-48 flex items-center justify-center">
        {/* Center Node */}
@@ -75,14 +87,14 @@ const AnimatedNetwork = () => (
        {[0, 120, 240].map((deg, i) => (
          <div key={i} style={{ transform: `rotate(${deg}deg)` }} className="absolute inset-0 z-0">
             <motion.div
-               animate={{ rotate: 360 }}
-               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+               animate={disableHeavyEffects ? { rotate: 0 } : { rotate: 360 }}
+               transition={disableHeavyEffects ? { duration: 0 } : { duration: 8, repeat: Infinity, ease: "linear" }}
                className="w-full h-full absolute inset-0"
             >
                <div className="w-10 h-10 bg-[#09090b] border border-teal-500/40 rounded-full flex items-center justify-center absolute top-0 left-1/2 -ml-5 shadow-[0_0_20px_rgba(45,212,191,0.2)]">
                   <motion.div 
-                     animate={{ scale: [1, 1.5, 1] }}
-                     transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+                     animate={disableHeavyEffects ? { scale: 1 } : { scale: [1, 1.5, 1] }}
+                     transition={disableHeavyEffects ? { duration: 0 } : { duration: 2, repeat: Infinity, delay: i * 0.5 }}
                      className="w-2 h-2 bg-teal-400 rounded-full" 
                   />
                </div>
@@ -93,10 +105,14 @@ const AnimatedNetwork = () => (
        ))}
     </div>
   </div>
-);
+  );
+};
 
-const AnimatedDeploy = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden p-6 group-hover:scale-105 transition-transform duration-700">
+const AnimatedDeploy = () => {
+  const { disableHeavyEffects } = usePerformanceMode();
+
+  return (
+  <div className={`absolute inset-0 flex items-center justify-center bg-[#09090b] overflow-hidden p-6 ${disableHeavyEffects ? '' : 'group-hover:scale-105 transition-transform duration-700'}`}>
      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-pink-500/10 blur-[80px] z-0 rounded-full" />
      <div className="w-full max-w-[280px] bg-[#18181b] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative z-10">
         <div className="h-8 flex items-center px-4 gap-2 bg-white/5 border-b border-white/5">
@@ -114,23 +130,23 @@ const AnimatedDeploy = () => (
               <div className="flex items-center justify-between text-[10px] font-mono text-white/50">
                  <span>Building assets...</span>
                  <motion.span 
-                   animate={{ opacity: [1, 0, 1] }}
-                   transition={{ duration: 1, repeat: Infinity }}
+                   animate={disableHeavyEffects ? { opacity: 1 } : { opacity: [1, 0, 1] }}
+                   transition={disableHeavyEffects ? { duration: 0 } : { duration: 1, repeat: Infinity }}
                    className="text-brand-blue"
                  >45%</motion.span>
               </div>
               <div className="w-full bg-black/50 rounded-full h-1.5 overflow-hidden shadow-inner relative">
                  <motion.div 
-                   animate={{ width: ["0%", "100%", "0%"] }}
-                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                   animate={disableHeavyEffects ? { width: "68%" } : { width: ["0%", "100%", "0%"] }}
+                   transition={disableHeavyEffects ? { duration: 0 } : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    className="bg-gradient-to-r from-brand-blue via-brand-purple to-pink-500 h-full absolute left-0 top-0"
                  />
               </div>
            </div>
 
            <motion.div 
-             animate={{ opacity: [0, 0, 1, 1, 0] }}
-             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+             animate={disableHeavyEffects ? { opacity: 1 } : { opacity: [0, 0, 1, 1, 0] }}
+             transition={disableHeavyEffects ? { duration: 0 } : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
              className="flex items-center gap-2 mt-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 rounded-lg"
            >
              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -141,7 +157,8 @@ const AnimatedDeploy = () => (
         </div>
      </div>
   </div>
-);
+  );
+};
 
 const principles = [
   {
@@ -176,6 +193,7 @@ const principles = [
 
 export function Methodology() {
   const { t } = useLanguage();
+  const { disableHeavyEffects } = usePerformanceMode();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentPrinciples = [
@@ -209,7 +227,7 @@ export function Methodology() {
   const pathHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="py-16 md:py-32 px-4 bg-transparent relative overflow-hidden" id="platform">
+    <section className="perf-section py-16 md:py-32 px-4 bg-transparent relative overflow-hidden" id="platform">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-brand-blue/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto">
@@ -252,7 +270,7 @@ export function Methodology() {
             {/* Animated Glow Line */}
             <motion.div 
               className="absolute top-0 w-[4px] bg-gradient-to-b from-brand-blue via-brand-purple to-pink-500 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.6)] z-10"
-              style={{ scaleY: pathHeight, transformOrigin: "top" }}
+              style={{ scaleY: disableHeavyEffects ? 1 : pathHeight, transformOrigin: "top" }}
             />
           </div>
 

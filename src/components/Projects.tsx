@@ -88,7 +88,7 @@ export function Projects() {
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="py-24 bg-transparent pt-32 relative" id="approach">
+    <section className="perf-section py-24 bg-transparent pt-32 relative" id="approach">
       <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-line to-transparent" />
       <div className="max-w-7xl mx-auto px-4">
         

@@ -1,11 +1,14 @@
 import { useRef, useState, ReactNode, MouseEvent } from 'react';
 import { motion } from 'motion/react';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 export function Magnetic({ children, className = '' }: { children: ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { disableHoverEffects } = usePerformanceMode();
 
   const handleMouse = (e: MouseEvent<HTMLDivElement>) => {
+    if (disableHoverEffects || !ref.current) return;
     if (!ref.current) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
@@ -17,6 +20,14 @@ export function Magnetic({ children, className = '' }: { children: ReactNode, cl
   const reset = () => {
     setPosition({ x: 0, y: 0 });
   };
+
+  if (disableHoverEffects) {
+    return (
+      <div className={className}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div

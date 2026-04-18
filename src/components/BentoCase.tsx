@@ -26,6 +26,7 @@ import {
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useLanguage } from "../i18n";
 import { getBentoContent } from "../i18n/bento";
+import { usePerformanceMode } from "../hooks/usePerformanceMode";
 
 type TabKey =
   | "landings"
@@ -76,20 +77,33 @@ const TAB_ANIMATIONS = {
 
 export function BentoCase() {
   const { lang } = useLanguage();
+  const { isMobile, disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
   const bentoI18n = getBentoContent(lang);
   const TABS_CONTENT = bentoI18n.tabs;
 
   const [activeTab, setActiveTab] = useState<TabKey>("landings");
-  const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const currentContent = TABS_CONTENT[activeTab];
 
+  const optimizeImage = (url: string) => {
+    if (!url.includes("images.unsplash.com")) {
+      return url;
+    }
+
+    const targetWidth = isMobile ? 720 : 1200;
+    const targetQuality = disableHeavyEffects ? 70 : 80;
+
+    return url
+      .replace(/w=\d+/g, `w=${targetWidth}`)
+      .replace(/q=\d+/g, `q=${targetQuality}`);
+  };
+
   // Derive images for slider
   const images = [
-    currentContent.project.image,
-    `https://picsum.photos/seed/${activeTab}2/800/600`,
-    `https://picsum.photos/seed/${activeTab}3/800/600`,
+    optimizeImage(currentContent.project.image),
+    `https://picsum.photos/seed/${activeTab}2/${isMobile ? 640 : 800}/${isMobile ? 480 : 600}`,
+    `https://picsum.photos/seed/${activeTab}3/${isMobile ? 640 : 800}/${isMobile ? 480 : 600}`,
   ];
 
   const handleNextSlide = (e: MouseEvent<HTMLButtonElement>) => {
@@ -110,14 +124,14 @@ export function BentoCase() {
 
   // Auto-slide effect
   useEffect(() => {
-    if (isHovered) return; // Pause slider when mouse is hovering over the card
+    if (isHovered || disableHeavyEffects) return;
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 4000); // 4 seconds per slide
     
     return () => clearInterval(timer);
-  }, [images.length, activeTab, isHovered]);
+  }, [images.length, activeTab, isHovered, disableHeavyEffects]);
 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -143,7 +157,7 @@ export function BentoCase() {
   )`;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (isMobile) return;
+    if (disableHoverEffects) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -154,11 +168,13 @@ export function BentoCase() {
   };
 
   const handleMouseEnter = () => {
+    if (disableHoverEffects) return;
     setIsHovered(true);
-    if (!isMobile) glareOpacity.set(1);
+    glareOpacity.set(1);
   };
 
   const handleMouseLeave = () => {
+    if (disableHoverEffects) return;
     setIsHovered(false);
     glareOpacity.set(0);
     mouseX.set(0.5);
@@ -169,13 +185,6 @@ export function BentoCase() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
     const handleTabChange = (event: Event) => {
       const customEvent = event as CustomEvent<TabKey>;
       setActiveTab(customEvent.detail);
@@ -184,20 +193,20 @@ export function BentoCase() {
         const topOfSection = sectionRef.current.offsetTop - 100;
         window.scrollTo({
           top: topOfSection,
-          behavior: "smooth",
+          behavior: disableHeavyEffects ? "auto" : "smooth",
         });
       }
     };
 
     window.addEventListener("changeBentoTab", handleTabChange);
     return () => window.removeEventListener("changeBentoTab", handleTabChange);
-  }, []);
+  }, [disableHeavyEffects]);
 
   return (
     <section
       id="solutions"
       ref={sectionRef}
-      className="px-4 py-8 md:py-16 max-w-7xl mx-auto flex items-center justify-center"
+      className="perf-section px-4 py-8 md:py-16 max-w-7xl mx-auto flex items-center justify-center"
     >
       <div className="bg-surface-card rounded-[32px] border border-line p-4 md:p-6 shadow-[0_0_50px_rgba(0,0,0,0.3)] w-full relative overflow-hidden">
         {/* Subtle Background Glow */}
@@ -239,7 +248,7 @@ export function BentoCase() {
 
         <div
           className="grid md:grid-cols-12 gap-6 lg:gap-8 items-center"
-          style={{ perspective: isMobile ? "none" : "2000px" }}
+          style={{ perspective: disableHoverEffects ? "none" : "2000px" }}
         >
           {/* Left Column - Text & Tags */}
           <div className="md:col-span-5 relative grid h-full">
@@ -279,8 +288,8 @@ export function BentoCase() {
 
                 <motion.a
                   href="#contact"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={disableHoverEffects ? undefined : { scale: 1.02 }}
+                  whileTap={disableHoverEffects ? undefined : { scale: 0.98 }}
                   className="px-8 py-4 bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-full font-bold text-base hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-shadow self-start flex items-center justify-center gap-3 group shrink-0 mt-auto w-full sm:w-auto no-underline"
                 >
                   {bentoI18n.startProject}
@@ -293,7 +302,7 @@ export function BentoCase() {
           {/* Right Column - Grid */}
           <div
             className="md:col-span-7 h-auto md:h-[400px] lg:h-[460px] mt-8 md:mt-0"
-            style={{ transformStyle: isMobile ? "flat" : "preserve-3d" }}
+            style={{ transformStyle: disableHoverEffects ? "flat" : "preserve-3d" }}
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -312,15 +321,15 @@ export function BentoCase() {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   style={{
-                    rotateX: isMobile ? 0 : rotateX,
-                    rotateY: isMobile ? 0 : rotateY,
-                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                    rotateX: disableHoverEffects ? 0 : rotateX,
+                    rotateY: disableHoverEffects ? 0 : rotateY,
+                    transformStyle: disableHoverEffects ? "flat" : "preserve-3d",
                   }}
                 >
                   <motion.div
                     className="w-full h-full rounded-[32px] overflow-hidden relative"
                     style={{
-                      transform: isMobile ? "none" : "translateZ(30px)",
+                      transform: disableHoverEffects ? "none" : "translateZ(30px)",
                     }}
                   >
                     {/* Background Image Slider */}
@@ -332,9 +341,12 @@ export function BentoCase() {
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        style={{ y: isMobile ? 0 : parallaxY }}
-                        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none group-hover:scale-110 transition-transform duration-[1.5s]"
+                        transition={{ duration: disableHeavyEffects ? 0.2 : 0.5, ease: "easeOut" }}
+                        style={{ y: disableHeavyEffects ? 0 : parallaxY }}
+                        className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-transform ${disableHoverEffects ? "" : "group-hover:scale-110 duration-[1.5s]"}`}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
                       />
                     </AnimatePresence>
 
@@ -342,7 +354,7 @@ export function BentoCase() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none z-10" />
 
                     {/* Glare Effect */}
-                    {!isMobile && (
+                    {!disableHoverEffects && (
                       <motion.div
                         className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay"
                         style={{
@@ -385,7 +397,7 @@ export function BentoCase() {
                     {/* Content Section inside */}
                     <motion.div
                       style={{
-                        transform: isMobile ? "none" : "translateZ(40px)",
+                        transform: disableHoverEffects ? "none" : "translateZ(40px)",
                       }}
                       className="absolute bottom-0 left-0 w-full p-5 md:p-6 z-30 flex flex-col justify-between gap-4 pointer-events-auto"
                     >
@@ -435,9 +447,9 @@ export function BentoCase() {
                         preserveAspectRatio="none"
                       >
                         <motion.path
-                          initial={{ pathLength: 0 }}
+                          initial={disableHeavyEffects ? false : { pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{ duration: 1.5, ease: "easeOut" }}
+                          transition={disableHeavyEffects ? { duration: 0 } : { duration: 1.5, ease: "easeOut" }}
                           d="M0,35 Q10,10 25,25 T50,15 T75,25 T100,5"
                           fill="none"
                           stroke="#2563EB"
@@ -450,9 +462,9 @@ export function BentoCase() {
                         {[100, 75, 45, 20].map((w, i) => (
                           <motion.div
                             key={i}
-                            initial={{ height: 0 }}
+                            initial={disableHeavyEffects ? false : { height: 0 }}
                             animate={{ height: `${w}%` }}
-                            transition={{ delay: i * 0.1 }}
+                            transition={disableHeavyEffects ? { duration: 0 } : { delay: i * 0.1 }}
                             className={`w-1.5 rounded-full ${i === 3 ? "bg-brand-purple" : "bg-brand-blue"}`}
                             style={{ opacity: 1 - i * 0.15 }}
                           />
@@ -460,7 +472,7 @@ export function BentoCase() {
                       </div>
                     )}
                     {activeTab === "mobile" && (
-                      <div className="relative w-8 h-8 flex items-center justify-center">
+                      <svg viewBox="0 0 28 28" className="w-8 h-8">
                         <motion.circle
                           cx="14"
                           cy="14"
@@ -470,20 +482,18 @@ export function BentoCase() {
                           strokeWidth="2"
                           strokeDasharray="80"
                           strokeLinecap="round"
-                          initial={{ strokeDashoffset: 80 }}
+                          initial={disableHeavyEffects ? false : { strokeDashoffset: 80 }}
                           animate={{ strokeDashoffset: 20 }}
-                          transition={{ duration: 1, delay: 0.2 }}
-                          viewBox="0 0 28 28"
-                          as="svg"
+                          transition={disableHeavyEffects ? { duration: 0 } : { duration: 1, delay: 0.2 }}
                         />
-                      </div>
+                      </svg>
                     )}
                     {activeTab === "branding" && (
                       <div className="relative w-8 h-8 flex items-center justify-end">
                         <motion.div
-                          initial={{ scale: 0, opacity: 1 }}
-                          animate={{ scale: 3, opacity: 0 }}
-                          transition={{ repeat: Infinity, duration: 2 }}
+                          initial={disableHeavyEffects ? false : { scale: 0, opacity: 1 }}
+                          animate={disableHeavyEffects ? { scale: 1.5, opacity: 0.35 } : { scale: 3, opacity: 0 }}
+                          transition={disableHeavyEffects ? { duration: 0 } : { repeat: Infinity, duration: 2 }}
                           className="absolute right-0 w-3 h-3 rounded-full border border-brand-purple"
                         />
                       </div>
@@ -492,24 +502,25 @@ export function BentoCase() {
                       <div className="relative w-12 h-6 flex items-center justify-between">
                         <div className="w-1.5 h-1.5 bg-brand-blue rounded-full shadow-[0_0_5px_#2563EB]" />
                         <motion.div
-                          initial={{ scaleX: 0 }}
+                          initial={disableHeavyEffects ? false : { scaleX: 0 }}
                           animate={{ scaleX: 1 }}
+                          transition={disableHeavyEffects ? { duration: 0 } : undefined}
                           className="h-0.5 bg-line flex-1 mx-1 origin-left"
                         />
                         <div className="w-1.5 h-1.5 bg-brand-purple rounded-full shadow-[0_0_5px_#7C3AED]" />
                       </div>
                     )}
                     {activeTab === "corporate" && (
-                      <div className="w-10 h-10 border-[3px] border-line border-t-brand-blue rounded-full animate-spin" />
+                      <div className={`w-10 h-10 border-[3px] border-line border-t-brand-blue rounded-full ${disableHeavyEffects ? "" : "animate-spin"}`} />
                     )}
                     {activeTab === "ecommerce" && (
                       <div className="flex items-end gap-1 h-8">
                         {[40, 70, 100].map((h, i) => (
                           <motion.div
                             key={i}
-                            initial={{ height: 0 }}
+                            initial={disableHeavyEffects ? false : { height: 0 }}
                             animate={{ height: `${h}%` }}
-                            transition={{ duration: 0.4, delay: 0.1 * i }}
+                            transition={disableHeavyEffects ? { duration: 0 } : { duration: 0.4, delay: 0.1 * i }}
                             className="w-2 rounded-t-sm bg-brand-blue/80"
                           />
                         ))}
@@ -531,7 +542,7 @@ export function BentoCase() {
                   <div className="w-full h-1.5 bg-surface-bg border border-line rounded-full overflow-hidden mt-auto mb-1">
                     <motion.div
                       className="h-full bg-gradient-to-r from-brand-blue to-brand-purple"
-                      initial={{ width: 0 }}
+                      initial={disableHeavyEffects ? false : { width: 0 }}
                       animate={{
                         width:
                           activeTab === "landings"
@@ -540,7 +551,7 @@ export function BentoCase() {
                               ? "99%"
                               : "75%",
                       }}
-                      transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                      transition={disableHeavyEffects ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.2 }}
                     />
                   </div>
                 </div>

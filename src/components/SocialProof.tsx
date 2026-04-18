@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Quote } from "lucide-react";
 import { useLanguage } from "../i18n";
+import { usePerformanceMode } from "../hooks/usePerformanceMode";
 
 const testimonials = [
   {
@@ -37,6 +38,7 @@ const logos = [
 
 export function SocialProof() {
   const { t, lang } = useLanguage();
+  const { disableHeavyEffects } = usePerformanceMode();
 
   const authorNames = {
     RU: ["Александр Соколов", "Елена Краснова", "Михаил Давыдов"],
@@ -68,24 +70,24 @@ export function SocialProof() {
 
   return (
     <section
-      className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden"
+      className="perf-section py-16 md:py-24 px-4 bg-transparent relative overflow-hidden"
       id="social-proof"
     >
       {/* Background elements */}
       <div className="absolute left-[-10%] top-0 w-[500px] h-[500px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       {/* Infinite Logo Marquee */}
-      <div className="w-full overflow-hidden mb-24 relative flex items-center">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-surface-bg to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-surface-bg to-transparent z-10" />
+      <div className={`w-full mb-24 relative flex items-center ${disableHeavyEffects ? 'overflow-x-auto perf-scroller' : 'overflow-hidden'}`}>
+        {!disableHeavyEffects && <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-surface-bg to-transparent z-10" />}
+        {!disableHeavyEffects && <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-surface-bg to-transparent z-10" />}
 
         <motion.div
-          className="flex whitespace-nowrap items-center gap-16 md:gap-24"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className={`flex items-center gap-16 md:gap-24 ${disableHeavyEffects ? 'flex-wrap justify-center min-w-full py-1' : 'whitespace-nowrap'}`}
+          animate={disableHeavyEffects ? undefined : { x: ["0%", "-50%"] }}
+          transition={disableHeavyEffects ? undefined : { duration: 30, repeat: Infinity, ease: "linear" }}
         >
           {/* Double array for seamless loop */}
-          {[...logos, ...logos, ...logos].map((logo, i) => (
+          {(disableHeavyEffects ? logos : [...logos, ...logos, ...logos]).map((logo, i) => (
             <div
               key={i}
               className="text-2xl md:text-3xl font-display font-medium text-white/40 tracking-tight grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:text-white transition-all cursor-default"
@@ -145,6 +147,8 @@ export function SocialProof() {
                     src={item.image}
                     alt={item.author}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                   />
                 </div>

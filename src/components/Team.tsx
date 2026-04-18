@@ -19,7 +19,7 @@ export function Team() {
   ];
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-[#09090b] relative overflow-hidden" id="team">
+    <section className="perf-section py-16 md:py-24 px-4 bg-[#09090b] relative overflow-hidden" id="team">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           
@@ -87,7 +87,7 @@ export function Team() {
                    <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-[3/4]">
                       <div className="absolute inset-0 bg-brand-blue/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team1/400/600" alt="Алексей, Lead React" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" referrerPolicy="no-referrer" />
+                      <img src="https://picsum.photos/seed/team1/400/600" alt="Алексей, Lead React" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                       <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                         <div className="text-xl font-bold text-white mb-1">{names.alex}</div>
                         <div className="text-sm text-brand-blue">Lead Frontend</div>
@@ -96,7 +96,7 @@ export function Team() {
                    <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-square">
                       <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team2/400/400" alt="Максим, DevOps Engineer" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" referrerPolicy="no-referrer" />
+                      <img src="https://picsum.photos/seed/team2/400/400" alt="Максим, DevOps Engineer" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                       <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                         <div className="text-xl font-bold text-white mb-1">{names.max}</div>
                         <div className="text-sm text-brand-purple">DevOps Architect</div>
@@ -109,7 +109,7 @@ export function Team() {
                    <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-square shadow-[0_0_40px_rgba(37,99,235,0.15)] z-20">
                       <div className="absolute inset-0 bg-brand-blue/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team3/400/400" alt="Елена, Art Director" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" referrerPolicy="no-referrer" />
+                      <img src="https://picsum.photos/seed/team3/400/400" alt="Елена, Art Director" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                       <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                         <div className="text-xl font-bold text-white mb-1">{names.maria}</div>
                         <div className="text-sm text-brand-blue">Art Director</div>
@@ -118,7 +118,7 @@ export function Team() {
                    <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-[3/4]">
                       <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team4/400/600" alt="Дмитрий, Lead Backend" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" referrerPolicy="no-referrer" />
+                      <img src="https://picsum.photos/seed/team4/400/600" alt="Дмитрий, Lead Backend" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                       <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                         <div className="text-xl font-bold text-white mb-1">{names.denis}</div>
                         <div className="text-sm text-brand-purple">Lead Backend</div>

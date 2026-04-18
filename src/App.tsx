@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useSpring } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { BentoCase } from './components/BentoCase';
@@ -16,9 +16,11 @@ import { LeadMagnet } from './components/LeadMagnet';
 import { Cta } from './components/Cta';
 import { Footer } from './components/Footer';
 import { FilmGrain } from './components/ui/FilmGrain';
+import { usePerformanceMode } from './hooks/usePerformanceMode';
+import { SeoManager } from './components/SeoManager';
 
 export default function App() {
-  // Minimal scroll progress
+  const { disableHeavyEffects } = usePerformanceMode();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -27,15 +29,16 @@ export default function App() {
   });
 
   return (
-    <div style={{ zoom: "85%" }}>
+    <div style={{ zoom: disableHeavyEffects ? '100%' : '85%' }}>
+      <SeoManager />
       <FilmGrain />
       <div className="min-h-screen selection:bg-brand-blue selection:text-white transition-colors duration-500 overflow-x-hidden">
-        
-        {/* Scroll Progress Bar */}
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-[3px] bg-brand-blue origin-left z-[60]"
-          style={{ scaleX }}
-        />
+        {!disableHeavyEffects && (
+          <motion.div
+            className="fixed top-0 left-0 right-0 h-[3px] bg-brand-blue origin-left z-[60]"
+            style={{ scaleX }}
+          />
+        )}
 
         <Header />
         

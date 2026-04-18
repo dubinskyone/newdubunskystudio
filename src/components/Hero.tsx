@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { Magnetic } from './ui/Magnetic';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../i18n';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
-const Typewriter = ({ words }: { words: string[] }) => {
+const Typewriter = ({ words, animated = true }: { words: string[]; animated?: boolean }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
 
   useEffect(() => {
+    if (!animated) return;
     if (!words || words.length === 0) return;
 
     if (subIndex === words[index].length && !reverse) {
@@ -30,6 +32,10 @@ const Typewriter = ({ words }: { words: string[] }) => {
     return () => clearTimeout(timeout);
   }, [subIndex, index, reverse, words]);
 
+  if (!animated) {
+    return <span className="relative inline-flex items-center">{words[0] ?? ''}</span>;
+  }
+
   return (
     <span className="relative inline-flex items-center">
       {words[index].substring(0, subIndex)}
@@ -44,6 +50,7 @@ const Typewriter = ({ words }: { words: string[] }) => {
 
 export function Hero() {
   const { t } = useLanguage();
+  const { disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
   const titleWordsStr = t('hero', 'titleWords' as any);
   const titleWordsArray = titleWordsStr && titleWordsStr !== 'titleWords' 
     ? titleWordsStr.split('|') 
@@ -57,13 +64,15 @@ export function Hero() {
   const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
   useEffect(() => {
+    if (disableHeavyEffects) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [disableHeavyEffects, mouseX, mouseY]);
 
   // Create a radial gradient that follows the mouse
   const background = useMotionTemplate`radial-gradient(600px circle at ${smoothX}px ${smoothY}px, rgba(255,255,255,0.06), transparent 80%)`;
@@ -71,49 +80,50 @@ export function Hero() {
   return (
     <section className="relative pt-32 pb-16 sm:pt-48 sm:pb-20 px-4 flex flex-col items-center justify-center text-center min-h-[85vh] overflow-hidden">
       
-      {/* Interactive Cursor Flashlight (follows cursor) */}
-      <motion.div 
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{ background }}
-      />
+      {!disableHeavyEffects && (
+        <motion.div 
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{ background }}
+        />
+      )}
 
       {/* Abstract Orbital Background - Pure CSS Animation */}
       <div className="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none overflow-hidden bg-surface-bg">
 
         {/* Floating Abstract Shapes */}
         <motion.div 
-          animate={{ 
+          animate={disableHeavyEffects ? undefined : { 
             y: [0, -40, 0],
             x: [0, 30, 0],
             rotate: [0, 45, 0]
           }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[10%] w-[30vw] max-w-[400px] aspect-square bg-brand-blue/10 rounded-full blur-[80px] mix-blend-screen"
+          transition={disableHeavyEffects ? undefined : { duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className={`absolute top-[15%] left-[10%] w-[30vw] max-w-[400px] aspect-square bg-brand-blue/10 rounded-full ${disableHeavyEffects ? 'blur-[40px]' : 'blur-[80px] mix-blend-screen'}`}
         />
         <motion.div 
-          animate={{ 
+          animate={disableHeavyEffects ? undefined : { 
             y: [0, 40, 0],
             x: [0, -30, 0],
             rotate: [0, -45, 0]
           }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] right-[10%] w-[35vw] max-w-[500px] aspect-square bg-brand-purple/10 rounded-full blur-[100px] mix-blend-screen"
+          transition={disableHeavyEffects ? undefined : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className={`absolute bottom-[10%] right-[10%] w-[35vw] max-w-[500px] aspect-square bg-brand-purple/10 rounded-full ${disableHeavyEffects ? 'blur-[48px]' : 'blur-[100px] mix-blend-screen'}`}
         />
 
         {/* Soft Ambient Core - Brightened performant radial gradients */}
-        <div className="absolute w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15)_0%,rgba(59,130,246,0.02)_50%,transparent_70%)] mix-blend-screen" />
-        <div className="absolute w-[100vw] h-[100vw] max-w-[1000px] max-h-[1000px] bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.15)_0%,rgba(139,92,246,0.02)_50%,transparent_70%)] -ml-40 mix-blend-screen" />
+        <div className={`absolute w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15)_0%,rgba(59,130,246,0.02)_50%,transparent_70%)] ${disableHeavyEffects ? '' : 'mix-blend-screen'}`} />
+        <div className={`absolute w-[100vw] h-[100vw] max-w-[1000px] max-h-[1000px] bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.15)_0%,rgba(139,92,246,0.02)_50%,transparent_70%)] -ml-40 ${disableHeavyEffects ? '' : 'mix-blend-screen'}`} />
         
         {/* Center illumination */}
-        <div className="absolute w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_60%)] mix-blend-screen" />
+        <div className={`absolute w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_60%)] ${disableHeavyEffects ? '' : 'mix-blend-screen'}`} />
 
         {/* Outer Static Data Ring */}
         <div className="absolute w-[90vw] max-w-[1000px] aspect-square border border-line/40 rounded-full" />
 
         {/* Middle Rotating Orbit with Particles */}
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          animate={disableHeavyEffects ? undefined : { rotate: 360 }}
+          transition={disableHeavyEffects ? undefined : { duration: 60, repeat: Infinity, ease: "linear" }}
           className="absolute w-[70vw] max-w-[750px] aspect-square border border-line/60 border-dashed rounded-full"
         >
           {/* Glowing Particle 1 */}
@@ -124,8 +134,8 @@ export function Hero() {
 
         {/* Inner Counter-Rotating Core Ring with Node */}
         <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          animate={disableHeavyEffects ? undefined : { rotate: -360 }}
+          transition={disableHeavyEffects ? undefined : { duration: 40, repeat: Infinity, ease: "linear" }}
           className="absolute w-[45vw] max-w-[500px] aspect-square border border-line/30 rounded-full"
         >
            {/* Flaring Energy Node */}
@@ -145,12 +155,12 @@ export function Hero() {
           className="mb-8 px-5 py-2.5 rounded-full border border-white/10 bg-surface-glass backdrop-blur-md flex items-center gap-3 shadow-[0_0_30px_rgba(37,99,235,0.1)] relative overflow-hidden group hover:border-brand-blue/40 transition-colors cursor-default"
         >
           <motion.div 
-            animate={{ x: ['-200%', '200%'] }} 
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }} 
+            animate={disableHeavyEffects ? undefined : { x: ['-200%', '200%'] }} 
+            transition={disableHeavyEffects ? undefined : { duration: 3, repeat: Infinity, ease: "linear" }} 
             className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent z-0 skew-x-12" 
           />
           <span className="relative flex h-2.5 w-2.5 z-10">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
+            {!disableHeavyEffects && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>}
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-blue shadow-[0_0_10px_rgba(59,130,246,1)]"></span>
           </span>
           <span className="text-xs font-bold uppercase tracking-widest text-text-main relative z-10">{t('hero', 'badge')}</span>
@@ -171,7 +181,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
             className="origin-bottom block pointer-events-none font-serif italic font-normal text-white/90"
           >
-            <Typewriter words={titleWordsArray} />
+            <Typewriter words={titleWordsArray} animated={!disableHeavyEffects} />
           </motion.span>
           <motion.span
             initial={{ opacity: 0, rotateX: -90, y: 40 }}
@@ -201,14 +211,14 @@ export function Hero() {
           <Magnetic>
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={disableHoverEffects ? undefined : { scale: 1.05 }}
+              whileTap={disableHoverEffects ? undefined : { scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
               className="relative px-8 py-4 bg-brand-blue text-white rounded-full font-bold text-[15px] tracking-wide w-full sm:w-auto flex items-center justify-center gap-2 group overflow-hidden shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:shadow-[0_0_60px_rgba(37,99,235,0.5)] transition-shadow no-underline"
             >
               <motion.div 
-                animate={{ x: ['-100%', '200%'] }} 
-                transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }} 
+                animate={disableHeavyEffects ? undefined : { x: ['-100%', '200%'] }} 
+                transition={disableHeavyEffects ? undefined : { duration: 2.5, repeat: Infinity, ease: "linear" }} 
                 className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0 skew-x-12" 
               />
               <span className="relative z-10 flex items-center gap-2">
@@ -221,8 +231,8 @@ export function Hero() {
           <Magnetic>
             <motion.a
               href="#solutions"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={disableHoverEffects ? undefined : { scale: 1.05 }}
+              whileTap={disableHoverEffects ? undefined : { scale: 0.95 }}
               className="relative px-8 py-4 bg-surface-glass border border-line backdrop-blur-md text-text-main rounded-full font-bold text-[15px] tracking-wide transition-all w-full sm:w-auto hover:bg-white/10 hover:border-white/20 group flex items-center justify-center gap-2 no-underline overflow-hidden"
             >
               <div className="absolute inset-0 rounded-full shadow-[0_0_20px_rgba(255,255,255,0)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-shadow" />

@@ -1,28 +1,41 @@
 import { motion } from 'motion/react';
 import { Activity, Code, ShieldCheck, Users } from 'lucide-react';
 import { useLanguage } from '../i18n';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
 // ... (retain Lottie animations)
-const LottieRadar = () => (
+const LottieRadar = () => {
+   const { disableHeavyEffects } = usePerformanceMode();
+
+   return (
    <div className="absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none overflow-hidden mix-blend-screen mix-blend-overlay">
       <div className="w-full h-full relative">
-         <div className="absolute inset-0 border-2 border-brand-blue/30 rounded-full animate-ping animate-duration-[3s]" />
-         <div className="absolute inset-4 border border-brand-blue/20 rounded-full animate-pulse" />
+         <div className={`absolute inset-0 border-2 border-brand-blue/30 rounded-full ${disableHeavyEffects ? '' : 'animate-ping animate-duration-[3s]'}`} />
+         <div className={`absolute inset-4 border border-brand-blue/20 rounded-full ${disableHeavyEffects ? '' : 'animate-pulse'}`} />
       </div>
    </div>
-);
+   );
+};
 
-const LottieShield = () => (
-   <div className="absolute top-4 right-4 w-24 h-24 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
+const LottieShield = () => {
+   const { disableHoverEffects } = usePerformanceMode();
+
+   return (
+   <div className={`absolute top-4 right-4 w-24 h-24 opacity-10 pointer-events-none ${disableHoverEffects ? '' : 'group-hover:opacity-20 transition-opacity'}`}>
       <ShieldCheck className="w-full h-full text-brand-purple" />
    </div>
-);
+   );
+};
 
-const LottieTeam = () => (
-   <div className="absolute right-0 bottom-0 w-48 h-48 opacity-10 pointer-events-none translate-x-12 translate-y-12 group-hover:scale-110 transition-transform duration-700">
+const LottieTeam = () => {
+   const { disableHoverEffects } = usePerformanceMode();
+
+   return (
+   <div className={`absolute right-0 bottom-0 w-48 h-48 opacity-10 pointer-events-none translate-x-12 translate-y-12 ${disableHoverEffects ? '' : 'group-hover:scale-110 transition-transform duration-700'}`}>
       <Users className="w-full h-full text-brand-blue" />
    </div>
-);
+   );
+};
 
 
 const dict = {
@@ -81,10 +94,11 @@ const dict = {
 
 export function Transparency() {
   const { lang } = useLanguage();
+  const { disableHoverEffects } = usePerformanceMode();
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="integration">
+    <section className="perf-section py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="integration">
       {/* Dynamic Background Glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/5 blur-[150px] rounded-full pointer-events-none -z-10" />
 
@@ -155,7 +169,7 @@ export function Transparency() {
             {/* Card 1: Team */}
             <motion.a 
               href="#contact"
-              whileHover={{ y: -2 }}
+              whileHover={disableHoverEffects ? undefined : { y: -2 }}
               className="sm:col-span-2 bg-surface-glass border border-line rounded-[32px] p-5 sm:p-6 lg:p-8 flex items-center justify-between cursor-pointer block hover:shadow-[0_0_40px_rgba(37,99,235,0.15)] hover:border-brand-blue/30 transition-all backdrop-blur-md group relative overflow-hidden"
             >
               <LottieTeam />
@@ -176,7 +190,7 @@ export function Transparency() {
             {/* Card 2: Transparency / Sync */}
             <motion.a 
               href="#contact"
-              whileHover={{ y: -2 }}
+              whileHover={disableHoverEffects ? undefined : { y: -2 }}
               className="col-span-1 bg-surface-bg border border-line rounded-[32px] p-6 lg:p-8 flex flex-col justify-between min-h-[240px] cursor-pointer block hover:shadow-[0_0_30px_rgba(37,99,235,0.1)] hover:border-brand-blue/40 transition-all group relative overflow-hidden"
             >
               <LottieRadar />
@@ -192,7 +206,7 @@ export function Transparency() {
             {/* Card 3: SLA */}
             <motion.a 
               href="#contact"
-              whileHover={{ y: -2 }}
+              whileHover={disableHoverEffects ? undefined : { y: -2 }}
               className="col-span-1 bg-gradient-to-br from-brand-purple/10 to-transparent border border-brand-purple/30 rounded-[32px] p-6 lg:p-8 flex flex-col justify-between min-h-[240px] cursor-pointer block hover:shadow-[0_0_40px_rgba(124,58,237,0.2)] hover:border-brand-purple/50 transition-all group relative overflow-hidden"
             >
               <LottieShield />
