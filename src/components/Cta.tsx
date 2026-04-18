@@ -3,10 +3,12 @@ import { ArrowRight, Send, Sparkles, Clock, CircleDollarSign, CheckCircle2, Mail
 import { useState, FormEvent } from 'react';
 import { useLanguage } from '../i18n';
 import { usePerformanceMode } from '../hooks/usePerformanceMode';
+import { useRevealMotion } from '../hooks/useRevealMotion';
 
 export function Cta() {
   const { t } = useLanguage();
   const { disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
+  const { reveal } = useRevealMotion();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -22,10 +24,12 @@ export function Cta() {
   return (
     <section className="perf-section px-4 py-16 md:py-32 max-w-7xl mx-auto relative overflow-hidden" id="contact">
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        {...reveal({
+          initial: { opacity: 0, scale: 0.95 },
+          whileInView: { opacity: 1, scale: 1 },
+          viewport: { once: true },
+          transition: { duration: 1, ease: "easeOut" },
+        })}
         className="bg-surface-card border border-line rounded-[40px] px-6 py-12 md:p-16 lg:p-20 shadow-[0_0_100px_rgba(37,99,235,0.05)] relative overflow-hidden flex flex-col lg:flex-row gap-16 items-center"
       >
         {/* Dynamic Glowing Aurora Background inside the Card */}
@@ -38,10 +42,12 @@ export function Cta() {
         <div className="lg:w-1/2 w-full text-left relative z-10">
           {/* Floating chip */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { delay: 0.2 },
+            })}
             className="mb-8 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2 w-fit"
           >
             <Sparkles className="w-4 h-4 text-brand-purple" />

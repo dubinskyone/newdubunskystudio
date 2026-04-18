@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../i18n";
 import { usePerformanceMode } from "../hooks/usePerformanceMode";
+import { useRevealMotion } from "../hooks/useRevealMotion";
 
 const getMockProjects = (tLocal: any) => [
   {
@@ -197,6 +198,7 @@ const getMockProjects = (tLocal: any) => [
 export function ShowcaseMarquee() {
   const { lang, t } = useLanguage();
   const { disableHeavyEffects, disableHoverEffects } = usePerformanceMode();
+  const { reveal } = useRevealMotion();
 
   const content = {
     RU: {
@@ -329,17 +331,21 @@ export function ShowcaseMarquee() {
       <div className="max-w-7xl mx-auto px-4 mb-16 relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-10">
         <div>
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, scale: 0.9 },
+              whileInView: { opacity: 1, scale: 1 },
+              viewport: { once: true },
+            })}
             className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit"
           >
             {tLocal.badge}
           </motion.div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+            })}
             className="text-4xl md:text-5xl font-display font-bold text-text-main max-w-xl leading-[1.05] tracking-tight"
           >
             {tLocal.titlePart1}
@@ -350,9 +356,11 @@ export function ShowcaseMarquee() {
 
         <motion.a
           href="#contact"
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          {...reveal({
+            initial: { opacity: 0, x: 20 },
+            whileInView: { opacity: 1, x: 0 },
+            viewport: { once: true },
+          })}
           whileHover={disableHoverEffects ? undefined : { scale: 1.05 }}
           whileTap={disableHoverEffects ? undefined : { scale: 0.95 }}
           className="px-8 py-4 bg-surface-glass border border-line text-text-main rounded-full font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-white/5 hover:text-white transition-colors group whitespace-nowrap hidden sm:flex shadow-soft w-fit no-underline"

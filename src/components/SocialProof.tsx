@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { Quote } from "lucide-react";
 import { useLanguage } from "../i18n";
 import { usePerformanceMode } from "../hooks/usePerformanceMode";
+import { useRevealMotion } from "../hooks/useRevealMotion";
 
 const testimonials = [
   {
@@ -39,6 +40,7 @@ const logos = [
 export function SocialProof() {
   const { t, lang } = useLanguage();
   const { disableHeavyEffects } = usePerformanceMode();
+  const { reveal } = useRevealMotion();
 
   const authorNames = {
     RU: ["Александр Соколов", "Елена Краснова", "Михаил Давыдов"],
@@ -101,18 +103,22 @@ export function SocialProof() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, scale: 0.9 },
+              whileInView: { opacity: 1, scale: 1 },
+              viewport: { once: true },
+            })}
             className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit mx-auto"
           >
             {t("social", "badge")}
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+            })}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main leading-[1.05] tracking-tight"
           >
             {t("social", "title1")} <br />{" "}
@@ -127,10 +133,12 @@ export function SocialProof() {
           {currentTestimonials.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.15, duration: 0.8 }}
+              {...reveal({
+                initial: { opacity: 0, y: 30 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, margin: "-100px" },
+                transition: { delay: i * 0.15, duration: 0.8 },
+              })}
               className={`bg-surface-card border border-line rounded-3xl p-8 flex flex-col relative group hover:border-white/20 transition-colors ${
                 i === 2 ? 'md:col-span-2 lg:col-span-1' : ''
               }`}

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Layers, Terminal, Fingerprint } from 'lucide-react';
 import { useLanguage } from '../i18n';
+import { useRevealMotion } from '../hooks/useRevealMotion';
 
 const teamNames = {
   RU: { alex: "Алексей Воронов", max: "Максим Лебедев", maria: "Мария Крамер", denis: "Денис Смирнов" },
@@ -10,6 +11,7 @@ const teamNames = {
 
 export function Team() {
   const { t, lang } = useLanguage();
+  const { reveal } = useRevealMotion();
   const names = teamNames[lang] || teamNames.EN;
 
   const currentStats = [
@@ -25,28 +27,34 @@ export function Team() {
           
           <div className="lg:w-1/2">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              {...reveal({
+                initial: { opacity: 0, scale: 0.9 },
+                whileInView: { opacity: 1, scale: 1 },
+                viewport: { once: true },
+              })}
               className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-bold uppercase tracking-widest text-[#a1a1aa] mb-6 w-fit"
             >
               {t('team', 'badge')}
             </motion.div>
 
             <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              {...reveal({
+                initial: { opacity: 0, y: 20 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true },
+              })}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 leading-[1.05] tracking-tight"
             >
               {t('team', 'title1')} <span className="font-serif italic text-brand-blue font-normal">{t('team', 'titleHighlight')}</span><br/>{t('team', 'title2')}
             </motion.h2>
             
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              {...reveal({
+                initial: { opacity: 0, y: 20 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true },
+                transition: { delay: 0.1 },
+              })}
               className="text-lg md:text-xl text-[#a1a1aa] mb-12 max-w-lg leading-relaxed"
             >
               {t('team', 'desc')}
@@ -56,10 +64,12 @@ export function Team() {
                {currentStats.map((stat, idx) => (
                   <motion.div 
                      key={idx}
-                     initial={{ opacity: 0, x: -20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ delay: 0.2 + idx * 0.1 }}
+                     {...reveal({
+                       initial: { opacity: 0, x: -20 },
+                       whileInView: { opacity: 1, x: 0 },
+                       viewport: { once: true },
+                       transition: { delay: 0.2 + idx * 0.1 },
+                     })}
                      className="flex items-center gap-5"
                   >
                      <div className="w-14 h-14 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center shrink-0">
@@ -76,10 +86,12 @@ export function Team() {
 
           <div className="lg:w-1/2 relative">
              <motion.div
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.8 }}
+               {...reveal({
+                 initial: { opacity: 0, scale: 0.95 },
+                 whileInView: { opacity: 1, scale: 1 },
+                 viewport: { once: true },
+                 transition: { duration: 0.8 },
+               })}
                className="relative grid grid-cols-2 gap-4 h-full"
              >
                 {/* 1st photo */}

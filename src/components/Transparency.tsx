@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Activity, Code, ShieldCheck, Users } from 'lucide-react';
 import { useLanguage } from '../i18n';
 import { usePerformanceMode } from '../hooks/usePerformanceMode';
+import { useRevealMotion } from '../hooks/useRevealMotion';
 
 // ... (retain Lottie animations)
 const LottieRadar = () => {
@@ -95,6 +96,7 @@ const dict = {
 export function Transparency() {
   const { lang } = useLanguage();
   const { disableHoverEffects } = usePerformanceMode();
+  const { reveal } = useRevealMotion();
   const t = dict[lang] || dict.EN;
 
   return (
@@ -107,27 +109,33 @@ export function Transparency() {
         {/* Left Column */}
         <div>
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, scale: 0.9 },
+              whileInView: { opacity: 1, scale: 1 },
+              viewport: { once: true },
+            })}
             className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit"
           >
             {t.badge}
           </motion.div>
 
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+            })}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main mb-8 leading-[1.05] tracking-tight"
           >
             {t.title1}<br/>{t.title2}
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { delay: 0.1 },
+            })}
             className="text-lg md:text-xl text-text-muted mb-12 max-w-lg leading-relaxed"
           >
             {t.desc}
@@ -137,10 +145,12 @@ export function Transparency() {
             {t.list.map((item, i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + (i * 0.1) }}
+                {...reveal({
+                  initial: { opacity: 0, x: -20 },
+                  whileInView: { opacity: 1, x: 0 },
+                  viewport: { once: true },
+                  transition: { delay: 0.2 + (i * 0.1) },
+                })}
                 className="flex items-center gap-5 text-base md:text-lg font-medium text-text-main py-4 border-b border-line/50 last:border-b-0 max-w-md group hover:pl-2 transition-all cursor-crosshair"
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-bg border border-line flex items-center justify-center group-hover:border-brand-blue/50 group-hover:bg-brand-blue/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
@@ -154,10 +164,12 @@ export function Transparency() {
 
         {/* Right Column (Dark Bento Widget) */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          {...reveal({
+            initial: { opacity: 0, scale: 0.95 },
+            whileInView: { opacity: 1, scale: 1 },
+            viewport: { once: true },
+            transition: { duration: 0.7 },
+          })}
           className="bg-surface-card rounded-[40px] p-4 lg:p-8 shadow-soft border border-line relative overflow-hidden"
         >
           {/* Subtle grid pattern background */}

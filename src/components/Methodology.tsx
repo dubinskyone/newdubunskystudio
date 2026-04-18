@@ -3,6 +3,7 @@ import { LineChart, CheckCircle2, Globe, Zap } from 'lucide-react';
 import { useRef } from 'react';
 import { useLanguage } from '../i18n';
 import { usePerformanceMode } from '../hooks/usePerformanceMode';
+import { useRevealMotion } from '../hooks/useRevealMotion';
 
 const AnimatedChart = () => {
   const { disableHeavyEffects } = usePerformanceMode();
@@ -194,6 +195,7 @@ const principles = [
 export function Methodology() {
   const { t } = useLanguage();
   const { disableHeavyEffects } = usePerformanceMode();
+  const { reveal } = useRevealMotion();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentPrinciples = [
@@ -233,28 +235,34 @@ export function Methodology() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-24 text-center flex flex-col items-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+            })}
             className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-bold uppercase tracking-widest text-[#a1a1aa] mb-6 backdrop-blur-md"
           >
             {t('methodology', 'badge')}
           </motion.div>
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { delay: 0.1 },
+            })}
             className="text-5xl md:text-7xl font-display font-bold text-white mb-6 tracking-tight leading-[1.05]"
           >
             {t('methodology', 'title1')}<br/>
             <span className="text-white/40">{t('methodology', 'title2')}</span>
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            {...reveal({
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { delay: 0.2 },
+            })}
             className="text-lg md:text-xl text-[#a1a1aa] max-w-2xl font-medium"
           >
             {t('methodology', 'desc')}
@@ -285,10 +293,12 @@ export function Methodology() {
 
                  {/* Main Card */}
                  <motion.div 
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6 }}
+                    {...reveal({
+                      initial: { opacity: 0, y: 40 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true, margin: "-100px" },
+                      transition: { duration: 0.6 },
+                    })}
                     className="w-full bg-[#18181b] border border-white/5 rounded-[32px] overflow-hidden flex flex-col lg:flex-row shadow-2xl hover:border-white/10 hover:shadow-[0_0_50px_rgba(255,255,255,0.03)] transition-all duration-500 relative"
                  >
                     {/* Hover Glow Background inside card */}
