@@ -21,7 +21,7 @@ export const translations = {
       faq: 'FAQ'
     },
     hero: {
-      badge: 'Премиум Экосистема 2026',
+      badge: 'Разработка без головной боли',
       title1: 'Создаем',
       title2: 'цифровые',
       titleWords: 'цифровые|премиальные|масштабируемые|инновационные|B2B',
@@ -139,7 +139,7 @@ export const translations = {
       faq: 'FAQ'
     },
     hero: {
-      badge: 'Premium Ecosystem 2026',
+      badge: 'Development without headaches',
       title1: 'We build',
       title2: 'digital',
       titleWords: 'digital|premium|scalable|innovative|B2B',
@@ -257,7 +257,7 @@ export const translations = {
       faq: 'FAQ'
     },
     hero: {
-      badge: 'Преміальна екосистема 2026',
+      badge: 'Розробка без головного болю',
       title1: 'Створюємо',
       title2: 'цифрові',
       titleWords: 'цифрові|преміальні|масштабовані|інноваційні|B2B',

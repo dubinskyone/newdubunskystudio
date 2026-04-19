@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import { lazy, Suspense, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { BentoCaseLite } from './components/BentoCaseLite';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -119,9 +119,30 @@ function SafeSection({
 
 export default function App() {
   const isLiteMode = useLiteMode();
-  const primaryRootMargin = isLiteMode ? '0px 0px' : '900px 0px';
-  const secondaryRootMargin = isLiteMode ? '0px 0px' : '720px 0px';
-  const tertiaryRootMargin = isLiteMode ? '0px 0px' : '560px 0px';
+  const primaryRootMargin = isLiteMode ? '1400px 0px' : '900px 0px';
+  const secondaryRootMargin = isLiteMode ? '1200px 0px' : '720px 0px';
+  const tertiaryRootMargin = isLiteMode ? '1000px 0px' : '560px 0px';
+
+  useEffect(() => {
+    if (!isLiteMode) {
+      return;
+    }
+
+    const preloadTimer = window.setTimeout(() => {
+      void loadProjects();
+      void loadShowcaseMarquee();
+      void loadMethodology();
+      void loadTransparency();
+      void loadTeam();
+      void loadSocialProof();
+      void loadLeadMagnet();
+      void loadFaq();
+      void loadCta();
+      void loadFooter();
+    }, 180);
+
+    return () => window.clearTimeout(preloadTimer);
+  }, [isLiteMode]);
 
   return (
     <div className="lg:[zoom:85%]">

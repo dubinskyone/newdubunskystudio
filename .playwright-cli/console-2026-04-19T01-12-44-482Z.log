@@ -1,0 +1,6 @@
+[     110ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=c3e2d6c2:20100
+[     522ms] [WARNING] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. @ http://localhost:3001/node_modules/.vite/deps/motion_react.js?v=c3e2d6c2:185
+[ 1094515ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/src/components/HeroTypewriter.tsx?t=1776562258991:0
+[ 1094516ms] [ERROR] [vite] Failed to reload /src/components/HeroTypewriter.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:3001/@vite/client:881
+[ 1296853ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=c3e2d6c2:20100
+[ 1297246ms] [WARNING] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. @ http://localhost:3001/node_modules/.vite/deps/motion_react.js?v=c3e2d6c2:185

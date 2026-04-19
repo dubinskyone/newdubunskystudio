@@ -243,21 +243,21 @@ export function Header() {
               href="#top"
               onClick={closeMobileMenu}
               aria-label="Dubinsky Studio"
-              className="group flex items-center gap-4 no-underline transition-transform duration-300 hover:scale-[1.02] sm:gap-[1.05rem]"
+              className="group flex items-center gap-[0.85rem] no-underline transition-transform duration-300 hover:scale-[1.02] sm:gap-[1.05rem]"
             >
               <img
                 src="/branding/logo-mark-white.svg"
                 alt=""
                 aria-hidden="true"
-                className="h-[2.05rem] w-auto shrink-0 opacity-100 drop-shadow-[0_0_18px_rgba(255,255,255,0.08)] transition-[opacity,transform,filter] duration-300 group-hover:translate-x-[1px] group-hover:drop-shadow-[0_0_24px_rgba(255,255,255,0.12)] sm:h-[2.25rem]"
+                className="h-[1.74rem] w-auto shrink-0 opacity-100 drop-shadow-[0_0_18px_rgba(255,255,255,0.08)] transition-[opacity,transform,filter] duration-300 group-hover:translate-x-[1px] group-hover:drop-shadow-[0_0_24px_rgba(255,255,255,0.12)] sm:h-[2.25rem]"
                 loading="eager"
                 decoding="async"
               />
               <span className="flex flex-col justify-center whitespace-nowrap leading-none opacity-95 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="font-sans sm:font-logo text-[14px] font-black uppercase tracking-[0.075em] text-white sm:text-[15px]">
+                <span className="font-sans sm:font-logo text-[12px] font-black uppercase tracking-[0.075em] text-white sm:text-[15px]">
                   Dubinsky
                 </span>
-                <span className="mt-[0.32rem] font-sans sm:font-logo text-[7.5px] font-bold uppercase tracking-[0.38em] text-white/72 sm:text-[8.5px]">
+                <span className="mt-[0.24rem] font-sans sm:font-logo text-[6.5px] font-bold uppercase tracking-[0.38em] text-white/72 sm:text-[8.5px]">
                   Studio
                 </span>
               </span>

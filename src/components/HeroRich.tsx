@@ -167,7 +167,7 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-              className="brand-button group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-4 text-[15px] font-bold tracking-wide text-white no-underline transition-all sm:w-auto"
+              className="brand-button group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-4 text-[15px] font-bold tracking-wide text-white no-underline transition-all hover:-translate-y-0.5 sm:w-auto"
             >
               <motion.div
                 animate={{ x: ['-100%', '200%'] }}
@@ -186,12 +186,13 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
               href="#solutions"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-line bg-surface-glass px-8 py-4 text-[15px] font-bold tracking-wide text-text-main no-underline transition-all hover:border-white/20 hover:bg-white/10 sm:w-auto"
+              className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-line bg-surface-glass px-8 py-4 text-[15px] font-bold tracking-wide text-text-main no-underline transition-all hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 sm:w-auto"
             >
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(106,189,255,0.12),transparent_62%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="absolute inset-0 rounded-full shadow-[0_0_20px_rgba(255,255,255,0)] transition-shadow group-hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]" />
               <span className="relative z-10 flex items-center gap-2">
                 {copy.cases}
-                <Sparkles className="h-4 w-4 text-text-muted transition-colors group-hover:text-amber-300" />
+                <Sparkles className="h-4 w-4 text-text-muted transition-all duration-300 group-hover:scale-110 group-hover:text-amber-300" />
               </span>
             </motion.a>
           </Magnetic>
