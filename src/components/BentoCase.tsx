@@ -26,6 +26,7 @@ import {
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useLanguage } from "../i18n";
 import { getBentoContent } from "../i18n/bento";
+import { useLiteMode } from "../hooks/useLiteMode";
 
 type TabKey =
   | "landings"
@@ -76,21 +77,23 @@ const TAB_ANIMATIONS = {
 
 export function BentoCase() {
   const { lang } = useLanguage();
+  const isLiteMode = useLiteMode();
   const bentoI18n = getBentoContent(lang);
   const TABS_CONTENT = bentoI18n.tabs;
 
   const [activeTab, setActiveTab] = useState<TabKey>("landings");
-  const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const currentContent = TABS_CONTENT[activeTab];
 
   // Derive images for slider
-  const images = [
-    currentContent.project.image,
-    `https://picsum.photos/seed/${activeTab}2/800/600`,
-    `https://picsum.photos/seed/${activeTab}3/800/600`,
-  ];
+  const images = isLiteMode
+    ? [currentContent.project.image]
+    : [
+        currentContent.project.image,
+        `https://picsum.photos/seed/${activeTab}2/800/600`,
+        `https://picsum.photos/seed/${activeTab}3/800/600`,
+      ];
 
   const handleNextSlide = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -110,14 +113,16 @@ export function BentoCase() {
 
   // Auto-slide effect
   useEffect(() => {
-    if (isHovered) return; // Pause slider when mouse is hovering over the card
+    if (isHovered || isLiteMode || images.length < 2) {
+      return;
+    }
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 4000); // 4 seconds per slide
     
     return () => clearInterval(timer);
-  }, [images.length, activeTab, isHovered]);
+  }, [images.length, activeTab, isHovered, isLiteMode]);
 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -143,7 +148,7 @@ export function BentoCase() {
   )`;
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (isMobile) return;
+    if (isLiteMode) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -155,7 +160,7 @@ export function BentoCase() {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (!isMobile) glareOpacity.set(1);
+    if (!isLiteMode) glareOpacity.set(1);
   };
 
   const handleMouseLeave = () => {
@@ -167,13 +172,6 @@ export function BentoCase() {
 
   // Parallax subtle movement for the image
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const handleTabChange = (event: Event) => {
@@ -239,7 +237,7 @@ export function BentoCase() {
 
         <div
           className="grid md:grid-cols-12 gap-6 lg:gap-8 items-center"
-          style={{ perspective: isMobile ? "none" : "2000px" }}
+          style={{ perspective: isLiteMode ? "none" : "2000px" }}
         >
           {/* Left Column - Text & Tags */}
           <div className="md:col-span-5 relative grid h-full">
@@ -293,7 +291,7 @@ export function BentoCase() {
           {/* Right Column - Grid */}
           <div
             className="md:col-span-7 h-auto md:h-[400px] lg:h-[460px] mt-8 md:mt-0"
-            style={{ transformStyle: isMobile ? "flat" : "preserve-3d" }}
+            style={{ transformStyle: isLiteMode ? "flat" : "preserve-3d" }}
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -312,15 +310,15 @@ export function BentoCase() {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   style={{
-                    rotateX: isMobile ? 0 : rotateX,
-                    rotateY: isMobile ? 0 : rotateY,
-                    transformStyle: isMobile ? "flat" : "preserve-3d",
+                    rotateX: isLiteMode ? 0 : rotateX,
+                    rotateY: isLiteMode ? 0 : rotateY,
+                    transformStyle: isLiteMode ? "flat" : "preserve-3d",
                   }}
                 >
                   <motion.div
                     className="w-full h-full rounded-[32px] overflow-hidden relative"
                     style={{
-                      transform: isMobile ? "none" : "translateZ(30px)",
+                      transform: isLiteMode ? "none" : "translateZ(30px)",
                     }}
                   >
                     {/* Background Image Slider */}
@@ -330,12 +328,18 @@ export function BentoCase() {
                         src={images[currentSlide]}
                         alt={`${currentContent.project.name} - slide ${currentSlide + 1}`}
                         loading="lazy"
-                        initial={{ opacity: 0, scale: 1.05 }}
+                        decoding="async"
+                        width={1200}
+                        height={900}
+                        sizes="(max-width: 767px) 92vw, (max-width: 1024px) 58vw, 760px"
+                        initial={isLiteMode ? false : { opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        style={{ y: isMobile ? 0 : parallaxY }}
-                        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none group-hover:scale-110 transition-transform duration-[1.5s]"
+                        exit={isLiteMode ? undefined : { opacity: 0 }}
+                        transition={isLiteMode ? { duration: 0 } : { duration: 0.5, ease: "easeOut" }}
+                        style={{ y: isLiteMode ? 0 : parallaxY }}
+                        className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none ${
+                          isLiteMode ? '' : 'group-hover:scale-110 transition-transform duration-[1.5s]'
+                        }`}
                       />
                     </AnimatePresence>
 
@@ -343,7 +347,7 @@ export function BentoCase() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none z-10" />
 
                     {/* Glare Effect */}
-                    {!isMobile && (
+                    {!isLiteMode && (
                       <motion.div
                         className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay"
                         style={{
@@ -354,41 +358,45 @@ export function BentoCase() {
                     )}
 
                     {/* Slider Controls */}
-                    <div className="absolute top-4 right-4 z-30 flex items-center gap-2 pointer-events-auto">
-                      <button 
-                        onClick={handlePrevSlide}
-                        aria-label="Previous slide"
-                        className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button 
-                        onClick={handleNextSlide}
-                        aria-label="Next slide"
-                        className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </div>
+                    {!isLiteMode && (
+                      <div className="absolute top-4 right-4 z-30 flex items-center gap-2 pointer-events-auto">
+                        <button 
+                          onClick={handlePrevSlide}
+                          aria-label="Previous slide"
+                          className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button 
+                          onClick={handleNextSlide}
+                          aria-label="Next slide"
+                          className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white transition-all hover:scale-110 active:scale-95"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </div>
+                    )}
 
                     {/* Slider Indicators */}
-                    <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex gap-1.5 pointer-events-none">
-                      {images.map((_, idx) => (
-                        <div 
-                          key={idx}
-                          className={`h-1.5 rounded-full transition-all duration-300 ${
-                            idx === currentSlide 
-                              ? 'w-6 bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]' 
-                              : 'w-1.5 bg-white/30'
-                          }`}
-                        />
-                      ))}
-                    </div>
+                    {!isLiteMode && (
+                      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex gap-1.5 pointer-events-none">
+                        {images.map((_, idx) => (
+                          <div 
+                            key={idx}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              idx === currentSlide 
+                                ? 'w-6 bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]' 
+                                : 'w-1.5 bg-white/30'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
 
                     {/* Content Section inside */}
                     <motion.div
                       style={{
-                        transform: isMobile ? "none" : "translateZ(40px)",
+                        transform: isLiteMode ? "none" : "translateZ(40px)",
                       }}
                       className="absolute bottom-0 left-0 w-full p-5 md:p-6 z-30 flex flex-col justify-between gap-4 pointer-events-auto"
                     >

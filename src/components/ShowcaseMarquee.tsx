@@ -1,456 +1,552 @@
-import type { ReactNode } from 'react';
 import { motion } from 'motion/react';
 import {
   ArrowRight,
-  Activity,
+  Blocks,
+  Code2,
+  Route,
   ShieldCheck,
-  CreditCard,
-  LayoutDashboard,
-  Search,
-  Zap,
-  PieChart,
-  TrendingUp,
-  Users,
+  Sparkles,
+  type LucideIcon,
 } from 'lucide-react';
 import { useLanguage } from '../i18n';
 
-const SHOWCASE_COPY = {
-  RU: {
-    badge: 'Галерея интерфейсов',
-    titlePart1: 'Интерфейсы,',
-    titlePart2: 'задающие тренды',
-    button: 'Обсудить дизайн',
-    projects: {
-      fintech: {
-        title: 'Финтех Приложение',
-        tag: 'Мобильный интерфейс',
-        type: 'Native iOS',
-        verified: 'Подтверждено',
-        balance: 'Баланс',
-        month: 'в этом месяце',
-        transfer: 'Перевод',
-        pay: 'Оплата',
-      },
-      crm: {
-        title: 'AI CRM Система',
-        tag: 'Веб Дашборд',
-        type: 'React Frontend',
-        analytics: 'Аналитика',
-      },
-      logistics: {
-        title: 'Платформа логистики',
-        tag: 'B2B Платформа',
-        type: 'Vue Client',
-        online: 'Онлайн',
-        secure: 'Защищенный Узел',
-      },
-      social: {
-        title: 'Социальная сеть',
-        tag: 'React Native',
-        type: 'Мобильное Приложение',
-        live: 'Прямой эфир',
-        follow: 'Подписаться',
-      },
-    },
-  },
-  EN: {
-    badge: 'Interface Gallery',
-    titlePart1: 'Interfaces that',
-    titlePart2: 'set the trends',
-    button: 'Discuss Design',
-    projects: {
-      fintech: {
-        title: 'FinTech App',
-        tag: 'Mobile UI',
-        type: 'Native iOS',
-        verified: 'Verified',
-        balance: 'Total Balance',
-        month: 'this month',
-        transfer: 'Transfer',
-        pay: 'Pay',
-      },
-      crm: {
-        title: 'AI CRM System',
-        tag: 'Web Dashboard',
-        type: 'React Frontend',
-        analytics: 'Analytics',
-      },
-      logistics: {
-        title: 'Logistics Platform',
-        tag: 'B2B Platform',
-        type: 'Vue Client',
-        online: 'Online',
-        secure: 'Secure Node',
-      },
-      social: {
-        title: 'Social Network',
-        tag: 'React Native',
-        type: 'Mobile App',
-        live: 'Live',
-        follow: 'Follow',
-      },
-    },
-  },
-  UA: {
-    badge: 'Галерея інтерфейсів',
-    titlePart1: 'Інтерфейси,',
-    titlePart2: 'що задають тренди',
-    button: 'Обговорити дизайн',
-    projects: {
-      fintech: {
-        title: 'Фінтех Додаток',
-        tag: 'Мобільний інтерфейс',
-        type: 'Native iOS',
-        verified: 'Перевірено',
-        balance: 'Загальний Баланс',
-        month: 'в цьому місяці',
-        transfer: 'Переказ',
-        pay: 'Оплата',
-      },
-      crm: {
-        title: 'AI CRM Система',
-        tag: 'Веб Дашборд',
-        type: 'React Frontend',
-        analytics: 'Аналітика',
-      },
-      logistics: {
-        title: 'Платформа логістики',
-        tag: 'B2B Платформа',
-        type: 'Vue Client',
-        online: 'Онлайн',
-        secure: 'Захищений Вузол',
-      },
-      social: {
-        title: 'Соціальна мережа',
-        tag: 'React Native',
-        type: 'Мобільний Додаток',
-        live: 'Наживо',
-        follow: 'Стежити',
-      },
-    },
-  },
-} as const;
-
-type ShowcaseCopy = (typeof SHOWCASE_COPY)[keyof typeof SHOWCASE_COPY];
-
-type ProjectCardData = {
-  key: string;
+type Step = {
+  index: string;
   title: string;
-  tag: string;
-  type: string;
-  desktopWidth: string;
-  mobileWidth: string;
-  gradientClass: string;
-  content: ReactNode;
+  desc: string;
+  Icon: LucideIcon;
 };
 
-function getMockProjects(tLocal: ShowcaseCopy): ProjectCardData[] {
-  return [
-    {
-      key: 'fintech',
-      title: tLocal.projects.fintech.title,
-      tag: tLocal.projects.fintech.tag,
-      type: tLocal.projects.fintech.type,
-      desktopWidth: 'w-[282px]',
-      mobileWidth: 'w-[82vw] max-w-[312px]',
-      gradientClass: 'from-[#0d2340] via-[#1f59af] to-[#70caff]',
-      content: (
-        <div className="relative z-10 flex h-full flex-col gap-3 p-5">
-          <div className="mb-1 flex items-center justify-between">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-white/12 text-sky-100">
-              <CreditCard className="h-5 w-5" />
-            </div>
-            <div className="rounded-full border border-cyan-200/20 bg-cyan-300/12 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-100">
-              {tLocal.projects.fintech.verified}
-            </div>
-          </div>
+type Outcome = {
+  title: string;
+  desc: string;
+};
 
-          <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-blue-100/68">
-            {tLocal.projects.fintech.balance}
-          </div>
-          <div className="text-[32px] font-bold tracking-[-0.05em] text-white">$124,592.50</div>
-          <div className="text-xs font-semibold text-cyan-100/88">
-            +12.4% {tLocal.projects.fintech.month}
-          </div>
+type StepSceneKind = 'context' | 'flow' | 'system' | 'handoff';
 
-          <div className="mt-auto grid grid-cols-2 gap-3">
-            <div className="flex h-14 flex-col items-center justify-center gap-1 rounded-2xl border border-white/12 bg-white/10">
-              <Activity className="h-5 w-5 text-sky-100" />
-              <span className="text-[9px] uppercase tracking-[0.18em] text-white/72">
-                {tLocal.projects.fintech.transfer}
-              </span>
-            </div>
-            <div className="flex h-14 flex-col items-center justify-center gap-1 rounded-2xl border border-cyan-200/18 bg-cyan-300/12">
-              <Zap className="h-5 w-5 text-cyan-100" />
-              <span className="text-[9px] uppercase tracking-[0.18em] text-white/72">
-                {tLocal.projects.fintech.pay}
-              </span>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: 'crm',
-      title: tLocal.projects.crm.title,
-      tag: tLocal.projects.crm.tag,
-      type: tLocal.projects.crm.type,
-      desktopWidth: 'w-[392px]',
-      mobileWidth: 'w-[88vw] max-w-[356px]',
-      gradientClass: 'from-[#0e223d] via-[#1b4b87] to-[#58adff]',
-      content: (
-        <div className="relative z-10 flex h-full flex-col gap-4 p-5">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/12 bg-white/10">
-                <LayoutDashboard className="h-4 w-4 text-sky-100" />
-              </div>
-              <div className="h-3 w-20 rounded-full bg-white/18" />
-            </div>
-            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-white/12 bg-white/10">
-              <Users className="h-3.5 w-3.5 text-cyan-100" />
-            </div>
-          </div>
+type SectionCopy = {
+  badge: string;
+  titlePart1: string;
+  titlePart2: string;
+  desc: string;
+  boardLabel: string;
+  boardTitle: string;
+  boardDesc: string;
+  steps: Step[];
+  outcomesLabel: string;
+  outcomes: Outcome[];
+  button: string;
+};
 
-          <div className="flex flex-1 gap-4">
-            <div className="flex w-[34%] flex-col gap-3 rounded-[18px] border border-white/10 bg-black/12 p-3">
-              <div className="h-2 w-full rounded-full bg-cyan-200/48" />
-              <div className="h-2 w-3/4 rounded-full bg-white/22" />
-              <div className="mt-auto h-2 w-1/2 rounded-full bg-white/16" />
-            </div>
+const OUTCOME_ICONS: readonly LucideIcon[] = [Sparkles, ShieldCheck, Blocks];
+const STEP_SCENES: readonly StepSceneKind[] = ['context', 'flow', 'system', 'handoff'];
 
-            <div className="relative flex w-[66%] flex-col rounded-[18px] border border-white/10 bg-black/10 p-3">
-              <div className="flex h-full items-end gap-1.5">
-                {[44, 68, 52, 86, 64, 78].map((height, index) => (
-                  <div
-                    key={height}
-                    className={`flex-1 rounded-t-sm ${
-                      index === 3 ? 'bg-cyan-200/90' : 'bg-white/24'
-                    }`}
-                    style={{ height: `${height}%` }}
-                  />
-                ))}
-              </div>
-              <div className="mt-3 flex items-center justify-between text-[10px] font-medium text-white/58">
-                <span>{tLocal.projects.crm.analytics}</span>
-                <TrendingUp className="h-3.5 w-3.5 text-cyan-100" />
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: 'logistics',
-      title: tLocal.projects.logistics.title,
-      tag: tLocal.projects.logistics.tag,
-      type: tLocal.projects.logistics.type,
-      desktopWidth: 'w-[302px]',
-      mobileWidth: 'w-[84vw] max-w-[320px]',
-      gradientClass: 'from-[#0f2940] via-[#17658d] to-[#6ed3ff]',
-      content: (
-        <div className="relative z-10 flex h-full flex-col gap-4 overflow-hidden p-5">
-          <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-cyan-200/18 bg-cyan-200/8" />
+const SECTION_COPY: Record<'RU' | 'EN' | 'UA', SectionCopy> = {
+  RU: {
+    badge: 'Интерфейсная архитектура',
+    titlePart1: 'Как мы проектируем',
+    titlePart2: 'сильные интерфейсы',
+    desc:
+      'Мы не рисуем экраны в отрыве от продукта. Сначала собираем логику, затем строим UX flow, после этого формируем UI-систему и доводим её до разработки. Поэтому интерфейс выглядит зрелым и на desktop, и на mobile.',
+    boardLabel: 'Наш подход',
+    boardTitle: 'От продуктовой логики до dev-ready интерфейса',
+    boardDesc:
+      'Один и тот же подход работает для лендингов, B2B-платформ, fintech и data-heavy продуктов: меньше хаоса, сильнее иерархия, чище решение.',
+    steps: [
+      {
+        index: '01',
+        title: 'Контекст продукта',
+        desc: 'Разбираем роли, сценарии, бизнес-цели и то, что пользователь должен понять сразу.',
+        Icon: Sparkles,
+      },
+      {
+        index: '02',
+        title: 'UX flow',
+        desc: 'Сокращаем путь к действию, убираем лишнее и выстраиваем понятные приоритеты.',
+        Icon: Route,
+      },
+      {
+        index: '03',
+        title: 'UI-система',
+        desc: 'Собираем визуальную иерархию, компоненты, состояния и motion в целостный язык.',
+        Icon: Blocks,
+      },
+      {
+        index: '04',
+        title: 'Разработка без потерь',
+        desc: 'Передаём не просто макеты, а систему, которая одинаково хорошо работает на desktop и mobile.',
+        Icon: Code2,
+      },
+    ],
+    outcomesLabel: 'Что получает продукт',
+    outcomes: [
+      {
+        title: 'Понимание с первого экрана',
+        desc: 'Пользователь быстрее считывает суть продукта и не теряется в интерфейсе.',
+      },
+      {
+        title: 'Доверие в сложных сценариях',
+        desc: 'Финансы, статусы, таблицы, dashboards и действия выглядят надёжно, а не тревожно.',
+      },
+      {
+        title: 'Система, которая растёт',
+        desc: 'Интерфейс не рассыпается, когда продукт расширяется и появляются новые функции.',
+      },
+    ],
+    button: 'Обсудить интерфейс',
+  },
+  EN: {
+    badge: 'Interface architecture',
+    titlePart1: 'How we design',
+    titlePart2: 'strong interfaces',
+    desc:
+      'We do not draw screens in isolation. First comes product logic, then UX flow, then the UI system, and only then the handoff to development. That is why the interface feels mature on both desktop and mobile.',
+    boardLabel: 'Our approach',
+    boardTitle: 'From product logic to a dev-ready interface',
+    boardDesc:
+      'The same approach works for landing pages, B2B platforms, fintech, and data-heavy products: less chaos, stronger hierarchy, cleaner decisions.',
+    steps: [
+      {
+        index: '01',
+        title: 'Product context',
+        desc: 'We define roles, scenarios, business goals, and what the user must understand first.',
+        Icon: Sparkles,
+      },
+      {
+        index: '02',
+        title: 'UX flow',
+        desc: 'We shorten the path to action, remove friction, and build clear priorities.',
+        Icon: Route,
+      },
+      {
+        index: '03',
+        title: 'UI system',
+        desc: 'We shape hierarchy, components, states, and motion into one coherent language.',
+        Icon: Blocks,
+      },
+      {
+        index: '04',
+        title: 'Lossless handoff',
+        desc: 'We deliver not just screens, but a system that works equally well on desktop and mobile.',
+        Icon: Code2,
+      },
+    ],
+    outcomesLabel: 'What the product gets',
+    outcomes: [
+      {
+        title: 'Understanding from the first screen',
+        desc: 'Users grasp the product faster and do not get lost in the interface.',
+      },
+      {
+        title: 'Trust in complex scenarios',
+        desc: 'Finances, statuses, tables, dashboards, and actions feel reliable instead of stressful.',
+      },
+      {
+        title: 'A system that scales',
+        desc: 'The interface keeps its structure as the product grows and new features appear.',
+      },
+    ],
+    button: 'Discuss your interface',
+  },
+  UA: {
+    badge: 'Інтерфейсна архітектура',
+    titlePart1: 'Як ми проєктуємо',
+    titlePart2: 'сильні інтерфейси',
+    desc:
+      'Ми не малюємо екрани у відриві від продукту. Спочатку збираємо логіку, далі будуємо UX flow, потім формуємо UI-систему і лише після цього доводимо її до розробки. Тому інтерфейс виглядає зрілим і на desktop, і на mobile.',
+    boardLabel: 'Наш підхід',
+    boardTitle: 'Від логіки продукту до dev-ready інтерфейсу',
+    boardDesc:
+      'Один і той самий підхід працює для лендингів, B2B-платформ, fintech і data-heavy продуктів: менше хаосу, сильніша ієрархія, чистіше рішення.',
+    steps: [
+      {
+        index: '01',
+        title: 'Контекст продукту',
+        desc: 'Розбираємо ролі, сценарії, бізнес-цілі й те, що користувач має зрозуміти одразу.',
+        Icon: Sparkles,
+      },
+      {
+        index: '02',
+        title: 'UX flow',
+        desc: 'Скорочуємо шлях до дії, прибираємо зайве й вибудовуємо зрозумілі пріоритети.',
+        Icon: Route,
+      },
+      {
+        index: '03',
+        title: 'UI-система',
+        desc: 'Збираємо візуальну ієрархію, компоненти, стани й motion у цілісну мову.',
+        Icon: Blocks,
+      },
+      {
+        index: '04',
+        title: 'Розробка без втрат',
+        desc: 'Передаємо не просто макети, а систему, яка однаково добре працює на desktop і mobile.',
+        Icon: Code2,
+      },
+    ],
+    outcomesLabel: 'Що отримує продукт',
+    outcomes: [
+      {
+        title: 'Розуміння з першого екрана',
+        desc: 'Користувач швидше зчитує суть продукту й не губиться в інтерфейсі.',
+      },
+      {
+        title: 'Довіра в складних сценаріях',
+        desc: 'Фінанси, статуси, таблиці, dashboards і дії виглядають надійно, а не тривожно.',
+      },
+      {
+        title: 'Система, що росте',
+        desc: 'Інтерфейс не розсипається, коли продукт масштабується й отримує нові функції.',
+      },
+    ],
+    button: 'Обговорити інтерфейс',
+  },
+};
 
-          <div className="relative z-10 flex items-center justify-between">
-            <div className="rounded-xl border border-white/10 bg-black/14 p-2">
-              <Search className="h-5 w-5 text-sky-100" />
-            </div>
-            <div className="rounded-full border border-white/12 bg-white/86 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-900">
-              {tLocal.projects.logistics.online}
-            </div>
-          </div>
-
-          <div className="mt-6 flex items-center gap-4 rounded-[22px] border border-cyan-200/18 bg-white/12 p-4 backdrop-blur-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/18">
-              <ShieldCheck className="h-6 w-6 text-cyan-100" />
-            </div>
-            <div>
-              <div className="text-base font-semibold text-white">
-                {tLocal.projects.logistics.secure}
-              </div>
-              <div className="mt-1 text-xs text-cyan-100/82">Uptime 99.99%</div>
-            </div>
-          </div>
-
-          <div className="mt-auto flex items-end justify-between px-1 pb-1">
-            <div className="flex gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-cyan-100" />
-              <div className="h-2 w-2 rounded-full bg-cyan-100/38" />
-              <div className="h-2 w-2 rounded-full bg-cyan-100/24" />
-            </div>
-            <PieChart className="h-5 w-5 text-white/42" />
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: 'social',
-      title: tLocal.projects.social.title,
-      tag: tLocal.projects.social.tag,
-      type: tLocal.projects.social.type,
-      desktopWidth: 'w-[282px]',
-      mobileWidth: 'w-[82vw] max-w-[312px]',
-      gradientClass: 'from-[#10243e] via-[#255fa9] to-[#83d4ff]',
-      content: (
-        <div className="relative z-10 flex h-full flex-col">
-          <div className="relative flex h-[46%] items-start justify-between overflow-hidden rounded-t-[24px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_34%),linear-gradient(135deg,rgba(9,18,38,0.45),rgba(24,70,130,0.24),rgba(129,220,255,0.3))] p-4">
-            <div className="rounded-full border border-white/12 bg-black/18 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
-              {tLocal.projects.social.live}
-            </div>
-            <div className="flex gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-white/92" />
-              <div className="h-2 w-2 rounded-full bg-cyan-100/58" />
-            </div>
-          </div>
-
-          <div className="relative flex flex-1 flex-col gap-3 bg-[linear-gradient(180deg,rgba(6,12,24,0),rgba(4,11,22,0.22))] p-5">
-            <div className="absolute -top-7 left-5 flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-cyan-100/45 bg-[linear-gradient(135deg,#102d51,#3f86e7,#8dd7ff)] text-sm font-bold tracking-[0.16em] text-white">
-              DS
-            </div>
-
-            <div className="mt-7 flex items-start justify-between gap-3">
-              <div>
-                <div className="h-3 w-24 rounded-full bg-white/90" />
-                <div className="mt-2 h-2 w-16 rounded-full bg-white/32" />
-              </div>
-              <div className="rounded-full border border-cyan-200/18 bg-cyan-200/12 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-100">
-                {tLocal.projects.social.follow}
-              </div>
-            </div>
-
-            <div className="mt-auto grid grid-cols-2 gap-2">
-              <div className="h-10 rounded-xl border border-white/12 bg-white/10" />
-              <div className="h-10 rounded-xl border border-cyan-200/18 bg-cyan-200/12" />
-            </div>
-          </div>
-        </div>
-      ),
-    },
-  ];
+function FlowConnector() {
+  return (
+    <div className="relative hidden h-12 w-14 items-center justify-center xl:flex">
+      <div className="absolute left-1 right-1 top-1/2 h-px -translate-y-1/2 bg-white/10" />
+      <motion.div
+        className="absolute left-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-100 shadow-[0_0_12px_rgba(186,230,253,0.7)]"
+        animate={{ x: [0, 18, 0], opacity: [0.4, 1, 0.4] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+      />
+    </div>
+  );
 }
 
-function ShowcaseCard({ project }: { project: ProjectCardData }) {
+function InterfaceBlueprint() {
   return (
-    <>
-      <div className="showcase-card-shell relative overflow-hidden rounded-[32px] border border-white/8 bg-[#101218] p-2 shadow-[0_18px_48px_rgba(0,0,0,0.34)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(181,232,255,0.14),transparent_42%)]" />
-        <div
-          className={`relative flex h-[320px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br ${project.gradientClass}`}
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.04)_24%,transparent_58%)]" />
-          {project.content}
-        </div>
+    <div className="pointer-events-none absolute right-6 top-6 hidden xl:block">
+      <div className="relative h-24 w-24">
+        <div className="absolute inset-0 rounded-full border border-white/8" />
+        <motion.div
+          className="absolute inset-0 rounded-full border border-cyan-200/22"
+          animate={{ scale: [0.7, 1.12, 0.7], opacity: [0, 0.75, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-100 shadow-[0_0_16px_rgba(186,230,253,0.7)]" />
+        <div className="absolute left-1/2 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-white/70" />
+        <div className="absolute bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white/45" />
+        <div className="absolute left-1 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white/45" />
+        <div className="absolute right-1 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white/70" />
       </div>
+    </div>
+  );
+}
 
-      <div className="relative z-10 mt-7 pl-2 text-left">
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-white/10 bg-[#18181b] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#a1a1aa]">
-            {project.type}
-          </span>
-          <span className="rounded-full border border-sky-200/12 bg-sky-200/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-sky-100/84">
-            {project.tag}
-          </span>
+function StepScene({ kind }: { kind: StepSceneKind }) {
+  if (kind === 'context') {
+    return (
+      <div className="mt-auto pt-6">
+        <div className="relative mx-auto h-[164px] w-full max-w-[256px] overflow-hidden rounded-[24px] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(111,201,255,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-4">
+          <div className="absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="relative mt-8 h-[104px]">
+            <motion.div
+              className="absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 rounded-full border border-white/10 bg-[#171b23]"
+              animate={{ y: [0, 3, 0], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <div className="absolute inset-[11px] rounded-full bg-cyan-100/72" />
+            </motion.div>
+            <div className="absolute left-1/2 top-9 h-8 w-px -translate-x-1/2 bg-gradient-to-b from-cyan-100/24 to-transparent" />
+            <motion.div
+              className="absolute left-1/2 top-11 h-[68px] w-[146px] -translate-x-1/2 rounded-[20px] border border-cyan-200/18 bg-[linear-gradient(180deg,rgba(23,33,53,0.96),rgba(11,15,23,0.94))] px-4 py-3"
+              animate={{
+                y: [0, -4, 0],
+                boxShadow: [
+                  '0 0 0 rgba(0,0,0,0)',
+                  '0 12px 28px rgba(43,103,210,0.16)',
+                  '0 0 0 rgba(0,0,0,0)',
+                ],
+              }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <div className="h-2.5 w-14 rounded-full bg-cyan-100/70" />
+              <div className="mt-3 h-2 w-full rounded-full bg-white/12" />
+              <div className="mt-2 h-2 w-4/5 rounded-full bg-white/10" />
+            </motion.div>
+
+            {['left-6 top-[62px]', 'right-6 top-[62px]'].map((position, index) => (
+              <motion.div
+                key={position}
+                className={`absolute ${position} rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/54`}
+                animate={{
+                  y: index === 0 ? [0, -6, 0] : [0, 6, 0],
+                  opacity: [0.45, 0.9, 0.45],
+                }}
+                transition={{ duration: 3 + index * 0.35, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                Node
+              </motion.div>
+            ))}
+
+            {[
+              'left-[27%] top-[70px] w-10 rotate-6',
+              'right-[27%] top-[70px] w-10 -rotate-6',
+            ].map((position, index) => (
+              <motion.div
+                key={position}
+                className={`absolute ${position} h-px bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent`}
+                animate={{ opacity: [0.2, 0.7, 0.2] }}
+                transition={{ duration: 2.4 + index * 0.2, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            ))}
+          </div>
         </div>
-        <h3 className="text-[22px] font-display font-medium text-white transition-colors duration-300 group-hover/project:text-sky-100">
-          {project.title}
-        </h3>
       </div>
-    </>
+    );
+  }
+
+  if (kind === 'flow') {
+    return (
+      <div className="mt-auto pt-6">
+        <div className="relative mx-auto h-[164px] w-full max-w-[256px] overflow-hidden rounded-[24px] border border-white/8 bg-[radial-gradient(circle_at_bottom_right,rgba(96,165,250,0.14),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-4">
+          <div className="absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="relative mt-7 h-[106px]">
+            <div className="absolute left-5 right-5 top-6 h-px bg-gradient-to-r from-white/4 via-white/12 to-white/4" />
+            {[0, 1, 2, 3].map((index) => (
+              <motion.div
+                key={index}
+                className="absolute top-3 h-6 w-6 -translate-x-1/2 rounded-full border border-white/12 bg-[#171a22]"
+                style={{ left: `${18 + index * 21}%` }}
+                animate={{
+                  borderColor: [
+                    'rgba(255,255,255,0.12)',
+                    'rgba(186,230,253,0.45)',
+                    'rgba(255,255,255,0.12)',
+                  ],
+                  boxShadow: [
+                    '0 0 0 rgba(0,0,0,0)',
+                    '0 0 24px rgba(59,130,246,0.22)',
+                    '0 0 0 rgba(0,0,0,0)',
+                  ],
+                }}
+                transition={{ duration: 2.6, repeat: Infinity, delay: index * 0.18, ease: 'easeInOut' }}
+              >
+                <div className="absolute inset-[6px] rounded-full bg-white/12" />
+              </motion.div>
+            ))}
+
+            <motion.div
+              className="absolute top-[17px] h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-cyan-100 shadow-[0_0_16px_rgba(186,230,253,0.75)]"
+              animate={{ left: ['18%', '81%', '18%'] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            <div className="absolute inset-x-3 bottom-0 grid grid-cols-3 gap-2">
+              {[0, 1, 2].map((index) => (
+                <motion.div
+                  key={index}
+                  className="rounded-[16px] border border-white/8 bg-black/20 px-3 py-3"
+                  animate={{ y: [0, -3, 0], opacity: [0.58, 0.92, 0.58] }}
+                  transition={{ duration: 2.4 + index * 0.25, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <div className="h-2 w-8 rounded-full bg-white/22" />
+                  <div className="mt-2 h-2 w-full rounded-full bg-white/10" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (kind === 'system') {
+    return (
+      <div className="mt-auto pt-6">
+        <div className="relative mx-auto h-[164px] w-full max-w-[256px] overflow-hidden rounded-[24px] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(125,211,252,0.16),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-4">
+          <div className="absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            {[0, 1, 2, 3].map((index) => (
+              <motion.div
+                key={index}
+                className={`rounded-[18px] border border-white/8 p-3 ${
+                  index === 1 || index === 2
+                    ? 'bg-[linear-gradient(180deg,rgba(34,98,201,0.28),rgba(16,24,38,0.72))]'
+                    : 'bg-black/16'
+                }`}
+                animate={{
+                  scale: index === 1 || index === 2 ? [1, 1.03, 1] : [1, 1.01, 1],
+                  borderColor: [
+                    'rgba(255,255,255,0.08)',
+                    index === 1 || index === 2
+                      ? 'rgba(125,211,252,0.34)'
+                      : 'rgba(255,255,255,0.14)',
+                    'rgba(255,255,255,0.08)',
+                  ],
+                }}
+                transition={{ duration: 2.8 + index * 0.12, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="h-2 w-8 rounded-full bg-white/26" />
+                <div className="mt-2 h-2 w-full rounded-full bg-white/12" />
+                <div className="mt-2 h-2 w-4/5 rounded-full bg-white/10" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-auto pt-6">
+      <div className="relative mx-auto h-[164px] w-full max-w-[256px] overflow-hidden rounded-[24px] border border-white/8 bg-[radial-gradient(circle_at_bottom_left,rgba(96,165,250,0.14),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-4">
+        <div className="absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="relative mt-8 h-[104px]">
+          <div className="absolute left-2 top-2 w-[38%] rounded-[18px] border border-white/8 bg-black/20 p-3">
+            <div className="h-2 w-10 rounded-full bg-white/22" />
+            <div className="mt-2 h-2 w-full rounded-full bg-white/10" />
+            <div className="mt-2 h-10 rounded-[12px] border border-white/6 bg-white/[0.04]" />
+          </div>
+          <div className="absolute right-2 top-2 w-[38%] rounded-[18px] border border-white/8 bg-black/20 p-3">
+            <div className="h-2 w-8 rounded-full bg-cyan-100/54" />
+            <div className="mt-2 space-y-2">
+              {[0, 1, 2].map((index) => (
+                <motion.div
+                  key={index}
+                  className="h-2 rounded-full bg-white/10"
+                  style={{ width: `${88 - index * 14}%` }}
+                  animate={{ opacity: [0.28, 0.76, 0.28] }}
+                  transition={{ duration: 1.8, repeat: Infinity, delay: index * 0.14, ease: 'easeInOut' }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="absolute left-1/2 top-[44px] h-px w-12 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-100/34 to-transparent" />
+          <motion.div
+            className="absolute left-1/2 top-[31px] h-8 w-8 -translate-x-1/2 rounded-full border border-cyan-100/18 bg-[#101722]"
+            animate={{ x: [0, 36, 0], rotate: [0, 180, 360] }}
+            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <div className="absolute inset-[9px] rounded-full bg-cyan-100/70" />
+          </motion.div>
+          <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2">
+            {['UI', 'DEV', 'QA'].map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-white/8 bg-white/[0.04] px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.16em] text-white/40"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export function ShowcaseMarquee() {
   const { lang } = useLanguage();
-  const tLocal = SHOWCASE_COPY[lang as keyof typeof SHOWCASE_COPY] ?? SHOWCASE_COPY.EN;
-  const projects = getMockProjects(tLocal);
-  const desktopTrackItems = [...projects, ...projects];
+  const copy = SECTION_COPY[lang as keyof typeof SECTION_COPY] ?? SECTION_COPY.EN;
 
   return (
     <section
       id="showcase"
-      className="relative w-full overflow-hidden bg-surface-bg py-16 scroll-mt-28 md:py-24 md:scroll-mt-32"
+      className="relative overflow-hidden bg-surface-bg py-16 scroll-mt-28 md:py-24 md:scroll-mt-32"
     >
-      <div className="pointer-events-none absolute right-[-80px] top-0 h-[420px] w-[420px] rounded-full bg-sky-400/8 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-[-180px] left-[-120px] h-[500px] w-[500px] rounded-full bg-blue-500/8 blur-[140px]" />
+      <div className="pointer-events-none absolute right-[-100px] top-[10%] h-[420px] w-[420px] rounded-full bg-sky-400/8 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-[-120px] left-[-80px] h-[480px] w-[480px] rounded-full bg-blue-500/8 blur-[140px]" />
 
-      <div className="relative z-10 mx-auto mb-12 flex max-w-7xl flex-col justify-between gap-6 px-4 lg:mb-16 lg:flex-row lg:items-end lg:gap-10">
-        <div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.4 }}
-            className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted"
-          >
-            {tLocal.badge}
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            className="max-w-xl text-4xl font-display font-bold leading-[1.05] tracking-tight text-text-main md:text-5xl"
-          >
-            {tLocal.titlePart1}
-            <br />
-            <span className="brand-gradient-text">{tLocal.titlePart2}</span>
-          </motion.h2>
-        </div>
-
-        <motion.a
-          href="#contact"
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          className="brand-button group hidden w-fit items-center justify-center gap-2 rounded-full border border-brand-blue/35 px-8 py-4 text-[15px] font-bold text-white shadow-soft transition-transform no-underline sm:flex"
-        >
-          {tLocal.button}
-          <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
-        </motion.a>
-      </div>
-
-      <div className="relative hidden overflow-hidden py-10 md:block">
-        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-40 bg-gradient-to-r from-surface-bg to-transparent xl:w-64" />
-        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-40 bg-gradient-to-l from-surface-bg to-transparent xl:w-64" />
-
-        <div className="group flex overflow-hidden">
-          <div className="showcase-marquee-track flex w-max gap-8 px-4 will-change-transform">
-            {desktopTrackItems.map((project, index) => (
-              <article
-                key={`${project.key}-${index}`}
-                className={`group/project flex shrink-0 flex-col transition-transform duration-300 hover:-translate-y-2 ${project.desktopWidth}`}
-              >
-                <ShowcaseCard project={project} />
-              </article>
-            ))}
+      <div className="relative z-10 mx-auto max-w-7xl px-4">
+        <div className="max-w-4xl">
+          <div className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted">
+            {copy.badge}
           </div>
-        </div>
-      </div>
 
-      <div className="scrollbar-hide showcase-mobile-scroll relative -mx-4 overflow-x-auto px-4 pb-2 pt-4 md:hidden">
-        <div className="flex w-max gap-4 pr-4">
-          {projects.map((project) => (
-            <article
-              key={project.key}
-              className={`group/project snap-start ${project.mobileWidth}`}
-            >
-              <ShowcaseCard project={project} />
-            </article>
-          ))}
-        </div>
-      </div>
+          <h2 className="text-4xl font-display font-bold leading-[1.02] tracking-tight text-text-main md:text-5xl lg:text-6xl xl:text-[72px]">
+            {copy.titlePart1}
+            <br />
+            <span className="brand-gradient-text">{copy.titlePart2}</span>
+          </h2>
 
-      <div className="mt-6 flex px-4 sm:hidden">
-        <motion.a
-          href="#contact"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="brand-button flex w-full items-center justify-center gap-2 rounded-full border border-brand-blue/35 py-4 text-[15px] font-bold text-white shadow-soft transition-transform no-underline"
-        >
-          {tLocal.button}
-          <ArrowRight className="h-5 w-5" />
-        </motion.a>
+          <p className="mt-6 max-w-3xl text-base leading-relaxed text-text-muted md:text-lg">
+            {copy.desc}
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6">
+          <div className="relative overflow-hidden rounded-[38px] border border-white/10 bg-[#101117]/92 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-6 lg:p-8">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(152,221,255,0.12),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(47,135,234,0.12),transparent_42%)]" />
+            <InterfaceBlueprint />
+
+            <div className="relative z-10">
+              <div className="max-w-3xl">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                  {copy.boardLabel}
+                </div>
+                <h3 className="mt-3 text-2xl font-display font-bold leading-tight text-white sm:text-[30px] xl:text-[34px]">
+                  {copy.boardTitle}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/66 sm:text-[15px]">
+                  {copy.boardDesc}
+                </p>
+              </div>
+
+              <div className="mt-8 grid gap-3 xl:flex xl:items-stretch xl:gap-4">
+                {copy.steps.map((step, index) => (
+                  <div key={step.title} className="contents">
+                    <article className="group min-w-0 rounded-[28px] border border-white/10 bg-white/[0.035] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[transform,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-white/16 hover:shadow-[0_18px_34px_rgba(0,0,0,0.22)] xl:flex xl:flex-1 xl:flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.07] text-white">
+                          <step.Icon className="h-5 w-5" />
+                        </div>
+                        <span className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100/74">
+                          {step.index}
+                        </span>
+                      </div>
+
+                      <div className="mt-6 text-[22px] font-display font-bold leading-tight text-white">
+                        {step.title}
+                      </div>
+                      <p className="mt-3 text-sm leading-6 text-white/66">
+                        {step.desc}
+                      </p>
+
+                      <StepScene kind={STEP_SCENES[index] ?? 'context'} />
+                    </article>
+
+                    {index < copy.steps.length - 1 && <FlowConnector />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            {copy.outcomes.map((item, index) => {
+              const Icon = OUTCOME_ICONS[index] ?? ShieldCheck;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-[30px] border border-white/10 bg-white/[0.03] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)] sm:p-6"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="mt-5 text-[22px] font-display font-bold leading-tight text-white">
+                    {item.title}
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-white/64">
+                    {item.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <a
+            href="#contact"
+            className="brand-button group inline-flex items-center justify-center gap-2 self-start rounded-full border border-brand-blue/35 px-6 py-3.5 text-sm font-bold text-white shadow-soft transition-transform no-underline hover:-translate-y-0.5"
+          >
+            {copy.button}
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+        </div>
       </div>
     </section>
   );

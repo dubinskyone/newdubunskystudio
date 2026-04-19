@@ -1,0 +1,55 @@
+- generic [ref=e4]:
+  - banner:
+    - generic [ref=e5]:
+      - link "Dubinsky Studio" [ref=e7] [cursor=pointer]:
+        - /url: "#top"
+        - img [ref=e8]
+        - generic [ref=e9]:
+          - generic [ref=e10]: Dubinsky
+          - generic [ref=e11]: Studio
+      - navigation [ref=e12]:
+        - button "Services" [ref=e14]:
+          - generic [ref=e15]: Services
+          - img [ref=e17]
+        - link "Cases" [ref=e20] [cursor=pointer]:
+          - /url: "#solutions"
+        - link "Interfaces" [ref=e22] [cursor=pointer]:
+          - /url: "#showcase"
+        - link "Process" [ref=e24] [cursor=pointer]:
+          - /url: "#platform"
+        - link "Team" [ref=e26] [cursor=pointer]:
+          - /url: "#team"
+        - link "Contacts" [ref=e28] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e29]:
+        - link "Discuss Project" [ref=e31] [cursor=pointer]:
+          - /url: "#contact"
+          - generic [ref=e33]: Discuss Project
+        - button "EN" [ref=e35]:
+          - img [ref=e36]
+          - generic [ref=e39]: EN
+          - img [ref=e40]
+  - main [ref=e42]:
+    - generic [ref=e45]:
+      - generic [ref=e48]: Premium Ecosystem 2026
+      - heading "We build digital products" [level=1] [ref=e49]:
+        - generic [ref=e50]: We build
+        - generic [ref=e51]: digital
+        - generic [ref=e52]: products
+      - paragraph [ref=e53]: We are a full-cycle development studio. We don't just build interfaces, we deliver turnkey MVPs. We design UI/UX systems, write scalable code, and build a robust technical foundation for your business growth.
+      - generic [ref=e54]:
+        - link "Contact Us" [ref=e55] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Contact Us
+          - img [ref=e56]
+        - link "View Cases" [ref=e58] [cursor=pointer]:
+          - /url: "#solutions"
+          - text: View Cases
+          - img [ref=e59]
+      - generic [ref=e63]:
+        - generic [ref=e64]: Trusted by innovative teams
+        - generic [ref=e65]:
+          - generic [ref=e66]: FinTech Core
+          - generic [ref=e67]: NEXUS
+          - generic [ref=e68]: Lumina
+          - generic [ref=e69]: Aero

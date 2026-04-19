@@ -1,0 +1,1 @@
+import{b as s}from"./use-transform-BqXrpzvI.js";import{o as i}from"./proxy-Bakb2g4z.js";function f(n,...u){const r=n.length;function l(){let e="";for(let t=0;t<r;t++){e+=n[t];const o=u[t];o&&(e+=i(o)?o.get():o)}return e}return s(u.filter(i),l)}export{f as u};

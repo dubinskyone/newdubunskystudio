@@ -1,4 +1,4 @@
-import { translations, type Language } from './i18n';
+import type { Language } from './i18n';
 
 export const SITE_URL = 'https://dubinsky.studio';
 export const LANGUAGE_OPTIONS: Language[] = ['RU', 'EN', 'UA'];
@@ -77,61 +77,4 @@ export function getSeoForLanguage(language: Language) {
     canonical,
     path,
   };
-}
-
-export function buildStructuredData(language: Language) {
-  const seo = getSeoForLanguage(language);
-  const faqSource = translations[language].faq;
-
-  const organization = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Dubinsky Studio',
-    url: SITE_URL,
-    logo: `${SITE_URL}/preview.png`,
-    sameAs: ['https://t.me/dubinskystudio'],
-    contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        contactType: 'sales',
-        email: 'hello@dubinsky.studio',
-        availableLanguage: ['English', 'Russian', 'Ukrainian'],
-      },
-    ],
-  };
-
-  const website = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Dubinsky Studio',
-    url: canonicalizePath(seo.path),
-    description: seo.description,
-    inLanguage: seo.locale,
-  };
-
-  const faq = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    inLanguage: seo.locale,
-    mainEntity: [
-      { name: faqSource.q1, acceptedAnswer: { text: faqSource.a1 } },
-      { name: faqSource.q2, acceptedAnswer: { text: faqSource.a2 } },
-      { name: faqSource.q3, acceptedAnswer: { text: faqSource.a3 } },
-      { name: faqSource.q4, acceptedAnswer: { text: faqSource.a4 } },
-      { name: faqSource.q5, acceptedAnswer: { text: faqSource.a5 } },
-    ].map((entry) => ({
-      '@type': 'Question',
-      name: entry.name,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: entry.acceptedAnswer.text,
-      },
-    })),
-  };
-
-  return [organization, website, faq];
-}
-
-function canonicalizePath(path: string) {
-  return new URL(path, SITE_URL).toString();
 }

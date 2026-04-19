@@ -1,6 +1,13 @@
 import { memo } from 'react';
+import { useLiteMode } from '../../hooks/useLiteMode';
 
 export const FilmGrain = memo(() => {
+  const isLiteMode = useLiteMode();
+
+  if (isLiteMode) {
+    return null;
+  }
+
   return (
     <div className="pointer-events-none fixed inset-0 z-50 h-full w-full opacity-[0.03] mix-blend-overlay">
       <div 

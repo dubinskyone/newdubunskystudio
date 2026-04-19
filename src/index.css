@@ -1,5 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@800&family=Space+Grotesk:wght@400;500;700;900&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Inter Local";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/inter-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Inter Local";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Montserrat Local";
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url("/fonts/montserrat-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Montserrat Local";
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url("/fonts/montserrat-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Grotesk Local";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :root {
   --theme-bg: #09090b;
@@ -17,9 +61,9 @@
 }
 
 @theme {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-logo: "Montserrat", sans-serif;
+  --font-sans: "Inter Local", "SF Pro Text", "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Space Grotesk Local", "Inter Local", "SF Pro Display", "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-logo: "Montserrat Local", "Inter Local", "Avenir Next", "Segoe UI", Roboto, sans-serif;
 
   --color-brand-blue: #3B82F6;
   --color-brand-purple: #8B5CF6;
@@ -37,6 +81,13 @@
   --animate-pulse-slow: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-gradient: gradient 8s linear infinite;
   --animate-noise: noise 0.5s infinite;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --font-display: "Inter Local", "SF Pro Display", "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-logo: "Inter Local", "Avenir Next", "Segoe UI", Roboto, sans-serif;
+  }
 }
 
 @keyframes noise {
