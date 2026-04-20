@@ -50,7 +50,7 @@ const servicePreviewThemes: Record<ServiceTabKey, string> = {
 
 const navItems = [
   { id: 'services', labelKey: 'services', kind: 'services' },
-  { id: 'solutions', labelKey: 'cases', kind: 'link' },
+  { id: 'cases', labelKey: 'cases', kind: 'link' },
   { id: 'showcase', labelKey: 'gallery', kind: 'link' },
   { id: 'platform', labelKey: 'process', kind: 'link' },
   { id: 'team', labelKey: 'team', kind: 'link' },
@@ -94,7 +94,7 @@ export function Header() {
     serviceLinks.find((service) => service.key === activeServiceKey) ?? serviceLinks[0];
   const highlightedNavIndex = hoveredIndex ?? (activeDropdown === 'services' ? 0 : null);
   const isHeaderCondensed = scrollProgress > 0.04 || isMobileMenuOpen;
-  const headerWidthReduction = isMobileViewport ? 3 : 20;
+  const headerWidthReduction = isMobileViewport ? 3 : 12;
 
   const setDesktopNavItemRef = (index: number) => (node: HTMLDivElement | null) => {
     desktopNavItemRefs.current[index] = node;
@@ -126,7 +126,7 @@ export function Header() {
     const handleScroll = () => {
       const nextScrollY = window.scrollY;
       setScrolled(nextScrollY > 6);
-      setScrollProgress(Math.min(nextScrollY / 120, 1));
+      setScrollProgress(Math.min(nextScrollY / 180, 1));
     };
 
     handleScroll();
@@ -204,10 +204,10 @@ export function Header() {
     setIsMobileServicesOpen(false);
   };
 
-  const handleServiceSelect = (tabKey: ServiceTabKey) => {
-    window.dispatchEvent(new CustomEvent('changeBentoTab', { detail: tabKey }));
+  const handleServiceSelect = () => {
     closeDesktopDropdown();
     closeMobileMenu();
+    window.location.hash = 'showcase';
   };
 
   const toggleMobileMenu = () => {
@@ -232,7 +232,7 @@ export function Header() {
                   width: '100%',
                 }
           }
-          className={`flex w-full max-w-[1600px] origin-top items-center justify-between rounded-full pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`flex w-full max-w-[1640px] origin-top items-center justify-between rounded-full pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             scrolled || isMobileMenuOpen
               ? 'border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)]'
               : 'border border-transparent bg-transparent shadow-none'
@@ -363,8 +363,8 @@ export function Header() {
                               return (
                                 <a
                                   key={service.key}
-                                  href="#solutions"
-                                  onClick={() => handleServiceSelect(service.key)}
+                                  href="#showcase"
+                                  onClick={handleServiceSelect}
                                   onMouseEnter={() => setActiveServiceKey(service.key)}
                                   onFocus={() => setActiveServiceKey(service.key)}
                                   className={`group relative overflow-hidden rounded-[22px] border p-4 transition-all duration-200 no-underline ${
@@ -432,7 +432,7 @@ export function Header() {
 
                                 <div className="mt-8">
                                   <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/52">
-                                    {t('nav', 'cases')}
+                                    {t('nav', 'gallery')}
                                   </div>
                                   <div className="mt-2 text-[28px] font-display font-bold leading-[1.02] text-white">
                                     {activeServicePreview.projectName}
@@ -463,16 +463,16 @@ export function Header() {
                         </div>
 
                         <a
-                          href="#solutions"
+                          href="#showcase"
                           onClick={closeDesktopDropdown}
                           className="group mt-3 flex items-center justify-between rounded-[22px] border border-white/6 bg-white/[0.02] px-4 py-3 transition-colors duration-200 hover:border-white/10 hover:bg-white/[0.05] no-underline"
                         >
                           <div>
                             <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/35">
-                              {t('nav', 'cases')}
+                              {t('nav', 'gallery')}
                             </div>
                             <div className="mt-1 text-sm font-semibold text-white">
-                              {t('hero', 'cases')}
+                              {t('nav', 'gallery')}
                             </div>
                           </div>
                           <ArrowRight className="h-4 w-4 text-white/55 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white" />
@@ -631,8 +631,8 @@ export function Header() {
                           {serviceLinks.map((service) => (
                             <a
                               key={service.key}
-                              href="#solutions"
-                              onClick={() => handleServiceSelect(service.key)}
+                              href="#showcase"
+                              onClick={handleServiceSelect}
                               className="rounded-2xl border border-white/6 bg-white/[0.03] px-4 py-4 transition-colors duration-200 hover:border-white/12 hover:bg-white/[0.06] no-underline"
                             >
                               <div className="flex gap-3">

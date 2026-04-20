@@ -451,7 +451,7 @@ export function ShowcaseMarquee() {
       <div className="pointer-events-none absolute right-[-100px] top-[10%] h-[420px] w-[420px] rounded-full bg-sky-400/8 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-[-120px] left-[-80px] h-[480px] w-[480px] rounded-full bg-blue-500/8 blur-[140px]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4">
+      <div className="relative z-10 mx-auto max-w-[92rem] px-4">
         <div className="max-w-4xl">
           <div className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted">
             {copy.badge}

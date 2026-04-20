@@ -1,133 +1,220 @@
 import { motion } from 'motion/react';
-import { Layers, Terminal, Fingerprint } from 'lucide-react';
+import { Fingerprint, Layers, Terminal } from 'lucide-react';
 import { useLanguage } from '../i18n';
 
-const teamNames = {
-  RU: { alex: "Алексей Воронов", max: "Максим Лебедев", maria: "Мария Крамер", denis: "Денис Смирнов" },
-  EN: { alex: "Alex Voronov", max: "Max Lebedev", maria: "Maria Kramer", denis: "Denis Smirnov" },
-  UA: { alex: "Олексій Воронов", max: "Максим Лебедєв", maria: "Марія Крамер", denis: "Денис Смирнов" }
-};
+const TEAM_COPY = {
+  RU: {
+    badge: 'Команда',
+    title1: 'Над проектом работает',
+    title2: 'не случайный набор людей',
+    desc: 'Мы не продаём картинку из фотостока. Под каждый продукт собирается компактное senior-ядро: люди, которые понимают продукт, UX, код и выпуск как одну систему.',
+    highlights: [
+      {
+        title: 'Senior core',
+        description: 'Ключевые решения не отдаются на критический путь новичкам.',
+      },
+      {
+        title: 'One delivery loop',
+        description: 'Дизайн, разработка и product-логика идут в одной связке.',
+      },
+      {
+        title: 'Shared context',
+        description: 'Команда понимает не только задачу, но и бизнес-смысл каждого сценария.',
+      },
+    ],
+    rolesTitle: 'Кто обычно подключается к продукту',
+    roles: [
+      {
+        role: 'Product / delivery lead',
+        description: 'Формирует рамку проекта, синхронизирует приоритеты и держит коммуникацию в фокусе.',
+      },
+      {
+        role: 'UI/UX designer',
+        description: 'Собирает иерархию, сценарии и интерфейс так, чтобы продукт читался быстро и уверенно.',
+      },
+      {
+        role: 'Frontend engineering',
+        description: 'Переводит интерфейс в живой продукт без потери качества, логики и скорости.',
+      },
+      {
+        role: 'Backend / release layer',
+        description: 'Доводит продукт до рабочего состояния, интеграций и понятного запуска.',
+      },
+    ],
+  },
+  EN: {
+    badge: 'Team',
+    title1: 'A project is handled by',
+    title2: 'a focused senior core',
+    desc: 'We do not sell stock-photo chemistry. Each product is shaped by a compact senior team: people who treat product logic, UX, code, and release as one system.',
+    highlights: [
+      {
+        title: 'Senior core',
+        description: 'Critical decisions are not pushed onto juniors or fragmented teams.',
+      },
+      {
+        title: 'One delivery loop',
+        description: 'Design, development, and product logic move together in one rhythm.',
+      },
+      {
+        title: 'Shared context',
+        description: 'The team understands not just tasks, but the business meaning of each scenario.',
+      },
+    ],
+    rolesTitle: 'Who typically joins the product',
+    roles: [
+      {
+        role: 'Product / delivery lead',
+        description: 'Frames the project, aligns priorities, and keeps communication focused.',
+      },
+      {
+        role: 'UI/UX designer',
+        description: 'Builds hierarchy, flows, and interface clarity so the product reads fast and confidently.',
+      },
+      {
+        role: 'Frontend engineering',
+        description: 'Turns the interface into a living product without losing logic, quality, or speed.',
+      },
+      {
+        role: 'Backend / release layer',
+        description: 'Brings the product to a stable launch state with integrations and release readiness.',
+      },
+    ],
+  },
+  UA: {
+    badge: 'Команда',
+    title1: 'Над проєктом працює',
+    title2: 'не випадковий набір людей',
+    desc: 'Ми не продаємо картинку зі стоку. Під кожен продукт збирається компактне senior-ядро: люди, які сприймають продукт, UX, код і реліз як одну систему.',
+    highlights: [
+      {
+        title: 'Senior core',
+        description: 'Ключові рішення не віддаються на критичний шлях новачкам.',
+      },
+      {
+        title: 'One delivery loop',
+        description: 'Дизайн, розробка й product-логіка рухаються в одному ритмі.',
+      },
+      {
+        title: 'Shared context',
+        description: 'Команда розуміє не тільки задачі, а й бізнес-сенс кожного сценарію.',
+      },
+    ],
+    rolesTitle: 'Хто зазвичай підключається до продукту',
+    roles: [
+      {
+        role: 'Product / delivery lead',
+        description: 'Формує рамку проєкту, синхронізує пріоритети й тримає комунікацію в фокусі.',
+      },
+      {
+        role: 'UI/UX designer',
+        description: 'Збирає ієрархію, сценарії та інтерфейс так, щоб продукт читався швидко й упевнено.',
+      },
+      {
+        role: 'Frontend engineering',
+        description: 'Перетворює інтерфейс на живий продукт без втрати логіки, якості та швидкості.',
+      },
+      {
+        role: 'Backend / release layer',
+        description: 'Доводить продукт до робочого стану, інтеграцій і зрозумілого запуску.',
+      },
+    ],
+  },
+} as const;
+
+const HIGHLIGHT_ICONS = [Layers, Terminal, Fingerprint] as const;
 
 export function Team() {
-  const { t, lang } = useLanguage();
-  const names = teamNames[lang] || teamNames.EN;
-
-  const currentStats = [
-    { value: "5+", label: t('team', 'stat1Label'), icon: Layers },
-    { value: "12", label: t('team', 'stat2Label'), icon: Terminal },
-    { value: "100%", label: t('team', 'stat3Label'), icon: Fingerprint }
-  ];
+  const { lang } = useLanguage();
+  const copy = TEAM_COPY[lang] ?? TEAM_COPY.EN;
 
   return (
-    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-[#09090b] relative overflow-hidden" id="team">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
-          
-          <div className="lg:w-1/2">
+    <section
+      className="scroll-mt-28 relative overflow-hidden bg-[#09090b] px-4 py-16 md:scroll-mt-32 md:py-24"
+      id="team"
+    >
+      <div className="pointer-events-none absolute right-[-8%] top-1/2 -z-10 h-[520px] w-[520px] -translate-y-1/2 rounded-full bg-brand-blue/5 blur-[130px]" />
+
+      <div className="mx-auto max-w-[92rem]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
+          <div>
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-bold uppercase tracking-widest text-[#a1a1aa] mb-6 w-fit"
+              className="mb-6 w-fit rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#a1a1aa]"
             >
-              {t('team', 'badge')}
+              {copy.badge}
             </motion.div>
 
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 leading-[1.05] tracking-tight"
+              className="text-4xl font-display font-bold leading-[1.04] tracking-tight text-white md:text-5xl lg:text-6xl"
             >
-              {t('team', 'title1')} <span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t('team', 'titleHighlight')}</span><br/>{t('team', 'title2')}
+              {copy.title1} <span className="brand-gradient-text">{copy.title2}</span>
             </motion.h2>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-lg md:text-xl text-[#a1a1aa] mb-12 max-w-lg leading-relaxed"
+              transition={{ delay: 0.08 }}
+              className="mt-6 max-w-xl text-lg leading-relaxed text-[#a1a1aa] md:text-xl"
             >
-              {t('team', 'desc')}
+              {copy.desc}
             </motion.p>
 
-            <div className="flex flex-col gap-6">
-               {currentStats.map((stat, idx) => (
-                  <motion.div 
-                     key={idx}
-                     initial={{ opacity: 0, x: -20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ delay: 0.2 + idx * 0.1 }}
-                     className="flex items-center gap-5"
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {copy.highlights.map((item, index) => {
+                const Icon = HIGHLIGHT_ICONS[index];
+
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08 }}
+                    className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5"
                   >
-                     <div className="w-14 h-14 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center shrink-0">
-                        <stat.icon className="w-6 h-6 text-brand-blue" />
-                     </div>
-                     <div>
-                        <div className="text-3xl font-display font-black text-white">{stat.value}</div>
-                        <div className="text-sm font-bold text-[#a1a1aa] uppercase tracking-wider">{stat.label}</div>
-                     </div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-brand-blue/20 bg-brand-blue/10 text-brand-blue">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="mt-5 text-lg font-semibold text-white">{item.title}</div>
+                    <p className="mt-3 text-sm leading-6 text-[#a1a1aa]">{item.description}</p>
                   </motion.div>
-               ))}
+                );
+              })}
             </div>
           </div>
 
-          <div className="lg:w-1/2 relative">
-             <motion.div
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.8 }}
-               className="relative grid grid-cols-2 gap-4 h-full"
-             >
-                {/* 1st photo */}
-                <div className="col-span-1 flex flex-col gap-4 pt-12">
-                   <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-[3/4] cursor-pointer shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:-translate-y-2 transition-all duration-500">
-                      <div className="absolute inset-0 bg-brand-blue/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team1/400/600" alt="Алексей, Lead React" loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
-                      <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="text-xl font-bold text-white mb-1">{names.alex}</div>
-                        <div className="text-sm text-brand-blue">Lead Frontend</div>
-                      </div>
-                   </div>
-                   <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-square cursor-pointer shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_20px_40px_rgba(168,85,247,0.15)] hover:-translate-y-2 transition-all duration-500">
-                      <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team2/400/400" alt="Максим, DevOps Engineer" loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
-                      <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="text-xl font-bold text-white mb-1">{names.max}</div>
-                        <div className="text-sm text-brand-purple">DevOps Architect</div>
-                      </div>
-                   </div>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="rounded-[36px] border border-line bg-surface-card p-6 md:p-8"
+          >
+            <div className="mb-6 text-[11px] font-bold uppercase tracking-[0.24em] text-text-muted">
+              {copy.rolesTitle}
+            </div>
 
-                {/* 2nd photo column */}
-                <div className="col-span-1 flex flex-col gap-4">
-                   <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-square cursor-pointer shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:-translate-y-2 transition-all duration-500 z-20">
-                      <div className="absolute inset-0 bg-brand-blue/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team3/400/400" alt="Елена, Art Director" loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
-                      <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="text-xl font-bold text-white mb-1">{names.maria}</div>
-                        <div className="text-sm text-brand-blue">Art Director</div>
-                      </div>
-                   </div>
-                   <div className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-[3/4] cursor-pointer shadow-[0_0_0_rgba(255,255,255,0)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:-translate-y-2 transition-all duration-500">
-                      <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <img src="https://picsum.photos/seed/team4/400/600" alt="Дмитрий, Lead Backend" loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
-                      <div className="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="text-xl font-bold text-white mb-1">{names.denis}</div>
-                        <div className="text-sm text-brand-purple">Lead Backend</div>
-                      </div>
-                   </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {copy.roles.map((item, index) => (
+                <div
+                  key={item.role}
+                  className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-5"
+                >
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-sm font-bold text-white/72">
+                    0{index + 1}
+                  </div>
+                  <div className="text-xl font-display font-bold text-white">{item.role}</div>
+                  <p className="mt-3 text-sm leading-6 text-text-muted">{item.description}</p>
                 </div>
-             </motion.div>
-          </div>
-
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -5,79 +5,79 @@ import { TiltCard } from './ui/TiltCard';
 
 const dict = {
   RU: {
-    badge: "Наш подход",
-    titlePart1: "Почему выбирают ",
-    titleHighlight: "нашу инженерию",
-    desc: "Мы не просто пишем код. Мы проектируем устойчивые цифровые организмы, которые способны эволюционировать вместе с вашим бизнесом.",
+    badge: "Инженерный фундамент",
+    titlePart1: "Как мы строим",
+    titleHighlight: "продукты без лишнего техдолга",
+    desc: "Берём на себя не только интерфейс, но и архитектуру, надёжность, безопасность и release-ритм. Поэтому продукт не разваливается после первого запуска и спокойно растёт дальше.",
     cards: [
       {
-        title: "Cloud-Native Архитектура",
-        tag: "Инфраструктура",
-        desc: "Строим отказоустойчивые системы на базе микросервисов. Независимое масштабирование каждого узла под пиковые нагрузки рынка без деградации скорости.",
+        title: "Архитектура под реальный рост",
+        tag: "Architecture",
+        desc: "Не переусложняем старт, но сразу закладываем запас под новые роли, модули, интеграции и увеличение нагрузки.",
         icon: Network,
       },
       {
-        title: "Безопасность по умолчанию",
-        tag: "SecOps",
-        desc: "С самого первого коммита мы внедряем практики Zero-Trust. Регулярные аудиты, глубокое шифрование и защита пользовательских данных по банковским стандартам.",
+        title: "Надёжность и контроль рисков",
+        tag: "Reliability",
+        desc: "Продумываем доступы, состояния данных, ошибки и критические сценарии так, чтобы система вела себя спокойно и предсказуемо.",
         icon: Shield,
       },
       {
-        title: "Непрерывная поставка",
-        tag: "CI/CD & Agile",
-        desc: "Автоматизированные конвейеры развертывания и тестирования. Мы обеспечиваем экстремально быстрый релиз без потерь в качестве и надежности кода.",
+        title: "Релизы без хаоса",
+        tag: "Delivery",
+        desc: "Автоматизируем сборку, тесты и выкладку там, где это действительно снижает риск поломок и ускоряет команду.",
         icon: Zap,
       }
     ]
   },
   EN: {
-    badge: "Our Approach",
-    titlePart1: "Why choose ",
-    titleHighlight: "our engineering",
-    desc: "We don't just write code. We design resilient digital organisms capable of evolving alongside your business.",
+    badge: "Engineering foundation",
+    titlePart1: "How we build",
+    titleHighlight: "products without unnecessary tech debt",
+    desc: "We take responsibility not only for the interface, but also for architecture, reliability, security, and release rhythm. That is why the product stays stable after launch and scales with less friction.",
     cards: [
       {
-        title: "Cloud-Native Architecture",
-        tag: "Infrastructure",
-        desc: "We build fault-tolerant systems based on microservices. Independent scaling of each node for market peak loads without speed degradation.",
+        title: "Architecture for real growth",
+        tag: "Architecture",
+        desc: "We do not overengineer the start, but we do leave room for new roles, modules, integrations, and future load.",
         icon: Network,
       },
       {
-        title: "Security by Default",
-        tag: "SecOps",
-        desc: "From the very first commit, we implement Zero-Trust practices. Regular audits, deep encryption, and banking-standard user data protection.",
+        title: "Reliability and risk control",
+        tag: "Reliability",
+        desc: "We think through access, data states, failures, and critical flows so the system behaves calmly and predictably.",
         icon: Shield,
       },
       {
-        title: "Continuous Delivery",
-        tag: "CI/CD & Agile",
-        desc: "Automated deployment and testing pipelines. We ensure extremely fast time-to-market without compromising code quality and reliability.",
+        title: "Releases without chaos",
+        tag: "Delivery",
+        desc: "We automate build, testing, and deployment where it actually reduces breakage risk and helps the team move faster.",
         icon: Zap,
       }
     ]
   },
   UA: {
-    badge: "Наш підхід",
-    titlePart1: "Чому обирають ",
-    titleHighlight: "нашу інженерію",
-    desc: "Ми не просто пишемо код. Ми проєктуємо стійкі цифрові організми, здатні еволюціонувати разом із вашим бізнесом.",
+    badge: "Інженерний фундамент",
+    titlePart1: "Як ми будуємо",
+    titleHighlight: "продукти без зайвого техборгу",
+    desc: "Беремо на себе не лише інтерфейс, а й архітектуру, надійність, безпеку та release-ритм. Тому продукт не розсипається після запуску і спокійно масштабується далі.",
     cards: [
       {
-        title: "Cloud-Native Архітектура",
-        tag: "Інфраструктура",
-        desc: "Будуємо відмовостійкі системи на базі мікросервісів. Незалежне масштабування кожного вузла під пікові навантаження ринку без деградації швидкості.",
+        title: "Архітектура під реальний ріст",
+        tag: "Architecture",
+        desc: "Не переускладнюємо старт, але одразу закладаємо запас під нові ролі, модулі, інтеграції та майбутнє навантаження.",
         icon: Network,
       },
       {
-        title: "Безпека за замовчуванням",
-        tag: "SecOps",
-        desc: "З самого першого коміту ми впроваджуємо практики Zero-Trust. Регулярні аудити, глибоке шифрування та захист даних користувачів за банківськими стандартами.",
+        title: "Надійність і контроль ризиків",
+        tag: "Reliability",
+        desc: "Продумуємо доступи, стани даних, помилки та критичні сценарії так, щоб система поводилася спокійно й передбачувано.",
         icon: Shield,
       },
       {
-        title: "Безперервна поставка",
-        tag: "CI/CD & Agile",
-        desc: "Автоматизовані конвеєри розгортання та тестування. Ми забезпечуємо екстремально швидкий реліз без втрат якості та надійності коду.",
+        title: "Релізи без хаосу",
+        tag: "Delivery",
+        desc: "Автоматизуємо збірку, тести й викладку там, де це справді знижує ризик поломок і пришвидшує команду.",
         icon: Zap,
       }
     ]
@@ -89,11 +89,11 @@ export function Projects() {
   const t = dict[lang] || dict.EN;
 
   return (
-    <section className="scroll-mt-28 md:scroll-mt-32 py-24 bg-transparent pt-32 relative" id="approach">
+    <section className="relative scroll-mt-28 bg-transparent px-4 py-18 md:scroll-mt-32 md:py-22 lg:py-24" id="approach">
       <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-line to-transparent" />
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto max-w-[92rem]">
         
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="mx-auto mb-16 max-w-[56rem] text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -106,7 +106,7 @@ export function Projects() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main mb-6 tracking-tight leading-tight"
+            className="mb-6 text-4xl font-display font-bold leading-tight tracking-tight text-text-main md:text-5xl lg:text-6xl xl:text-[4.4rem]"
           >
             {t.titlePart1} <span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t.titleHighlight}</span>
           </motion.h2>
@@ -115,13 +115,13 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-text-muted"
+            className="text-lg text-text-muted md:text-xl"
           >
             {t.desc}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
           {t.cards.map((project, index) => (
             <motion.div
               key={index}

@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'motion/react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Magnetic } from './ui/Magnetic';
 import { HeroCopy, TrustedMarks } from './HeroShared';
+
+const HERO_BACKGROUND_VIDEO = '/cases/transmatika.mp4';
+const HERO_BACKGROUND_POSTER = '/cases/transmatika-poster.jpg';
 
 function Typewriter({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
@@ -45,10 +48,16 @@ function Typewriter({ words }: { words: string[] }) {
 }
 
 export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWordsArray: string[] }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
   const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+  const [useHeroVideo, setUseHeroVideo] = useState(true);
+  const [allowHeroVideo, setAllowHeroVideo] = useState(false);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+  const [isHeroInView, setIsHeroInView] = useState(true);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -60,16 +69,167 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
+  useEffect(() => {
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+
+    const shouldDisableVideo =
+      motionQuery.matches ||
+      connection?.saveData === true ||
+      ['slow-2g', '2g', '3g'].includes(connection?.effectiveType ?? '');
+
+    setUseHeroVideo(!shouldDisableVideo);
+  }, []);
+
+  useEffect(() => {
+    if (!useHeroVideo) {
+      setAllowHeroVideo(false);
+      return;
+    }
+
+    const win = window as Window & {
+      requestIdleCallback?: (
+        callback: IdleRequestCallback,
+        options?: IdleRequestOptions,
+      ) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    let timeoutId: number | null = null;
+    let idleId: number | null = null;
+
+    const enableVideo = () => setAllowHeroVideo(true);
+
+    if (typeof win.requestIdleCallback === 'function') {
+      idleId = win.requestIdleCallback(enableVideo, { timeout: 1800 });
+    } else {
+      timeoutId = window.setTimeout(enableVideo, 1200);
+    }
+
+    return () => {
+      if (idleId !== null && typeof win.cancelIdleCallback === 'function') {
+        win.cancelIdleCallback(idleId);
+      }
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [useHeroVideo]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroInView(entry.isIntersecting);
+      },
+      { threshold: 0.18, rootMargin: '120px 0px 120px 0px' },
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!useHeroVideo || !allowHeroVideo) {
+      setHeroVideoReady(false);
+    }
+  }, [allowHeroVideo, useHeroVideo]);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video || !useHeroVideo || !allowHeroVideo || !heroVideoReady) {
+      return;
+    }
+
+    const syncPlayback = () => {
+      if (document.hidden || !isHeroInView) {
+        video.pause();
+        return;
+      }
+
+      void video.play().catch(() => {
+        setUseHeroVideo(false);
+        setAllowHeroVideo(false);
+        setHeroVideoReady(false);
+      });
+    };
+
+    syncPlayback();
+    document.addEventListener('visibilitychange', syncPlayback);
+
+    return () => {
+      document.removeEventListener('visibilitychange', syncPlayback);
+    };
+  }, [allowHeroVideo, heroVideoReady, isHeroInView, useHeroVideo]);
+
   const background = useMotionTemplate`radial-gradient(600px circle at ${smoothX}px ${smoothY}px, rgba(255,255,255,0.06), transparent 80%)`;
 
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative flex min-h-[85svh] scroll-mt-28 flex-col items-center justify-center overflow-hidden px-4 pb-16 pt-32 text-center sm:pb-20 sm:pt-48 md:scroll-mt-32"
     >
       <motion.div className="pointer-events-none absolute inset-0 z-0" style={{ background }} />
 
       <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden bg-surface-bg">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div
+            className="relative h-[74vh] w-[74vw] max-h-[860px] max-w-[1120px] overflow-hidden rounded-[56px] opacity-[0.12]"
+            style={{
+              maskImage:
+                'radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 28%, rgba(0,0,0,0.48) 52%, rgba(0,0,0,0.08) 76%, transparent 100%)',
+              WebkitMaskImage:
+                'radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 28%, rgba(0,0,0,0.48) 52%, rgba(0,0,0,0.08) 76%, transparent 100%)',
+            }}
+          >
+            <img
+              src={HERO_BACKGROUND_POSTER}
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover brightness-[0.66] saturate-[0.82]"
+            />
+            {useHeroVideo && allowHeroVideo ? (
+              <video
+                ref={heroVideoRef}
+                className={`absolute inset-0 h-full w-full object-cover brightness-[0.66] saturate-[0.82] transition-opacity duration-500 ${
+                  heroVideoReady ? 'opacity-100' : 'opacity-0'
+                }`}
+                src={HERO_BACKGROUND_VIDEO}
+                poster={HERO_BACKGROUND_POSTER}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="none"
+                disablePictureInPicture
+                disableRemotePlayback
+                aria-hidden="true"
+                onLoadedData={() => setHeroVideoReady(true)}
+                onCanPlay={() => setHeroVideoReady(true)}
+                onError={() => {
+                  setUseHeroVideo(false);
+                  setAllowHeroVideo(false);
+                  setHeroVideoReady(false);
+                }}
+              />
+            ) : null}
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,15,0.42),rgba(5,8,15,0.18)_38%,rgba(5,8,15,0.6))]" />
+          </div>
+        </div>
+
         <motion.div
           animate={{ y: [0, -40, 0], x: [0, 30, 0], rotate: [0, 45, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
@@ -160,7 +320,7 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
           {copy.descEnding}
         </p>
 
-        <div className="z-20 mb-20 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row">
+        <div className="z-20 mb-10 flex w-full flex-col items-center justify-center gap-4 sm:mb-12 sm:w-auto sm:flex-row">
           <Magnetic>
             <motion.a
               href="#contact"
@@ -183,7 +343,7 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
 
           <Magnetic>
             <motion.a
-              href="#solutions"
+              href="#cases"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-line bg-surface-glass px-8 py-4 text-[15px] font-bold tracking-wide text-text-main no-underline transition-all hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 sm:w-auto"
@@ -191,12 +351,28 @@ export function HeroRich({ copy, titleWordsArray }: { copy: HeroCopy; titleWords
               <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(106,189,255,0.12),transparent_62%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="absolute inset-0 rounded-full shadow-[0_0_20px_rgba(255,255,255,0)] transition-shadow group-hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]" />
               <span className="relative z-10 flex items-center gap-2">
-                {copy.cases}
+                {copy.secondaryCta}
                 <Sparkles className="h-4 w-4 text-text-muted transition-all duration-300 group-hover:scale-110 group-hover:text-amber-300" />
               </span>
             </motion.a>
           </Magnetic>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.42, duration: 0.55 }}
+          className="mb-16 flex max-w-[780px] flex-wrap items-center justify-center gap-2.5 sm:mb-18"
+        >
+          {copy.focusItems.map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72"
+            >
+              {item}
+            </span>
+          ))}
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}

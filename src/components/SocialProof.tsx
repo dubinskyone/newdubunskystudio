@@ -1,162 +1,186 @@
-import { motion } from "motion/react";
-import { Quote } from "lucide-react";
-import { useLanguage } from "../i18n";
+import { motion } from 'motion/react';
+import { Activity, Layers, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../i18n';
 
-const testimonials = [
-  {
-    text: "Мы искали исполнителей, а нашли полноценных партнеров. Команда взяла на себя архитектуру приложения и выпустила MVP на 2 недели раньше дедлайна. Конверсия из триала в плату выросла на 24%.",
-    author: "Александр Соколов",
-    role: "CEO @ FinTech Core",
-    image: "https://picsum.photos/seed/alex/100/100?blur=1",
+const SECTION_COPY = {
+  RU: {
+    badge: 'Как строится работа',
+    title1: 'Бизнесу важны',
+    title2: 'понятные сигналы качества',
+    desc: 'Здесь собраны сигналы качества, которые действительно помогают принять решение о сотрудничестве: кто на связи, как виден прогресс и как держится фокус на результате.',
+    portfolioLabel: 'Проекты в портфолио',
+    projects: ['Transmatika', 'Swipy', 'KeyTrust', 'NovaBot', 'CoinGem', 'Fungypack'],
+    cards: [
+      {
+        title: 'Прямой диалог',
+        description:
+          'Важные продуктовые и технические вопросы обсуждаются напрямую, без лишней прослойки между клиентом и командой.',
+        detail: 'Стратегия, UX и delivery не расходятся по разным людям.',
+      },
+      {
+        title: 'Видимый прогресс',
+        description:
+          'Дизайн, разработка, приоритеты и следующие шаги читаются как единая картина, а не как набор отдельных апдейтов.',
+        detail: 'Клиент видит движение по продукту, а не слушает обещания.',
+      },
+      {
+        title: 'Фокус на результате',
+        description:
+          'Решения проходят через призму сценариев, скорости запуска, удобства интерфейса и будущего роста продукта.',
+        detail: 'Красота не отрывается от пользы для бизнеса.',
+      },
+    ],
   },
-  {
-    text: "Их процесс работы — это эталон. Абсолютная прозрачность, идеальный код и дизайн, который получил Awwwards в первую же неделю после релиза. Стоимость лида упала вдвое.",
-    author: "Елена Краснова",
-    role: "Founder @ Lumina",
-    image: "https://picsum.photos/seed/elena/100/100?blur=1",
+  EN: {
+    badge: 'How collaboration works',
+    title1: 'Business owners need',
+    title2: 'clear quality signals',
+    desc: 'This section focuses on the quality signals that actually matter before a partnership starts: who is involved, how progress stays visible, and how product decisions stay outcome-driven.',
+    portfolioLabel: 'Projects in the portfolio',
+    projects: ['Transmatika', 'Swipy', 'KeyTrust', 'NovaBot', 'CoinGem', 'Fungypack'],
+    cards: [
+      {
+        title: 'Direct communication',
+        description:
+          'Important product and technical topics are discussed directly, without unnecessary layers between the client and the team.',
+        detail: 'Strategy, UX, and delivery stay aligned in one loop.',
+      },
+      {
+        title: 'Visible progress',
+        description:
+          'Design, development, priorities, and next steps remain readable as one system instead of fragmented updates.',
+        detail: 'The client sees movement in the product, not just hears promises.',
+      },
+      {
+        title: 'Outcome focus',
+        description:
+          'Decisions are filtered through user journeys, launch speed, interface clarity, and future product scale.',
+        detail: 'Visual quality never gets separated from business usefulness.',
+      },
+    ],
   },
-  {
-    text: "Не просто дизайн ради дизайна. Ребята глубоко погружаются в юнит-экономику проекта и предлагают интерфейсные решения, которые напрямую повышают LTV. Просто топ.",
-    author: "Михаил Давыдов",
-    role: "CTO @ NEXUS Systems",
-    image: "https://picsum.photos/seed/mike/100/100?blur=1",
+  UA: {
+    badge: 'Як будується робота',
+    title1: 'Бізнесу потрібні',
+    title2: 'зрозумілі сигнали якості',
+    desc: 'Тут зібрані сигнали якості, які справді допомагають прийняти рішення про співпрацю: хто на зв’язку, як видно прогрес і як утримується фокус на результаті.',
+    portfolioLabel: 'Проєкти в портфоліо',
+    projects: ['Transmatika', 'Swipy', 'KeyTrust', 'NovaBot', 'CoinGem', 'Fungypack'],
+    cards: [
+      {
+        title: 'Прямий діалог',
+        description:
+          'Важливі продуктові та технічні питання обговорюються напряму, без зайвого прошарку між клієнтом і командою.',
+        detail: 'Стратегія, UX і delivery не розходяться між різними людьми.',
+      },
+      {
+        title: 'Видимий прогрес',
+        description:
+          'Дизайн, розробка, пріоритети й наступні кроки читаються як цілісна система, а не як розрізнені апдейти.',
+        detail: 'Клієнт бачить рух продукту, а не просто чує обіцянки.',
+      },
+      {
+        title: 'Фокус на результаті',
+        description:
+          'Рішення проходять через призму сценаріїв, швидкості запуску, ясності інтерфейсу та майбутнього росту продукту.',
+        detail: 'Візуальна якість не відривається від користі для бізнесу.',
+      },
+    ],
   },
-];
+} as const;
 
-const logos = [
-  "NEXUS",
-  "FinTech Core",
-  "Lumina",
-  "Aero",
-  "BlockChain.io",
-  "Vanguard",
-  "Aura",
-  "PayOrbit",
-  "Global Link",
-];
+const CARD_ICONS = [Activity, Layers, ShieldCheck] as const;
 
 export function SocialProof() {
-  const { t, lang } = useLanguage();
-
-  const authorNames = {
-    RU: ["Александр Соколов", "Елена Краснова", "Михаил Давыдов"],
-    EN: ["Alex Sokolov", "Elena Krasnova", "Michael Davydov"],
-    UA: ["Олександр Соколов", "Олена Краснова", "Михайло Давидов"]
-  };
-  const names = authorNames[lang] || authorNames.EN;
-
-  const currentTestimonials = [
-    {
-      text: t("social", "text1"),
-      author: names[0],
-      role: "CEO @ FinTech Core",
-      image: "https://picsum.photos/seed/alex/100/100?blur=1",
-    },
-    {
-      text: t("social", "text2"),
-      author: names[1],
-      role: "Founder @ Lumina",
-      image: "https://picsum.photos/seed/elena/100/100?blur=1",
-    },
-    {
-      text: t("social", "text3"),
-      author: names[2],
-      role: "CTO @ NEXUS Systems",
-      image: "https://picsum.photos/seed/mike/100/100?blur=1",
-    },
-  ];
+  const { lang } = useLanguage();
+  const copy = SECTION_COPY[lang] ?? SECTION_COPY.EN;
 
   return (
     <section
-      className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden"
+      className="scroll-mt-28 overflow-hidden px-4 py-16 md:scroll-mt-32 md:py-24"
       id="social-proof"
     >
-      {/* Background elements */}
-      <div className="absolute left-[-10%] top-0 w-[500px] h-[500px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none -z-10" />
+      <div className="pointer-events-none absolute left-[-12%] top-0 -z-10 h-[480px] w-[480px] rounded-full bg-brand-blue/5 blur-[120px]" />
 
-      {/* Infinite Logo Marquee */}
-      <div className="w-full overflow-hidden mb-24 relative flex items-center">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-surface-bg to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-surface-bg to-transparent z-10" />
-
-        <motion.div
-          className="flex whitespace-nowrap items-center gap-16 md:gap-24"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        >
-          {/* Double array for seamless loop */}
-          {[...logos, ...logos, ...logos].map((logo, i) => (
-            <div
-              key={i}
-              className="text-2xl md:text-3xl font-display font-medium text-white/40 tracking-tight grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:text-white transition-all cursor-default"
-            >
-              {logo}
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+      <div className="mx-auto max-w-[92rem]">
+        <div className="mb-12 max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit mx-auto"
+            className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted"
           >
-            {t("social", "badge")}
+            {copy.badge}
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main leading-[1.05] tracking-tight"
+            className="text-4xl font-display font-bold leading-[1.04] tracking-tight text-text-main md:text-5xl lg:text-6xl"
           >
-            {t("social", "title1")} <br />{" "}
-            <span className="brand-gradient-text font-semibold tracking-[-0.02em]">
-              {t("social", "titleHighlight")}
-            </span>
+            {copy.title1} <span className="brand-gradient-text">{copy.title2}</span>
           </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 }}
+            className="mt-6 max-w-3xl text-lg leading-relaxed text-text-muted md:text-xl"
+          >
+            {copy.desc}
+          </motion.p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-          {currentTestimonials.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.15, duration: 0.8 }}
-              className={`bg-surface-card border border-line rounded-3xl p-8 flex flex-col relative group hover:border-white/20 transition-colors ${
-                i === 2 ? 'md:col-span-2 lg:col-span-1' : ''
-              }`}
-            >
-              <Quote className="w-10 h-10 text-brand-blue/20 absolute top-8 right-8 group-hover:text-brand-blue/40 transition-colors" />
+        <div className="grid gap-6 lg:grid-cols-3">
+          {copy.cards.map((card, index) => {
+            const Icon = CARD_ICONS[index];
 
-              <p className="text-text-main text-lg mb-8 relative z-10 font-medium leading-relaxed">
-                "{item.text}"
-              </p>
+            return (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.65, delay: index * 0.08 }}
+                className="group rounded-[32px] border border-line bg-surface-card p-8 transition-colors hover:border-white/16"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-brand-blue transition-colors group-hover:border-brand-blue/30 group-hover:bg-brand-blue/10">
+                  <Icon className="h-6 w-6" />
+                </div>
 
-              <div className="mt-auto flex items-center gap-4 relative z-10">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-line group-hover:border-brand-blue/50 transition-colors">
-                  <img
-                    src={item.image}
-                    alt={item.author}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
+                <h3 className="mt-8 text-2xl font-display font-bold text-white">{card.title}</h3>
+                <p className="mt-4 text-base leading-7 text-text-muted">{card.description}</p>
+                <div className="mt-6 rounded-[22px] border border-white/8 bg-white/[0.03] px-5 py-4 text-sm leading-6 text-white/76">
+                  {card.detail}
                 </div>
-                <div>
-                  <div className="text-white font-bold">{item.author}</div>
-                  <div className="text-text-muted text-sm">{item.role}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.12 }}
+          className="mt-8 rounded-[32px] border border-line bg-surface-card px-6 py-6"
+        >
+          <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-text-muted">
+            {copy.portfolioLabel}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {copy.projects.map((project) => (
+              <span
+                key={project}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-white/78"
+              >
+                {project}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

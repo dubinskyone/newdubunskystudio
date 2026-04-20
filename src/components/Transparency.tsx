@@ -1,215 +1,198 @@
 import { motion } from 'motion/react';
-import { Activity, Code, ShieldCheck, Users } from 'lucide-react';
+import { Activity, Code, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../i18n';
 
-// ... (retain Lottie animations)
-const LottieRadar = () => (
-   <div className="absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none overflow-hidden mix-blend-screen mix-blend-overlay">
-      <div className="w-full h-full relative">
-         <div className="absolute inset-0 border-2 border-brand-blue/30 rounded-full animate-ping animate-duration-[3s]" />
-         <div className="absolute inset-4 border border-brand-blue/20 rounded-full animate-pulse" />
-      </div>
-   </div>
-);
-
-const LottieShield = () => (
-   <div className="absolute top-4 right-4 w-24 h-24 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
-      <ShieldCheck className="w-full h-full text-brand-purple" />
-   </div>
-);
-
-const LottieTeam = () => (
-   <div className="absolute right-0 bottom-0 w-48 h-48 opacity-10 pointer-events-none translate-x-12 translate-y-12 group-hover:scale-110 transition-transform duration-700">
-      <Users className="w-full h-full text-brand-blue" />
-   </div>
-);
-
-
-const dict = {
+const SECTION_COPY = {
   RU: {
-    badge: "Процесс",
-    title1: "Абсолютная",
-    title2: "прозрачность",
-    desc: "Никаких черных ящиков. Вы знаете статус своего проекта в любую секунду. Мы снимаем возражения через тотальную открытость процессов.",
-    list: [
-      { text: "Ежедневные статусы в Telegram", icon: Activity },
-      { text: "Открытый бэклог в Jira/Linear", icon: Code },
-      { text: "Регулярные демо-созвоны", icon: ShieldCheck }
+    badge: 'Процесс',
+    title1: 'Работа должна быть',
+    title2: 'видимой и спокойной',
+    desc: 'Когда клиент понимает, что происходит сейчас, что будет дальше и где нужна его реакция, проект движется быстрее и без лишнего напряжения.',
+    principles: [
+      {
+        title: 'Общий канал связи',
+        description: 'Оперативные вопросы, решения и апдейты не теряются между разными чатами и ролями.',
+      },
+      {
+        title: 'Открытые приоритеты',
+        description: 'Клиент видит, какой сценарий в фокусе, что уже сделано и почему именно это идёт следующим.',
+      },
+      {
+        title: 'Регулярные демо',
+        description: 'Прогресс показывается на живом продукте, а не только в сообщениях и красивых обещаниях.',
+      },
     ],
-    card1Label: "Команда проекта",
-    card1Title: "Senior уровень",
-    card2Label: "Синхронизация",
-    card2Title: "Real-time трекинг",
-    card3Label: "Гарантия качества",
-    card3Title: "SLA Поддержка"
+    panelTitle: 'Что обычно видно клиенту',
+    items: [
+      'Текущий фокус спринта',
+      'Статус дизайна и разработки',
+      'Открытые вопросы, требующие решения',
+      'Следующий milestone и ближайшее демо',
+    ],
+    footerLabel: 'Это снижает хаос и помогает принимать решения вовремя.',
   },
   EN: {
-    badge: "Process",
-    title1: "Absolute",
-    title2: "transparency",
-    desc: "No black boxes. You know the status of your project at any second. We remove objections through total transparency of processes.",
-    list: [
-      { text: "Daily status updates in Telegram", icon: Activity },
-      { text: "Open backlog in Jira/Linear", icon: Code },
-      { text: "Regular demo calls", icon: ShieldCheck }
+    badge: 'Process',
+    title1: 'Work should feel',
+    title2: 'visible and calm',
+    desc: 'When the client understands what is happening now, what comes next, and where their decision is needed, the project moves faster and with less friction.',
+    principles: [
+      {
+        title: 'One shared channel',
+        description: 'Questions, decisions, and updates do not get lost between scattered chats and disconnected roles.',
+      },
+      {
+        title: 'Visible priorities',
+        description: 'The client sees which scenario is in focus, what is already done, and why that work matters now.',
+      },
+      {
+        title: 'Regular demos',
+        description: 'Progress is shown on a living product, not just described in messages or promises.',
+      },
     ],
-    card1Label: "Project team",
-    card1Title: "Senior level",
-    card2Label: "Synchronization",
-    card2Title: "Real-time tracking",
-    card3Label: "Quality Assurance",
-    card3Title: "SLA Support"
+    panelTitle: 'What the client usually sees',
+    items: [
+      'Current sprint focus',
+      'Design and development status',
+      'Open questions that need decisions',
+      'Next milestone and upcoming demo',
+    ],
+    footerLabel: 'This reduces chaos and helps decisions happen on time.',
   },
   UA: {
-    badge: "Процес",
-    title1: "Абсолютна",
-    title2: "прозорість",
-    desc: "Ніяких чорних ящиків. Ви знаєте статус свого проєкту в будь-яку секунду. Ми знімаємо заперечення через тотальну відкритість процесів.",
-    list: [
-      { text: "Щоденні статуси в Telegram", icon: Activity },
-      { text: "Відкритий беклог у Jira/Linear", icon: Code },
-      { text: "Регулярні демо-дзвінки", icon: ShieldCheck }
+    badge: 'Процес',
+    title1: 'Робота має бути',
+    title2: 'видимою і спокійною',
+    desc: 'Коли клієнт розуміє, що відбувається зараз, що буде далі й де потрібне його рішення, проєкт рухається швидше та без зайвої напруги.',
+    principles: [
+      {
+        title: 'Спільний канал зв’язку',
+        description: 'Оперативні питання, рішення й апдейти не губляться між різними чатами та ролями.',
+      },
+      {
+        title: 'Видимі пріоритети',
+        description: 'Клієнт бачить, який сценарій у фокусі, що вже зроблено і чому саме це йде наступним.',
+      },
+      {
+        title: 'Регулярні демо',
+        description: 'Прогрес показується на живому продукті, а не лише в повідомленнях чи обіцянках.',
+      },
     ],
-    card1Label: "Команда проєкту",
-    card1Title: "Senior рівень",
-    card2Label: "Синхронізація",
-    card2Title: "Real-time трекінг",
-    card3Label: "Гарантія якості",
-    card3Title: "SLA Підтримка"
-  }
-};
+    panelTitle: 'Що зазвичай бачить клієнт',
+    items: [
+      'Поточний фокус спринту',
+      'Статус дизайну та розробки',
+      'Відкриті питання, що потребують рішення',
+      'Наступний milestone і найближче демо',
+    ],
+    footerLabel: 'Це знижує хаос і допомагає вчасно приймати рішення.',
+  },
+} as const;
+
+const ITEM_ICONS = [Activity, Code, ShieldCheck] as const;
 
 export function Transparency() {
   const { lang } = useLanguage();
-  const t = dict[lang] || dict.EN;
+  const copy = SECTION_COPY[lang] ?? SECTION_COPY.EN;
 
   return (
-    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="integration">
-      {/* Dynamic Background Glow */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/5 blur-[150px] rounded-full pointer-events-none -z-10" />
+    <section
+      className="scroll-mt-28 relative overflow-hidden px-4 py-16 md:scroll-mt-32 md:py-24"
+      id="integration"
+    >
+      <div className="pointer-events-none absolute right-0 top-1/2 -z-10 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-brand-purple/5 blur-[150px]" />
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
-        
-        {/* Left Column */}
+      <div className="mx-auto grid max-w-[92rem] gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start">
         <div>
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="px-4 py-1.5 rounded-full border border-line bg-surface-glass text-xs font-bold uppercase tracking-widest text-text-muted mb-6 w-fit"
+            className="mb-6 w-fit rounded-full border border-line bg-surface-glass px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-text-muted"
           >
-            {t.badge}
+            {copy.badge}
           </motion.div>
 
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-main mb-8 leading-[1.05] tracking-tight"
+            className="text-4xl font-display font-bold leading-[1.04] tracking-tight text-text-main md:text-5xl lg:text-6xl"
           >
-            {t.title1}<br/>{t.title2}
+            {copy.title1} <span className="brand-gradient-text">{copy.title2}</span>
           </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-text-muted mb-12 max-w-lg leading-relaxed"
+            transition={{ delay: 0.08 }}
+            className="mt-6 max-w-xl text-lg leading-relaxed text-text-muted md:text-xl"
           >
-            {t.desc}
+            {copy.desc}
           </motion.p>
 
-          <div className="space-y-5">
-            {t.list.map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + (i * 0.1) }}
-                className="flex items-center gap-5 text-base md:text-lg font-medium text-text-main py-4 border-b border-line/50 last:border-b-0 max-w-md group hover:pl-2 transition-all cursor-crosshair"
-              >
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-bg border border-line flex items-center justify-center group-hover:border-brand-blue/50 group-hover:bg-brand-blue/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <item.icon className="w-6 h-6 text-brand-blue group-hover:text-white transition-colors" />
-                </div>
-                {item.text}
-              </motion.div>
-            ))}
+          <div className="mt-10 space-y-4">
+            {copy.principles.map((item, index) => {
+              const Icon = ITEM_ICONS[index];
+
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.12 + index * 0.08 }}
+                  className="rounded-[28px] border border-line bg-surface-card p-5"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-brand-blue">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-semibold text-white">{item.title}</div>
+                      <p className="mt-2 text-sm leading-6 text-text-muted">{item.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Right Column (Dark Bento Widget) */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="bg-surface-card rounded-[40px] p-4 lg:p-8 shadow-soft border border-line relative overflow-hidden"
+          transition={{ duration: 0.65 }}
+          className="relative overflow-hidden rounded-[38px] border border-line bg-surface-card p-6 md:p-8"
         >
-          {/* Subtle grid pattern background */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-20 pointer-events-none" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:30px_30px] opacity-20" />
 
-          {/* Inner cards GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-            
-            {/* Card 1: Team */}
-            <motion.a 
-              href="#contact"
-              whileHover={{ y: -2 }}
-              className="sm:col-span-2 bg-surface-glass border border-line rounded-[32px] p-5 sm:p-6 lg:p-8 flex items-center justify-between cursor-pointer block hover:shadow-[0_0_40px_rgba(37,99,235,0.15)] hover:border-brand-blue/30 transition-all backdrop-blur-md group relative overflow-hidden"
-            >
-              <LottieTeam />
-              <div className="flex items-center gap-5 relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center group-hover:bg-brand-blue group-hover:border-brand-blue group-hover:scale-110 transition-all duration-300">
-                  <Users className="w-7 h-7 text-brand-blue group-hover:text-white transition-colors duration-300" />
+          <div className="relative z-10">
+            <div className="mb-6 text-[11px] font-bold uppercase tracking-[0.24em] text-text-muted">
+              {copy.panelTitle}
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {copy.items.map((item, index) => (
+                <div
+                  key={item}
+                  className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5"
+                >
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-sm font-bold text-white/78">
+                    0{index + 1}
+                  </div>
+                  <div className="text-base font-semibold leading-7 text-white/86">{item}</div>
                 </div>
-                <div>
-                  <div className="text-text-muted text-sm font-bold uppercase tracking-wider mb-1">{t.card1Label}</div>
-                  <div className="text-xl sm:text-2xl font-bold text-text-main">{t.card1Title}</div>
-                </div>
-              </div>
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-display font-black text-brand-blue relative z-10 ml-4 drop-shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-                5+
-              </div>
-            </motion.a>
+              ))}
+            </div>
 
-            {/* Card 2: Transparency / Sync */}
-            <motion.a 
-              href="#contact"
-              whileHover={{ y: -2 }}
-              className="col-span-1 bg-surface-bg border border-line rounded-[32px] p-6 lg:p-8 flex flex-col justify-between min-h-[240px] cursor-pointer block hover:shadow-[0_0_30px_rgba(37,99,235,0.1)] hover:border-brand-blue/40 transition-all group relative overflow-hidden"
-            >
-              <LottieRadar />
-              <div className="relative z-10">
-                <div className="text-brand-blue text-xs font-bold uppercase tracking-wider mb-2">{t.card2Label}</div>
-                <div className="text-xl lg:text-2xl font-bold text-text-main leading-tight max-w-[140px]">{t.card2Title}</div>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-white/5 border border-line flex items-center justify-center relative z-10 mt-6 group-hover:bg-brand-blue group-hover:border-brand-blue transition-colors">
-                 <Activity className="w-5 h-5 text-text-muted group-hover:text-white transition-colors" />
-              </div>
-            </motion.a>
-
-            {/* Card 3: SLA */}
-            <motion.a 
-              href="#contact"
-              whileHover={{ y: -2 }}
-              className="col-span-1 bg-gradient-to-br from-brand-purple/10 to-transparent border border-brand-purple/30 rounded-[32px] p-6 lg:p-8 flex flex-col justify-between min-h-[240px] cursor-pointer block hover:shadow-[0_0_40px_rgba(124,58,237,0.2)] hover:border-brand-purple/50 transition-all group relative overflow-hidden"
-            >
-              <LottieShield />
-              <div className="relative z-10 flex justify-end mb-4">
-                 <div className="text-5xl lg:text-6xl font-display font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-                   100%
-                 </div>
-              </div>
-              <div className="relative z-10 mt-auto">
-                <div className="text-brand-purple text-xs font-bold uppercase tracking-wider mb-2">{t.card3Label}</div>
-                <div className="text-xl lg:text-2xl font-bold text-text-main leading-tight">{t.card3Title}</div>
-              </div>
-            </motion.a>
-
+            <div className="mt-6 rounded-[26px] border border-brand-blue/20 bg-brand-blue/8 px-5 py-4 text-sm font-medium leading-6 text-white/78">
+              {copy.footerLabel}
+            </div>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

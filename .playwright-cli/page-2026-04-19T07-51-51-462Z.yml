@@ -1,0 +1,129 @@
+- generic [ref=e4]:
+  - banner:
+    - generic [ref=e5]:
+      - link "Dubinsky Studio" [ref=e7] [cursor=pointer]:
+        - /url: "#top"
+        - img [ref=e8]
+        - generic [ref=e9]:
+          - generic [ref=e10]: Dubinsky
+          - generic [ref=e11]: Studio
+      - button "Open menu" [ref=e13]
+  - main [ref=e19]:
+    - generic [ref=e24]:
+      - generic [ref=e27]: Development without headaches
+      - heading "We build digital products" [level=1] [ref=e28]:
+        - generic [ref=e29]: We build
+        - generic [ref=e30]: digital
+        - generic [ref=e31]: products
+      - paragraph [ref=e32]: We are a full-cycle development studio. We don't just build interfaces, we deliver turnkey MVPs. We design UI/UX systems, write scalable code, and build a robust technical foundation for your business growth.
+      - generic [ref=e33]:
+        - link "Contact Us" [ref=e34] [cursor=pointer]:
+          - /url: "#contact"
+          - generic [ref=e35]:
+            - text: Contact Us
+            - img [ref=e36]
+        - link "View Cases" [ref=e38] [cursor=pointer]:
+          - /url: "#solutions"
+          - generic [ref=e39]:
+            - text: View Cases
+            - img [ref=e40]
+      - generic [ref=e45]:
+        - generic [ref=e46]: Trusted by innovative teams
+        - generic [ref=e47]:
+          - generic [ref=e48]: FinTech Core
+          - generic [ref=e49]: NEXUS
+          - generic [ref=e50]: Lumina
+          - generic [ref=e51]: Aero
+    - generic [ref=e54]:
+      - generic [ref=e55]: Cases
+      - heading "Cases that explain our product depth at a glance" [level=2] [ref=e56]
+      - paragraph [ref=e57]: "Each scenario is framed as a compact product story: context, solution, outcome, and a fast interface preview instead of decorative noise."
+      - generic [ref=e59]:
+        - button "Web3 & TMA" [ref=e60]:
+          - img [ref=e62]
+        - button "Fintech & Exchange" [ref=e65]:
+          - img [ref=e67]
+        - button "B2B Platforms" [ref=e69]:
+          - img [ref=e71]
+        - button "DeFi & DAO" [ref=e74]:
+          - img [ref=e76]
+        - button "GameFi" [ref=e79]:
+          - img [ref=e82]
+        - button "Cloud Mining" [ref=e84]:
+          - img [ref=e86]
+        - button "Trading Tools" [ref=e88]:
+          - img [ref=e90]
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]:
+                - img [ref=e98]
+                - generic [ref=e100]: GameFi
+              - generic [ref=e101]: Instant game loop
+            - generic [ref=e102]:
+              - generic [ref=e103]: Spin
+              - heading "Telegram App with Crash Mechanics" [level=3] [ref=e104]
+              - paragraph [ref=e105]: A game UI with fast rhythm, readable risk, and a clear visual focus on action from the very first seconds.
+            - generic [ref=e106]:
+              - generic [ref=e107]:
+                - img [ref=e108]
+                - paragraph [ref=e111]: The first action starts immediately without unnecessary setup.
+              - generic [ref=e112]:
+                - img [ref=e113]
+                - paragraph [ref=e116]: Motion and multiplier are driven by the game rhythm, not decoration.
+              - generic [ref=e117]:
+                - img [ref=e118]
+                - paragraph [ref=e121]: The wallet path and retention hooks are part of the core experience.
+            - generic [ref=e122]:
+              - generic [ref=e123]:
+                - generic [ref=e124]: Platform
+                - generic [ref=e125]: TMA
+              - generic [ref=e126]:
+                - generic [ref=e127]: Focus
+                - generic [ref=e128]: Retention
+            - generic [ref=e129]:
+              - link "Discuss a similar case" [ref=e130] [cursor=pointer]:
+                - /url: "#contact"
+                - text: Discuss a similar case
+                - img [ref=e131]
+              - link "Open gallery" [ref=e133] [cursor=pointer]:
+                - /url: "#showcase"
+                - text: Open gallery
+                - img [ref=e134]
+          - generic [ref=e136]:
+            - generic [ref=e137]:
+              - generic [ref=e138]: Context
+              - paragraph [ref=e139]: In a crash mechanic product, the interface has to pull the user into action instantly and explain risk without extra screens.
+            - generic [ref=e140]:
+              - generic [ref=e141]: What we designed
+              - paragraph [ref=e142]: We accelerated the first scenario, pushed the multiplier into the main focus, and built a fast game rhythm around the key action.
+            - generic [ref=e143]:
+              - generic [ref=e144]: Business outcome
+              - paragraph [ref=e145]: The product feels alive, fast, and readable, while the preview proves there is a real interaction pattern behind the UI.
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]:
+                - img [ref=e150]
+                - generic [ref=e154]: Live preview
+              - generic [ref=e155]: Spin
+            - generic [ref=e159]:
+              - generic [ref=e163]:
+                - generic [ref=e164]: Crash loop
+                - generic [ref=e165]: Live coeff
+              - img [ref=e174]
+            - generic [ref=e178]:
+              - generic [ref=e179]: GameFi
+              - generic [ref=e180]: Spin
+              - paragraph [ref=e181]: This case already includes a real video preview, so the user sees product behavior instead of a static cover.
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - generic [ref=e184]: Why this case works
+              - paragraph [ref=e185]: This case is powerful because the interface sells the mechanic in the very first seconds of contact.
+            - generic [ref=e186]:
+              - generic [ref=e187]: What we shipped
+              - generic [ref=e188]:
+                - generic [ref=e189]: Game loop
+                - generic [ref=e190]: Wallet entry
+                - generic [ref=e191]: Retention hooks

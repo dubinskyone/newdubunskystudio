@@ -1,110 +1,119 @@
 import { motion } from 'motion/react';
-import { Download, Rocket, FileText, ArrowRight } from 'lucide-react';
-import { useState, FormEvent } from 'react';
+import { ArrowRight, FileText, Mail, Send } from 'lucide-react';
 import { useLanguage } from '../i18n';
 
-export function LeadMagnet() {
-  const { t } = useLanguage();
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+const SECTION_COPY = {
+  RU: {
+    badge: 'Полезный материал',
+    title: 'Чеклист перед запуском продукта',
+    desc: 'Если нужен быстрый независимый взгляд на продукт перед стартом или переработкой, отправим список того, что обычно проверяем в интерфейсе, сценариях и delivery.',
+    items: ['Первый пользовательский сценарий', 'Конверсионные узкие места', 'Release-ready состояние продукта'],
+    telegram: 'Запросить в Telegram',
+    email: 'Запросить по почте',
+    requestFormat: 'Формат запроса',
+  },
+  EN: {
+    badge: 'Useful asset',
+    title: 'Pre-launch product checklist',
+    desc: 'If you need a fast outside look before launch or redesign, we can send the checklist we usually use to review interface clarity, user flows, and delivery readiness.',
+    items: ['First user scenario', 'Conversion bottlenecks', 'Release-ready product state'],
+    telegram: 'Request on Telegram',
+    email: 'Request by email',
+    requestFormat: 'Request format',
+  },
+  UA: {
+    badge: 'Корисний матеріал',
+    title: 'Чеклист перед запуском продукту',
+    desc: 'Якщо потрібен швидкий зовнішній погляд перед стартом або переробкою, надішлемо список того, що зазвичай перевіряємо в інтерфейсі, сценаріях і delivery.',
+    items: ['Перший користувацький сценарій', 'Конверсійні вузькі місця', 'Release-ready стан продукту'],
+    telegram: 'Запросити в Telegram',
+    email: 'Запросити поштою',
+    requestFormat: 'Формат запиту',
+  },
+} as const;
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (email.includes('@')) {
-      setIsSubmitted(true);
-      // In a real app, you would send this to your CRM/Backend
-      setTimeout(() => setIsSubmitted(false), 3000);
-      setEmail('');
-    }
-  };
+export function LeadMagnet() {
+  const { lang } = useLanguage();
+  const copy = SECTION_COPY[lang] ?? SECTION_COPY.EN;
 
   return (
-    <section className="scroll-mt-28 md:scroll-mt-32 py-16 md:py-24 px-4 bg-transparent relative overflow-hidden" id="lead-magnet">
-      <div className="max-w-5xl mx-auto relative z-10">
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
+    <section
+      className="scroll-mt-28 relative overflow-hidden px-4 py-16 md:scroll-mt-32 md:py-24"
+      id="lead-magnet"
+    >
+      <div className="mx-auto max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="bg-gradient-to-br from-[#18181b] to-surface-bg border border-line rounded-[40px] p-8 md:p-12 lg:p-16 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-12 text-left"
+          transition={{ duration: 0.75 }}
+          className="relative overflow-hidden rounded-[40px] border border-line bg-gradient-to-br from-[#18181b] to-surface-bg p-8 text-left md:p-12 lg:p-16"
         >
-          {/* Abstract Glow */}
-          <div className="absolute top-[-50%] right-[-10%] w-[400px] h-[400px] bg-brand-blue/10 blur-[100px] rounded-full mix-blend-screen pointer-events-none" />
-          
-          <div className="w-full lg:w-1/2 relative z-10 mt-8 md:mt-0">
-            <div className="flex items-center gap-3 mb-6">
-               <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center border border-brand-purple/20">
-                 <FileText className="w-5 h-5 text-brand-purple" />
-               </div>
-               <span className="text-xs font-bold uppercase tracking-widest text-text-muted">{t('lead', 'badge')}</span>
+          <div className="pointer-events-none absolute right-[-10%] top-[-20%] h-[360px] w-[360px] rounded-full bg-brand-blue/10 blur-[100px]" />
+
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)] lg:items-center">
+            <div className="relative z-10">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-purple/20 bg-brand-purple/10">
+                  <FileText className="h-5 w-5 text-brand-purple" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-widest text-text-muted">
+                  {copy.badge}
+                </span>
+              </div>
+
+              <h2 className="text-3xl font-display font-bold leading-tight text-white md:text-5xl">
+                {copy.title}
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-muted">
+                {copy.desc}
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {copy.items.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/78"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-            
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
-              {t('lead', 'titlePart1')}<span className="brand-gradient-text font-semibold tracking-[-0.02em]">{t('lead', 'titleHighlight')}</span>{t('lead', 'titlePart2')}
-            </h2>
-            <p className="text-text-muted text-lg mb-8 leading-relaxed">
-              {t('lead', 'desc')}
-            </p>
 
-             <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3 w-full max-w-md">
-              <label htmlFor="lead-email" className="sr-only">Email</label>
-              <input 
-                id="lead-email"
-                type="email" 
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('lead', 'placeholder')}
-                className="w-full px-6 py-4 rounded-xl sm:rounded-full bg-black/40 border border-white/10 text-white placeholder:text-[#a1a1aa] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
-              />
-              <button 
-                type="submit"
-                disabled={isSubmitted}
-                className="brand-button w-full sm:w-auto shrink-0 py-4 px-8 rounded-xl sm:rounded-full text-white font-bold transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card"
-              >
-                {isSubmitted ? (
-                  <span>{t('lead', 'sent')}</span>
-                ) : (
-                  <>
-                    {t('lead', 'download')}
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
+            <div className="relative z-10 rounded-[28px] border border-white/10 bg-surface-glass p-6 shadow-2xl backdrop-blur-md">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-text-muted">
+                {copy.requestFormat}
+              </div>
 
-          <div className="w-full lg:w-1/2 relative z-10 lg:-order-none order-first mb-8 lg:mb-0">
-             <div className="bg-surface-glass border border-line rounded-[24px] p-6 backdrop-blur-md shadow-2xl skew-y-3 lg:skew-y-6 transform hover:skew-y-0 transition-transform duration-500 max-w-sm mx-auto">
-                <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
-                   <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-[#ef4444]" />
-                      <div className="w-3 h-3 rounded-full bg-[#eab308]" />
-                      <div className="w-3 h-3 rounded-full bg-[#22c55e]" />
-                   </div>
-                   <div className="text-xs font-mono text-text-muted">guideline.pdf</div>
-                </div>
-                
-                <div className="space-y-4">
-                   <div className="h-4 w-3/4 bg-white/10 rounded-full animate-pulse" />
-                   <div className="h-4 w-full bg-white/5 rounded-full" />
-                   <div className="h-4 w-5/6 bg-white/5 rounded-full" />
-                   
-                   <div className="pt-4 flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-brand-blue/20 border border-brand-blue/40 flex items-center justify-center border-dashed">
-                        <Download className="w-6 h-6 text-brand-blue" />
-                      </div>
-                      <div>
-                        <div className="text-white font-bold text-sm">Boost Conversion</div>
-                        <div className="text-brand-blue text-xs">PDF • 2.4 MB</div>
-                      </div>
-                   </div>
-                </div>
-             </div>
+              <div className="space-y-4">
+                <a
+                  href="https://t.me/dubinskystudio"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-2xl bg-[#2AABEE] px-5 py-4 font-bold text-white transition-all hover:bg-[#229ED9] no-underline"
+                >
+                  <div className="flex items-center gap-3">
+                    <Send className="h-5 w-5" />
+                    <span>{copy.telegram}</span>
+                  </div>
+                  <ArrowRight className="h-5 w-5 opacity-60" />
+                </a>
+
+                <a
+                  href="mailto:hello@dubinsky.studio?subject=Checklist%20request"
+                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-5 py-4 font-bold text-white transition-all hover:border-white/20 hover:bg-white/[0.04] no-underline"
+                >
+                  <div className="flex items-center gap-3">
+                    <Mail className="h-5 w-5 text-brand-blue" />
+                    <span>{copy.email}</span>
+                  </div>
+                  <ArrowRight className="h-5 w-5 opacity-60" />
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

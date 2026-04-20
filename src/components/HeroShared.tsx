@@ -6,8 +6,9 @@ export type HeroCopy = {
   descHighlight: string;
   descEnding: string;
   contact: string;
-  cases: string;
+  secondaryCta: string;
   trusted: string;
+  focusItems: string[];
 };
 
 export function TrustedMarks({ trustedLabel }: { trustedLabel: string }) {
@@ -19,16 +20,16 @@ export function TrustedMarks({ trustedLabel }: { trustedLabel: string }) {
         </span>
         <div className="flex flex-wrap items-center justify-center gap-6 opacity-70 sm:gap-10 md:gap-16">
           <span className="font-sans text-lg font-bold text-text-muted sm:font-display sm:text-xl md:text-2xl">
-            FinTech Core
+            Transmatika
           </span>
           <span className="font-sans text-lg font-medium tracking-tighter text-text-muted sm:font-display sm:text-xl md:text-2xl">
-            NEXUS
+            Swipy
           </span>
           <span className="font-sans text-lg font-black tracking-tight text-text-muted sm:text-xl md:text-2xl">
-            Lumina
+            KeyTrust
           </span>
           <span className="brand-accent-text pr-2 font-sans text-lg font-semibold sm:font-display sm:text-xl md:text-2xl">
-            Aero
+            NovaBot
           </span>
         </div>
       </div>

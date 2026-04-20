@@ -2,11 +2,64 @@ import { motion } from 'motion/react';
 import { useLanguage, Language } from '../i18n';
 
 export function Footer() {
-  const { lang, setLang, t } = useLanguage();
+  const { lang, setLang } = useLanguage();
+  const copy = {
+    RU: {
+      tagline:
+        'Студия полного цикла для продуктовых команд. Делаем MVP, интерфейсы и рабочие цифровые продукты без лишнего шума.',
+      navTitle: 'Навигация',
+      contactsTitle: 'Связаться',
+      discuss: 'Обсудить проект',
+      links: [
+        { name: 'Главная', id: 'top' },
+        { name: 'Кейсы', id: 'cases' },
+        { name: 'Интерфейсы', id: 'showcase' },
+        { name: 'Процесс', id: 'platform' },
+        { name: 'Команда', id: 'team' },
+        { name: 'Контакты', id: 'contact' },
+      ],
+      nda: 'NDA и более детальный разбор — по запросу.',
+      rights: 'Все права защищены.',
+    },
+    EN: {
+      tagline:
+        'A full-cycle studio for product teams. We build MVPs, interfaces, and working digital products without unnecessary noise.',
+      navTitle: 'Navigation',
+      contactsTitle: 'Contact',
+      discuss: 'Discuss project',
+      links: [
+        { name: 'Home', id: 'top' },
+        { name: 'Cases', id: 'cases' },
+        { name: 'Interfaces', id: 'showcase' },
+        { name: 'Process', id: 'platform' },
+        { name: 'Team', id: 'team' },
+        { name: 'Contact', id: 'contact' },
+      ],
+      nda: 'NDA and a deeper product review are available on request.',
+      rights: 'All rights reserved.',
+    },
+    UA: {
+      tagline:
+        'Студія повного циклу для продуктових команд. Робимо MVP, інтерфейси та робочі цифрові продукти без зайвого шуму.',
+      navTitle: 'Навігація',
+      contactsTitle: 'Звʼязатися',
+      discuss: 'Обговорити проєкт',
+      links: [
+        { name: 'Головна', id: 'top' },
+        { name: 'Кейси', id: 'cases' },
+        { name: 'Інтерфейси', id: 'showcase' },
+        { name: 'Процес', id: 'platform' },
+        { name: 'Команда', id: 'team' },
+        { name: 'Контакти', id: 'contact' },
+      ],
+      nda: 'NDA і детальніший розбір — за запитом.',
+      rights: 'Всі права захищені.',
+    },
+  }[lang];
 
   return (
     <footer className="bg-surface-bg border-t border-line pt-20 pb-8 px-4 overflow-hidden relative">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-[92rem]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-line pb-16">
           <div className="col-span-1 md:col-span-5 pr-8">
             <a href="#top" className="mb-6 inline-flex w-fit items-center gap-3.5 no-underline" aria-label="Dubinsky Studio">
@@ -27,9 +80,7 @@ export function Footer() {
                 </span>
               </span>
             </a>
-            <p className="text-text-muted max-w-sm mb-8 text-lg">
-              {t('footer', 'tagline')}
-            </p>
+            <p className="text-text-muted max-w-sm mb-8 text-lg">{copy.tagline}</p>
 
             {/* Language Switcher */}
             <div className="flex gap-2">
@@ -54,15 +105,10 @@ export function Footer() {
           <div className="col-span-1 md:col-span-3">
             <h4 className="font-bold text-text-main mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand-blue" />
-              {t('footer', 'navTitle')}
+              {copy.navTitle}
             </h4>
             <div className="flex flex-col gap-4 text-text-muted font-medium">
-              {[
-                { name: t('footer', 'about'), id: 'top' },
-                { name: t('footer', 'solutions'), id: 'solutions' },
-                { name: t('footer', 'approach'), id: 'platform' },
-                { name: t('footer', 'process'), id: 'integration' }
-              ].map((item) => (
+              {copy.links.map((item) => (
                 <motion.a 
                   key={item.name}
                   href={`#${item.id}`} 
@@ -78,26 +124,22 @@ export function Footer() {
           <div className="col-span-1 md:col-span-4">
             <h4 className="font-bold text-text-main mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand-purple" />
-              {t('footer', 'contactsTitle')}
+              {copy.contactsTitle}
             </h4>
             <div className="flex flex-col gap-4 text-text-muted font-medium">
               <motion.a whileHover={{ x: 5, color: '#FAFAFA' }} href="mailto:hello@dubinsky.studio" className="transition-colors w-fit text-lg">hello@dubinsky.studio</motion.a>
               <div className="h-px w-full bg-line my-1" />
               <motion.a whileHover={{ x: 5, color: '#FAFAFA' }} href="https://t.me/dubinskystudio" target="_blank" rel="noreferrer" className="transition-colors w-fit">Telegram</motion.a>
-              <motion.a whileHover={{ x: 5, color: '#FAFAFA' }} href="#contact" className="transition-colors w-fit">Behance</motion.a>
-              <motion.a whileHover={{ x: 5, color: '#FAFAFA' }} href="#contact" className="transition-colors w-fit">LinkedIn</motion.a>
+              <motion.a whileHover={{ x: 5, color: '#FAFAFA' }} href="#contact" className="transition-colors w-fit">{copy.discuss}</motion.a>
             </div>
           </div>
         </div>
 
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
-          <div className="flex gap-6 text-sm font-medium text-text-muted/70">
-            <a href="#contact" className="hover:text-text-main transition-colors">{t('footer', 'privacy')}</a>
-            <a href="#contact" className="hover:text-text-main transition-colors">{t('footer', 'terms')}</a>
-          </div>
+          <div className="text-sm font-medium text-text-muted/70">{copy.nda}</div>
           
           <div className="text-sm text-text-muted/70">
-            © {new Date().getFullYear()} Dubinsky Studio. {t('footer', 'rights')}
+            © {new Date().getFullYear()} Dubinsky Studio. {copy.rights}
           </div>
         </div>
       </div>
